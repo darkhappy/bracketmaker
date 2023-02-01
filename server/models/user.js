@@ -6,9 +6,9 @@ const userSchema = new mongoose.Schema({
     email : String,
     password : String,
     avatar : String,
+    display_name : String,
     subscriptions : [Tournament.schema],
     tournaments: [Tournament.schema]
-
 });
 
 const User = mongoose.model('User', userSchema);
