@@ -5,7 +5,7 @@ mongoose.set('strictQuery', false);
 mongoose.connect('mongodb://127.0.0.1:27017/test', { useNewUrlParser: true, useUnifiedTopology: true })
 
 const app = express();
-var router = require('./routes'); 
+let router = require('./routes'); 
 app.use(express.json());
 app.use(router);
 app.listen(3000, () => {
