@@ -7,8 +7,8 @@ const userSchema = new mongoose.Schema({
     password : String,
     avatar : String,
     display_name : String,
-    subscriptions : [Tournament.schema],
-    tournaments: [Tournament.schema]
+    subscriptions : [{type: mongoose.Schema.Types.ObjectId, ref: 'Tournament'}],
+    tournaments: [{type: mongoose.Schema.Types.ObjectId, ref: 'Tournament'}]
 });
 
 const User = mongoose.model('User', userSchema);

@@ -5,10 +5,11 @@ const Match = require('./match');
 const tournamentSchema = new mongoose.Schema({
     name : String,
     description : String,
-    type : String,
+    bracket_type : String,
+    category : String,
     date : Date,
-    likes : [Player.schema],
-    dislikes : [Player.schema],
+    likes : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
+    dislikes : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     players : [Player.schema],
     matches : [Match.schema]
 });
