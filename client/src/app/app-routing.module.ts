@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {HomeLayoutComponent} from "./layout/home-layout/home-layout.component";
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
+    component: HomeLayoutComponent,
     loadChildren: () => {
       return import('@modules/home/home.module').then(m => m.HomeModule);
     }
