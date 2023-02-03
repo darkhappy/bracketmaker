@@ -1,26 +1,37 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {HomeLayoutComponent} from "./layout/home-layout/home-layout.component";
+import {ContentLayoutComponent} from "./layout/content-layout/content-layout.component";
 
 const routes: Routes = [
-  {
-    path: 'user',
-    loadChildren: () => {
-      return import('@modules/user/user.module').then(m => m.UserModule);
-    }
-  },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    component: HomeLayoutComponent,
-    loadChildren: () => {
-      return import('@modules/home/home.module').then(m => m.HomeModule);
-    }
-  }
+    path: '',
+    component: ContentLayoutComponent,
+    children: [
+      {
+        path: 'home',
+        loadChildren: () => {
+          return import('@modules/home/home.module').then(m => m.HomeModule);
+        }
+      },
+      {
+        path: 'user',
+        loadChildren: () => {
+          return import('@modules/user/user.module').then(m => m.UserModule);
+        }
+      },
+      {
+        path: 'auth',
+        loadChildren: () => {
+          return import('@modules/auth/auth.module').then(m => m.AuthModule);
+        }
+      }
+    ],
+  },
 ];
 
 @NgModule({
