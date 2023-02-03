@@ -3,9 +3,20 @@ import {RouterModule, Routes} from '@angular/router';
 
 const routes: Routes = [
   {
-    path: '/user',
+    path: 'user',
     loadChildren: () => {
       return import('@modules/user/user.module').then(m => m.UserModule);
+    }
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren: () => {
+      return import('@modules/home/home.module').then(m => m.HomeModule);
     }
   }
 ];
