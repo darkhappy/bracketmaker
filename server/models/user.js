@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const Tournament = require('./tournament');
 
 const userSchema = new mongoose.Schema({
     username : String,

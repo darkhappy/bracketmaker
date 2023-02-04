@@ -1,0 +1,10 @@
+<mat-toolbar color="primary">
+  <span class="mr-8" (click)="navigate('/')">Bracket Blitz</span>
+  <button mat-button (click)="navigate('/tour')">Tournois</button>
+  <button mat-button (click)="navigate('/orgs')">Organisateurs</button>
+  <span class="spacing"></span>
+  <div>
+    <button mat-button (click)="navigate('/auth/login')">Connexion</button>
+    <button mat-button (click)="navigate('/auth/register')" color="accent">Inscription</button>
+  </div>
+</mat-toolbar>

@@ -1,11 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 
+@use '@angular/material' as mat;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@include mat.core();
+
+$mat-primary: mat.define-palette(mat.$blue-palette, 500);
+$mat-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$mat-warning: mat.define-palette(mat.$red-palette, 500);
+
+$dark: mat.define-dark-theme((
+  color: (
+  primary: $mat-primary,
+    accent: $mat-accent,
+    warn: $mat-warning,
+  ),
+));
+
+$light: mat.define-light-theme((
+  color: (
+  primary: $mat-primary,
+    accent: $mat-accent,
+    warn: $mat-warning,
+  ),
+));
+
+@include mat.all-component-themes($dark);
+
+.light-theme {
+  @include mat.all-component-colors($light);
+}
