@@ -32,6 +32,8 @@ const routes: Routes = [
       }
     ],
   },
+  // Fallback
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({

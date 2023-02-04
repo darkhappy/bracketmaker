@@ -1,11 +1,10 @@
 <mat-toolbar color="primary">
-  <span class="mr-8">Bracket Blitz</span>
-  <button mat-button>Tournois</button>
-  <button mat-button>Organisateurs</button>
-  <button mat-button>Évènements</button>
+  <span class="mr-8" (click)="navigate('/')">Bracket Blitz</span>
+  <button mat-button (click)="navigate('/tour')">Tournois</button>
+  <button mat-button (click)="navigate('/orgs')">Organisateurs</button>
   <span class="spacing"></span>
   <div>
-    <button mat-button>Connexion</button>
-    <button mat-button color="accent">Inscription</button>
+    <button mat-button (click)="navigate('/auth/login')">Connexion</button>
+    <button mat-button (click)="navigate('/auth/register')" color="accent">Inscription</button>
   </div>
 </mat-toolbar>
