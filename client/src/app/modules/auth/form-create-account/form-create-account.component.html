@@ -11,7 +11,8 @@
         <mat-form-field>
             <mat-label>exemple@domaine.com</mat-label>
             <input matInput formControlName="email" type="email">
-            <mat-error>Le courriel est requis</mat-error>
+            <mat-error *ngIf="createAccount.get('email')?.hasError('required')">Le courriel est requis</mat-error>
+            <mat-error *ngIf="createAccount.get('email')?.hasError('email')">Le courriel n'est pas valide</mat-error>
         </mat-form-field>
         <p id="label">Mot de passe</p>
         <mat-form-field appearance="fill">
@@ -24,6 +25,7 @@
             <mat-label>Confirmer le mot de passe</mat-label>
             <input type="password" matInput formControlName="confirm">
             <mat-error *ngIf="createAccount.get('confirm')?.hasError('required')">La confirmation du mot de passe est requise</mat-error>
+            <mat-error *ngIf="createAccount.get('confirm')?.hasError('matching')">Les mots de passe ne correspondent pas</mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Créer un compte</button>
         <mat-error *ngIf="hide">Le nom d'utilisateur existe déjà</mat-error>
