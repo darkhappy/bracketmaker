@@ -10,30 +10,20 @@ import {Router} from "@angular/router";
 })
 export class FormLoginAccountComponent {
   // @ts-ignore
-  createAccount: FormGroup;
+  loginAccount: FormGroup;
 
   hide = false;
   constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
   ngOnInit(): void {
-    this.createAccount = this.fb.group({
+    this.loginAccount = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
       password: ['', Validators.required],
-      confirm : ['', Validators.required]
-    }, {
-      validators: this.validPassword
     });
   }
 
-  validPassword(group: FormGroup) {
-    const password = group.controls['password'].value;
-    const confirm = group.controls['confirm'].value;
-    return password === confirm ? null : { matching: true };
-  }
-
   onSubmit() {
-    if (this.createAccount?.valid) {
-      this.userService.createUser(this.createAccount.value).subscribe( {
+    if (this.loginAccount?.valid) {
+      this.userService.login(this.loginAccount.value).subscribe( {
         next: () => {
          
         }, 
