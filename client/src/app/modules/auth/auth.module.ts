@@ -8,13 +8,15 @@ import {MatButtonModule} from "@angular/material/button";
 import { LoginComponent } from './pages/login/login.component';
 import {authRoutes} from "@modules/auth/auth-routing.module";
 import { FormCreateAccountComponent } from './form-create-account/form-create-account.component';
+import { FormLoginAccountComponent } from './form-login-account/form-login-account.component';
 
 
 @NgModule({
   declarations: [
     RegisterComponent,
     LoginComponent,
-    FormCreateAccountComponent
+    FormCreateAccountComponent,
+    FormLoginAccountComponent
   ],
   imports: [
     CommonModule,

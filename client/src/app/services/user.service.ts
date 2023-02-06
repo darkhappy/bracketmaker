@@ -15,6 +15,10 @@ export class UserService {
     return this.http.get<User[]>('/api/'); //Mettre la bonne route
   }
 
+  login(user: any) {
+    return this.http.post<any>('/api/user/login', user);
+  }
+
   createUser(user: any) {
     return this.http.post<any>('/api/user/create', user);
   }
