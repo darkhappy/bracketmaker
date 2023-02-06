@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { User } from '../../models/user';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -16,10 +16,10 @@ export class UserService {
   }
 
   login(user: any) {
-    return this.http.post<any>('/api/user/login', user);
+    return this.http.post<any>('/api/user/', user);
   }
 
   createUser(user: any) {
-    return this.http.post<any>('/api/user/create', user);
+    return this.http.post<any>('/api/user/', user);
   }
 }
