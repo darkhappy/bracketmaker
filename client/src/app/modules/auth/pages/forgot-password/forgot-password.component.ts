@@ -11,7 +11,6 @@ export class ForgotPasswordComponent {
   // @ts-ignore
   formEmail: FormGroup;
 
-  hide = false;
   constructor(private fb: FormBuilder, private router: Router) { }
   ngOnInit(): void {
     this.formEmail = this.fb.group({
