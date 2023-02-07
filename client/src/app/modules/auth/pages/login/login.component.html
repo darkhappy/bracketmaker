@@ -5,7 +5,7 @@
         <mat-form-field>
             <mat-label>Nom d'utilisateur</mat-label>
             <input matInput formControlName="username" type="text">
-            <mat-error>Le nom d'utilisateur est requis</mat-error>
+            <mat-error *ngIf="formLogin.get('username')?.hasError('required')">Le nom d'utilisateur est requis</mat-error>
         </mat-form-field>
         <p>Mot de passe</p>
         <mat-form-field appearance="fill">
@@ -13,6 +13,9 @@
             <input type="password" matInput formControlName="password">
             <mat-error *ngIf="formLogin.get('password')?.hasError('required')">Le mot de passe est requis</mat-error>
         </mat-form-field>
+        <div class="links">
+            <a href="/auth/forgot-password">Mot de passe oublié</a>
+        </div>
         <button mat-raised-button color="primary" type="submit">Se connecter</button>
     </form>
 </div>
