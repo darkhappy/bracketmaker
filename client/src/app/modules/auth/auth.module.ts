@@ -7,7 +7,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import { LoginComponent } from './pages/login/login.component';
 import {authRoutes} from "@modules/auth/auth-routing.module";
-
+import {CoreModule} from "@app/core.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +20,8 @@ import {authRoutes} from "@modules/auth/auth-routing.module";
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
-    authRoutes
+    authRoutes,
+    CoreModule
   ]
 })
 export class AuthModule { }

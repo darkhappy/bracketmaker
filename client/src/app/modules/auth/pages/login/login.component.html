@@ -1,17 +1,17 @@
 <div id="parent">
     <form mat-form-field id="form" (ngSubmit)="onSubmit()" [formGroup]="formLogin">
         <h1 id="title">Bracket Blitz</h1>
-        <p id="label">Nom d'utilisateur</p>
+        <p>Nom d'utilisateur</p>
         <mat-form-field>
             <mat-label>Nom d'utilisateur</mat-label>
             <input matInput formControlName="username" type="text">
             <mat-error>Le nom d'utilisateur est requis</mat-error>
         </mat-form-field>
-        <p id="label">Mot de passe</p>
+        <p>Mot de passe</p>
         <mat-form-field appearance="fill">
             <mat-label>Mot de passe</mat-label>
             <input type="password" matInput formControlName="password">
-            <mat-error *ngIf="formLogin.get('password')?.hasError('required')">Le mot de passe est requis</mat-error>	
+            <mat-error *ngIf="formLogin.get('password')?.hasError('required')">Le mot de passe est requis</mat-error>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Se connecter</button>
     </form>

@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../../data/services/user.service";
+import {Component, NgModule} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators
+} from "@angular/forms";
+import {UserService} from "@data/services/user.service";
 import {Router} from "@angular/router";
-import {ErrorStateMatcher} from "@angular/material/core";
-import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,37 +16,39 @@ import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
 export class RegisterComponent {
   // @ts-ignore
   formRegister: FormGroup;
-  matcher = new MyErrorStateMatcher();
 
   hide = false;
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
+
+  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  }
+
   ngOnInit(): void {
     this.formRegister = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      confirm : ['', Validators.required]
-    }, {
-      validators: this.validPassword
+      confirm: ['', Validators.required]
     });
   }
 
-  validPassword(group: FormGroup) {
-    const password = group.controls['password'].value;
-    const confirm = group.controls['confirm'].value;
-    return password === confirm ? null : { matching: true };
+  validPassword(group: FormGroup): ValidationErrors | null {
+    const password = group.controls['password']?.value;
+    const confirm = group.controls['confirm']?.value;
+    return password === confirm ? null : {mismatch: true};
   }
 
   onSubmit() {
     if (this.formRegister?.valid) {
-      this.userService.createUser(this.formRegister.value).subscribe( {
+      this.userService.createUser(this.formRegister.value).subscribe({
         next: () => {
-         
-        }, 
+
+        },
         error: (error) => {
           this.hide = true;
         }
       });
+    } else {
+      alert("There was an error registering the user. Please try again later.");
     }
   }
 
@@ -53,11 +59,3 @@ export class RegisterComponent {
   }
 }
 
-export class MyErrorStateMatcher implements ErrorStateMatcher {
-  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-    const invalidCtrl = !!(control?.invalid && control?.parent?.dirty);
-    const invalidParent = !!(control?.parent?.invalid && control?.parent?.dirty);
-
-    return invalidCtrl || invalidParent;
-  }
-}
