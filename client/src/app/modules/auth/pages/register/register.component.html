@@ -1,37 +1,53 @@
-<h1>Bracket Blitz</h1>
-
-<form>
-  <mat-form-field>
-    <mat-label>nom d'utilisateur</mat-label>
-    <input matInput formControlName="userName">
-    <mat-error>Le nom est requis</mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>e-mail</mat-label>
-    <input matInput formControlName="password" type="password">
-    <mat-error>L'e-mail est requis</mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>mot de passe</mat-label>
-    <input matInput formControlName="password" type="password">
-    <mat-error>Le mot de passe est requis</mat-error>
-  </mat-form-field>
-  <br>
-  <mat-form-field>
-    <mat-label>Confirmer le mot de passe</mat-label>
-    <input matInput formControlName="password" type="password">
-    <mat-error>Le mot de passe est requis</mat-error>
-  </mat-form-field>
-  <br>
-  <button mat-raised-button color="primary">Confirmer</button>
-  <br><br>
-</form>
-
-<p>Partenaires de connexion</p>
-<hr>
-<button mat-raised-button color="primary">Google</button>
-<br>
-<button mat-raised-button color="primary">Facebook</button>
+<div id="parent">
+  <form id="form" (ngSubmit)="onSubmit()" [formGroup]="formRegister"
+        appMismatch
+        firstField="password"
+        secondField="confirm">
+    <h1 id="title">Bracket Blitz</h1>
+    <p>Nom d'utilisateur</p>
+    <mat-form-field>
+      <mat-label>Nom d'utilisateur</mat-label>
+      <input matInput formControlName="username" type="text">
+      <mat-error *ngIf="formRegister.get('email')?.hasError('required')">Le nom d'utilisateur est requis</mat-error>
+      <mat-error *ngIf="hide">Le nom d'utilisateur existe déjà</mat-error>
+    </mat-form-field>
+    <p>Adresse courriel</p>
+    <mat-form-field>
+      <mat-label>exemple@domaine.com</mat-label>
+      <input matInput formControlName="email" type="email">
+      <mat-error *ngIf="formRegister.get('email')?.hasError('required')">
+        Le courriel est requis
+      </mat-error>
+      <mat-error *ngIf="formRegister.get('email')?.hasError('email')">
+        Le courriel n'est pas valide
+      </mat-error>
+    </mat-form-field>
+    <p>Mot de passe</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Mot de passe</mat-label>
+      <input type="password" matInput formControlName="password">
+      <mat-error *ngIf="formRegister.get('password')?.hasError('required')">
+        Le mot de passe est requis
+      </mat-error>
+    </mat-form-field>
+    <p>Confirmer mot de passe</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Confirmer le mot de passe</mat-label>
+      <input type="password" matInput formControlName="confirm">
+      <mat-error *ngIf="formRegister.get('confirm')?.hasError('required')">
+        La confirmation du mot de passe est requise
+      </mat-error>
+      <mat-error *ngIf="formRegister.hasError('mismatch')">
+        Les mots de passe ne correspondent pas
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Créer un compte</button>
+  </form>
+  <div id="partenaire">
+    <p>Partenaires de connexion</p>
+    <br>
+    <button mat-raised-button color="warm" id="google" (click)="googleLogin()">Google</button>
+    <button mat-raised-button color="primary" id="facebook" (click)="facebookLogin()">Facebook</button>
+  </div>
+</div>
 
