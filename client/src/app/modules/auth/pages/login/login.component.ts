@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../../data/services/user.service";
+import {AuthService} from "@data/services/auth.service";
 import {Router} from "@angular/router";
 
 @Component({
@@ -13,7 +13,7 @@ export class LoginComponent {
   formLogin: FormGroup;
 
   hide = false;
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
+  constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.formLogin = this.fb.group({
       username: ['', Validators.required],
@@ -25,8 +25,8 @@ export class LoginComponent {
     if (this.formLogin?.valid) {
       this.userService.login(this.formLogin.value).subscribe( {
         next: () => {
-         
-        }, 
+
+        },
         error: (error) => {
           this.hide = true;
         }
