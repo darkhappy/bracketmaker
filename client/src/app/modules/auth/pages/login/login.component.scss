@@ -7,10 +7,9 @@
     text-align: center;
     font-size: 3em;
     font-weight: bold;
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 #form {
-    text-align: center;
     vertical-align: middle;
     position: absolute;
     top: 50%;
@@ -18,6 +17,13 @@
     transform: translateY(-50%);
     margin: 0;
     width: 40%;
+}
+
+.links {
+    text-align: left;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 1em;
 }
 
 mat-form-field {
