@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {UserService} from "../../../../data/services/user.service";
+import {AuthService} from "@data/services/auth.service";
 import {Router} from "@angular/router";
 import {ErrorStateMatcher} from "@angular/material/core";
 import {FormControl, FormGroupDirective, NgForm} from "@angular/forms";
@@ -15,7 +15,7 @@ export class RegisterComponent {
   matcher = new MyErrorStateMatcher();
 
   hide = false;
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
+  constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.formRegister = this.fb.group({
       username: ['', Validators.required],
@@ -37,8 +37,8 @@ export class RegisterComponent {
     if (this.formRegister?.valid) {
       this.userService.createUser(this.formRegister.value).subscribe( {
         next: () => {
-         
-        }, 
+
+        },
         error: (error) => {
           this.hide = true;
         }
