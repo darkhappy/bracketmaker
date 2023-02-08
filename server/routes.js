@@ -36,4 +36,10 @@ router
 router
   .route('/token')
   .post(userController.createToken)
+
+router
+  .route('/password/:data')
+  .get(userController.getToken)
+  .put(userController.updatePassword)
+  .delete(userController.deleteToken)
 module.exports = router

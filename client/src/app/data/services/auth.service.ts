@@ -25,4 +25,16 @@ export class AuthService {
   createToken(user: any) {
     return this.http.post<any>('/api/token/', user);
   }
+
+  getToken(token: string | null) {
+    return this.http.get<any>(`/api/password/${token}`);
+  }
+  
+  changePassword(username: string, user: any) {
+    return this.http.put<any>(`/api/password/${username}`, user);
+  }
+
+  deleteToken(username: string) {
+    return this.http.delete<any>(`/api/password/${username}`);
+  }
 }

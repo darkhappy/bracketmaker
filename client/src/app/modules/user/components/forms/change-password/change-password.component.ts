@@ -11,12 +11,15 @@ import {AuthService} from "@data/services/auth.service";
 export class ChangePasswordComponent {
   // @ts-ignore
   formChangePassword: FormGroup;
-
+  token: string | null = null;
   hide = false;
-  constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
   ngOnInit(): void {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    this.token = urlParams.get('token');
+
     this.formChangePassword = this.fb.group({
-      password: ['', Validators.required],
       newPassword: ['', Validators.required],
       confirm : ['', Validators.required]
     }, {
@@ -32,7 +35,23 @@ export class ChangePasswordComponent {
 
   onSubmit() {
     if (this.formChangePassword?.valid) {
-
+      this.authService.getToken(this.token).subscribe({
+        next: (response) => {
+          this.authService.changePassword(response, this.formChangePassword.value).subscribe({
+            next: () => {
+              alert("Password changed successfully!");
+              this.authService.deleteToken(response).subscribe();
+              this.router.navigate(['/auth/login']);
+            },
+            error: (error) => {
+              alert("There was an error changing the password. Please try again later.");
+            }
+          });
+        },
+        error: (error) => {
+          console.log("mauvais token");
+        }
+      });
     }
   }
 }

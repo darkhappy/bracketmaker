@@ -68,7 +68,7 @@ function createToken (req, res) {
       return res.status(401).json(err);
     }
     else {
-      let email = bcrypt.hashSync(user[0].email, 10);
+      let email = generate_token(20);
       const filter = { _id: user[0]._id };
       const update = {
           $set: {
@@ -77,18 +77,65 @@ function createToken (req, res) {
       };
       const options = { upsert: true };
       User.updateOne(filter, update, options).then(()=> {
-        let payload = {id: email};
-        console.log(payload);
-        let jwtToken = jwt.sign(payload, 'email', {expiresIn: '2h'});
-        console.log(jwtToken);
-        res.cookie('TOKEN', jwtToken, {httpOnly: true});  
         return res.json(email);
       }).catch((err) => {
         return res.status(400).json(err);
       });
       
     }
-});
+  });
 }
 
-module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken }
+function updatePassword (req, res) {
+  const filter = { username: req.params.data };
+  const update = {
+      $set: {
+        password: bcrypt.hashSync(req.body.newPassword, 10)
+      }
+  };
+  const options = { upsert: true };
+  User.updateOne(filter, update, options).then(()=> {
+    return res.sendStatus(204);
+  }).catch((err) => {
+    return res.status(400).json(err);
+  });
+}
+
+function getToken(req, res) {
+  User.find({token: req.params.data}).exec((err, user) => {
+    if (err || user.length === 0) {
+      return res.status(401).json(err);
+    }
+    else {
+      return res.json(user[0].username);
+    }
+  });
+}
+
+function deleteToken(req, res) {
+  const filter = { username: req.params.data };
+  const update = {
+      $set: {
+        token: ''
+      }
+  };
+  const options = { upsert: true };
+  User.updateOne(filter, update, options).then(()=> {
+    return res.sendStatus(204);
+  }).catch((err) => {
+    return res.status(400).json(err);
+  });
+}
+
+function generate_token(length){
+
+  var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
+  var b = [];  
+  for (var i=0; i<length; i++) {
+    var j = (Math.random() * (a.length-1)).toFixed(0);
+    b[i] = a[j];
+  }
+  return b.join("");
+}
+
+module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken, updatePassword, deleteToken, getToken}

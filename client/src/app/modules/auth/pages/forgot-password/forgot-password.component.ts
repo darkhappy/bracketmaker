@@ -23,15 +23,14 @@ export class ForgotPasswordComponent {
     if (this.formEmail?.valid) {
       this.authService.createToken(this.formEmail.value).subscribe({
         next: (response) => {
-          alert("Email sent successfully!");
-          this.router.navigate(['/user/change-password/'], {state:  {email: response.email }});
+          if (window.confirm("Voici votre email. Cliquez sur ce lien pour changer votre mot de passe " + "localhost/auth/change-password?token=" + response)) {
+            window.location.href = "/auth/change-password?token=" + response;
+          }
         },
         error: (error) => {
-          alert("There was an error sending the email. Please try again later.");
+          alert("Vous avez aucun nouveau email.");
         }
       });
-    } else {
-      alert("There was an error sending the email. Please try again later.");
-    }
+    } 
   }
 }
