@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken');
 
 function getAllUsers (req, res) {
   // eslint-disable-next-line n/handle-callback-err
@@ -61,8 +62,33 @@ function deleteUser (req, res) {
   // todo: a faire
 }
 
-function createToken (user) {
-  // todo: a faire
+function createToken (req, res) {
+  User.find({email: req.body.email}).exec((err, user) => {
+    if (err || user.length === 0) {
+      return res.status(401).json(err);
+    }
+    else {
+      let email = bcrypt.hashSync(user[0].email, 10);
+      const filter = { _id: user[0]._id };
+      const update = {
+          $set: {
+            token: email
+          }
+      };
+      const options = { upsert: true };
+      User.updateOne(filter, update, options).then(()=> {
+        let payload = {id: email};
+        console.log(payload);
+        let jwtToken = jwt.sign(payload, 'email', {expiresIn: '2h'});
+        console.log(jwtToken);
+        res.cookie('TOKEN', jwtToken, {httpOnly: true});  
+        return res.json(email);
+      }).catch((err) => {
+        return res.status(400).json(err);
+      });
+      
+    }
+});
 }
 
 module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken }

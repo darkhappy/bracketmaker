@@ -21,4 +21,8 @@ export class AuthService {
   createUser(user: any) {
     return this.http.post<any>('/api/user/', user);
   }
+
+  createToken(user: any) {
+    return this.http.post<any>('/api/token/', user);
+  }
 }
