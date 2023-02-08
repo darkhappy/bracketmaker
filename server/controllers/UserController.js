@@ -62,7 +62,7 @@ function deleteUser (req, res) {
   // todo: a faire
 }
 
-function createToken (req, res) {
+const createToken = async (req, res) => {
   User.find({email: req.body.email}).exec((err, user) => {
     if (err || user.length === 0) {
       return res.status(401).json(err);
@@ -87,7 +87,7 @@ function createToken (req, res) {
 }
 
 function updatePassword (req, res) {
-  const filter = { username: req.params.data };
+  const filter = { token: req.params.token };
   const update = {
       $set: {
         password: bcrypt.hashSync(req.body.newPassword, 10)
@@ -95,6 +95,17 @@ function updatePassword (req, res) {
   };
   const options = { upsert: true };
   User.updateOne(filter, update, options).then(()=> {
+    console.log('Password updated');
+    const filter = { token: req.params.token };
+    const update = {
+        $set: {
+          token: ''
+        }
+    };
+    const options = { upsert: true };
+    User.updateOne(filter, update, options).then(()=> {}).catch((err) => {
+      return res.status(400).json(err);
+    });
     return res.sendStatus(204);
   }).catch((err) => {
     return res.status(400).json(err);
@@ -102,33 +113,15 @@ function updatePassword (req, res) {
 }
 
 function getToken(req, res) {
-  User.find({token: req.params.data}).exec((err, user) => {
-    if (err || user.length === 0) {
+  User.findOne({token: req.params.token}).exec((err, user) => {
+    if (!user) {
       return res.status(401).json(err);
     }
-    else {
-      return res.json(user[0].username);
-    }
   });
 }
 
-function deleteToken(req, res) {
-  const filter = { username: req.params.data };
-  const update = {
-      $set: {
-        token: ''
-      }
-  };
-  const options = { upsert: true };
-  User.updateOne(filter, update, options).then(()=> {
-    return res.sendStatus(204);
-  }).catch((err) => {
-    return res.status(400).json(err);
-  });
-}
 
 function generate_token(length){
-
   var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
   var b = [];  
   for (var i=0; i<length; i++) {
@@ -138,4 +131,4 @@ function generate_token(length){
   return b.join("");
 }
 
-module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken, updatePassword, deleteToken, getToken}
+module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken, updatePassword, getToken}
