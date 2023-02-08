@@ -27,7 +27,6 @@ function createUser (req, res) {
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, 10),
             token: '',
-            // token = createToken()
             isVerified: false,
             firstname: '',
             lastname: '',
