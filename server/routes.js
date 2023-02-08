@@ -36,4 +36,13 @@ router
   .post(playerController.createPlayer)
   .put(playerController.updatePlayer)
   .delete(playerController.deletePlayer)
+
+router
+  .route('/token')
+  .post(userController.createToken)
+
+router
+  .route('/password/:token')
+  .get(userController.getToken)
+  .put(userController.updatePassword)
 module.exports = router
