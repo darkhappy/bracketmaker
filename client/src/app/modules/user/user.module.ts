@@ -9,12 +9,14 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
+import { UserSettingsComponent } from './components/forms/user-settings/user-settings.component';
 @NgModule({
   declarations: [
     ProfileComponent,
     SettingsComponent,
     HeaderComponent,
     ChangePasswordComponent,
+    UserSettingsComponent,
   ],
   imports: [
     userRoutes,
