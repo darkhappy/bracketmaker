@@ -25,10 +25,11 @@ export class LoginComponent {
     if (this.formLogin?.valid) {
       this.userService.login(this.formLogin.value).subscribe( {
         next: () => {
-
+          alert('good');
         },
         error: (error) => {
-          this.hide = true;
+          //this.hide = true;
+          alert('nope');
         }
       });
     }

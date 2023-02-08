@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getUsers() {
-    return this.http.get<User[]>('/api/'); //Mettre la bonne route
+    return this.http.get<User[]>('/api/user');
   }
 
   login(user: any) {

@@ -1,13 +1,22 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require("dotenv");
+
+const result = dotenv.config()
+if (result.error) {
+    throw result.error
+}
+let conn = result.parsed.CONNECTION_STRING
 
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://127.0.0.1:27017/test', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(conn, { useNewUrlParser: true, useUnifiedTopology: true })
 
 const app = express();
-let router = require('./routes'); 
+let router = require('./routes');
+
 app.use(express.json());
 app.use(router);
+
 app.listen(3000, () => {
     console.log('Server started on port 3000');
 });
