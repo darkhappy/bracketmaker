@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "@data/services/auth.service";
-import { ValidationErrors } from "@angular/forms";
 import {Router} from "@angular/router";
+import {faDiscord, faGoogle} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,8 @@ import {Router} from "@angular/router";
 export class RegisterComponent {
   // @ts-ignore
   formRegister: FormGroup;
-
+  google = faGoogle;
+  discord = faDiscord;
   hide = false;
   constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
 
@@ -25,20 +26,18 @@ export class RegisterComponent {
     });
   }
 
-  validPassword(group: FormGroup): ValidationErrors | null {
-    const password = group.controls['password']?.value;
-    const confirm = group.controls['confirm']?.value;
-    return password === confirm ? null : {mismatch: true};
-  }
-
   onSubmit() {
     if (this.formRegister?.valid) {
       this.userService.createUser(this.formRegister.value).subscribe({
         next: () => {
-
+          alert("User registered successfully!");
         },
         error: (error) => {
-          this.hide = true;
+          if(error.status === 409){
+            alert(error.error.message);
+          } else if(error.status === 500){
+            alert("Internal server error");
+          }
         }
       });
     } else {
@@ -46,10 +45,10 @@ export class RegisterComponent {
     }
   }
 
-  googleLogin() {
+  googleRegister() {
   }
 
-  facebookLogin() {
+  discordRegister() {
   }
 }
 

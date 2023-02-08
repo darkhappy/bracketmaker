@@ -10,6 +10,7 @@ import {authRoutes} from "@modules/auth/auth-routing.module";
 import {CoreModule} from "@app/core.module";
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import {MatCardModule} from "@angular/material/card";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {MatCardModule} from "@angular/material/card";
         MatButtonModule,
         authRoutes,
         CoreModule,
-        MatCardModule
+        MatCardModule,
+        FontAwesomeModule
     ]
 })
 export class AuthModule { }
