@@ -1,33 +1,28 @@
-#parent {
-    display: flex;
-    width: 100%;
-    justify-content: center;
-}
-#title {
-    text-align: center;
-    font-size: 3em;
-    font-weight: bold;
-    margin-bottom: 1em;
-}
-#form {
-    vertical-align: middle;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    margin: 0;
-    width: 40%;
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-mat-form-field {
-    display:block;
+.social{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
-mat-error + mat-error {
-    display: none;
+form {
+  display: flex;
+  flex-direction: column;
 }
 
-#partenaire {
-    position: absolute;
-    top: 80%;
+.center {
+  text-align: center;
+  margin: 1em;
+}
+
+h1 {
+  font-size: 2em;
 }

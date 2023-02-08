@@ -9,6 +9,7 @@ import { LoginComponent } from './pages/login/login.component';
 import {authRoutes} from "@modules/auth/auth-routing.module";
 import {CoreModule} from "@app/core.module";
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import {MatCardModule} from "@angular/material/card";
 
 
 @NgModule({
@@ -17,14 +18,15 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     LoginComponent,
     ForgotPasswordComponent,
   ],
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    authRoutes,
-    CoreModule
-  ]
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        authRoutes,
+        CoreModule,
+        MatCardModule
+    ]
 })
 export class AuthModule { }
