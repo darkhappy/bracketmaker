@@ -5,13 +5,13 @@
   <div class="home-buttons mt-6">
     <h1 class="text-4xl">Rejoignez la communauté des champions</h1>
     <div class="join mt-4">
-      <button mat-raised-button color="primary">S'inscrire</button>
-      <button mat-raised-button color="accent">Se connecter</button>
+      <button mat-raised-button color="accent" (click)="navigate('/auth/login')">Se connecter</button>
+      <button mat-raised-button color="primary" (click)="navigate('/auth/register')">S'inscrire</button>
     </div>
     <h1 class="text-4xl mt-6">Jetez un coup d'oeuil</h1>
     <div class="take-a-look mt-4">
-      <button mat-raised-button color="primary">Évennements</button>
-      <button mat-raised-button color="accent">Tournois</button>
+      <button mat-raised-button color="primary" (click)="navigate('')">Événements</button>
+      <button mat-raised-button color="accent" (click)="navigate('')">Tournois</button>
     </div>
   </div>
 </div>
