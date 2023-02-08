@@ -69,15 +69,6 @@ function activateUser (req, res) {
     if (err || users.length === 0) {
       return res.status(404).json({ message: 'User not found' })
     } else {
-<<<<<<< HEAD
-      user = users[0]
-      user.isVerified = true
-      user.token = ''
-      user.save().then(() => {
-        return res.status(201).json({ message: 'User activated' })
-      }).catch((err) => {
-        return res.status(500).json(err)
-=======
       User.find({ email: req.body.email }).exec((err, users) => {
         if (err || users.length > 0) {
           return res.status(409).json({ message: 'Email already in use' })
@@ -100,7 +91,6 @@ function activateUser (req, res) {
             return res.status(500).json(err)
           })
         }
->>>>>>> b66d550e5fd5e56396320d8f66a257a1f3612c0e
       })
     }
   })
@@ -122,13 +112,6 @@ function deleteUser (req, res) {
   // todo: a faire
 }
 
-<<<<<<< HEAD
-function createToken () {
-  return bcrypt.hashSync(Date.now().toString(), 10)
-}
-
-module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, activateUser }
-=======
 const createToken = async (req, res) => {
   User.find({email: req.body.email}).exec((err, user) => {
     if (err || user.length === 0) {
@@ -148,7 +131,7 @@ const createToken = async (req, res) => {
       }).catch((err) => {
         return res.status(400).json(err);
       });
-      
+
     }
   });
 }
@@ -190,7 +173,7 @@ function getToken(req, res) {
 
 function generate_token(length){
   var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
-  let b = [];  
+  let b = [];
   for (let i=0; i<length; i++) {
     let j = (Math.random() * (a.length-1)).toFixed(0);
     b[i] = a[j];
@@ -199,4 +182,3 @@ function generate_token(length){
 }
 
 module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken, updatePassword, getToken}
->>>>>>> b66d550e5fd5e56396320d8f66a257a1f3612c0e

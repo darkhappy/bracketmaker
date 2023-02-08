@@ -35,5 +35,5 @@ export class AuthService {
   tokenExist(token: string) {
     return this.http.get<any>(`/api/password/${token}`);
   }
-  
+
 }
