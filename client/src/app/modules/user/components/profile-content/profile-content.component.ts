@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import {
+  faBoxArchive,
+  faUsers,
+  faGear,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-profile-content',
@@ -6,5 +12,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-content.component.scss']
 })
 export class ProfileContentComponent {
-
+  boxArchive = faBoxArchive;
+  users = faUsers;
+  gear = faGear;
+  user = faUser;
 }
