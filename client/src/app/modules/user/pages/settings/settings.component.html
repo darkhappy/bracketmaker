@@ -1,2 +1,31 @@
-<app-profile-header></app-profile-header>
-<app-user-settings></app-user-settings>
+<form mat-form-field id="form" (ngSubmit)="onSubmit()" [formGroup]="formSettings">
+    <div class="container">
+        <div class="side">
+            <p class="label">Nom d'utilisateur</p>
+            <mat-form-field>
+                <mat-label>Nom d'utilisateur</mat-label>
+                <input matInput formControlName="username" type="text">
+            </mat-form-field>
+            <p class="label">Courriel</p>
+            <mat-form-field appearance="fill">
+                <mat-label>Courriel</mat-label>
+                <input type="email" matInput formControlName="email">
+            </mat-form-field>
+            <div class="links">
+                <a href="/auth/change-password">Changer de mot de passe</a>
+            </div>
+        </div>
+        <div class="about">
+            <p class="label">À propos</p>
+            <mat-form-field appearance="fill">
+                <mat-label>À propos</mat-label>
+                <textarea type="text" matInput formControlName="firstname"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="buttons">
+        <button mat-raised-button color="primary" type="submit">Sauvegarder</button>
+        <button mat-raised-button color="warn" type="button" (click)="onDeleteAccount()">Supprimer le compte</button>
+    </div>
+    
+</form>
