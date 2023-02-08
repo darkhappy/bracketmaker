@@ -1,14 +1,16 @@
 <div class="main">
-  <form id="form" (ngSubmit)="onSubmit()" [formGroup]="formRegister" appMismatch firstField="password"
-        secondField="confirm">
+
+  <form id="form" (ngSubmit)="onSubmit()" [formGroup]="formRegister">
 
     <h1>Bracket Blitz</h1>
     <p>Commence à gérer tes tournois et événements facilement en t'inscrivant !</p>
 
     <p class="center">Se connecter avec</p>
     <div class="social">
-      <button mat-raised-button color="warm" id="google" (click)="googleLogin()">Google</button>
-      <button mat-raised-button color="primary" id="facebook" (click)="facebookLogin()">Facebook</button>
+      <button mat-raised-button color="warm" id="google" (click)="googleRegister()">
+        <fa-icon [icon]="google"></fa-icon> Google</button>
+      <button mat-raised-button color="primary" id="discord" (click)="discordRegister()">
+        <fa-icon [icon]="discord"></fa-icon> Discord</button>
     </div>
 
     <p class="center">ou</p>
@@ -48,10 +50,8 @@
       <mat-error *ngIf="formRegister.get('confirm')?.hasError('required')">
         La confirmation du mot de passe est requise
       </mat-error>
-      <mat-error *ngIf="formRegister.hasError('mismatch')">
-        Les mots de passe ne correspondent pas
-      </mat-error>
     </mat-form-field>
+
     <button mat-raised-button color="primary" type="submit">Créer un compte</button>
   </form>
 </div>
