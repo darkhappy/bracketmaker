@@ -1,4 +1,8 @@
-const User = require('../models/User')
+const User = require('../models/User');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
+const fs = require("fs");
 
 function getAllUsers (req, res) {
   User.find().exec((err, users) => {
@@ -7,7 +11,25 @@ function getAllUsers (req, res) {
 }
 
 function getUser (req, res) {
-  // todo: a faire
+  User.findOne({username: req.body.username},
+      (err, user) => {
+        if(err){
+          return res.sendStatus(401);
+        }
+        if(bcrypt.compareSync(req.body.password, user.password)){
+            let payload = {id: user.id};
+            let key = crypto.randomBytes(16);
+            let jwtToken = jwt.sign(payload, key, {expiresIn: '2h'});
+
+            fs.writeFileSync('.env', 'SECRET_KEY='+key);
+
+            res.cookie("SESSIONID", jwtToken, {httpOnly: true});
+            res.cookie("sessioninfo", payload);
+
+          return res.sendStatus(204);
+        }
+        return res.sendStatus(401);
+      });
 }
 
 function createUser (req, res) {

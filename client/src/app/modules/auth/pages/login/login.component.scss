@@ -1,35 +1,34 @@
-#parent {
-    display: flex;
-    width: 100%;
-    justify-content: center;
+mat-error + mat-error {
+    display: none;
 }
+
 #title {
-    text-align: center;
-    font-size: 3em;
-    font-weight: bold;
-    margin-bottom: 1em;
+  text-align: center;
+  font-size: 3em;
+  font-weight: bold;
+  margin-bottom: 1em;
 }
-#form {
-    vertical-align: middle;
-    position: absolute;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-    margin: 0;
-    width: 40%;
+#partner{
+  text-align: center;
+}
+
+#partner button{
+  width: 50%;
 }
 
 .links {
-    text-align: left;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 1em;
+  margin-top: 5%;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 2em;
 }
 
-mat-form-field {
-    display:block;
+mat-card {
+  max-width: 25%;
+  margin-top: 10%;
+  margin-left: 35%;
 }
 
-mat-error + mat-error {
-    display: none;
+mat-card form{
+  margin-left: 26%;
 }
