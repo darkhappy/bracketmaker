@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "@data/services/auth.service";
-import {Router} from "@angular/router";
 import {faDiscord, faGoogle} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
@@ -15,7 +14,7 @@ export class RegisterComponent {
   google = faGoogle;
   discord = faDiscord;
   hide = false;
-  constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private userService: AuthService) { }
 
   ngOnInit(): void {
     this.formRegister = this.fb.group({
@@ -29,8 +28,9 @@ export class RegisterComponent {
   onSubmit() {
     if (this.formRegister?.valid) {
       this.userService.createUser(this.formRegister.value).subscribe({
-        next: () => {
-          alert("User registered successfully!");
+        next: res => {
+          console.log(res)
+          alert(res.message);
         },
         error: (error) => {
           if(error.status === 409){
