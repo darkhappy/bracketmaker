@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/data/services/user.service';
+import {AuthService} from "@data/services/auth.service";
 
 @Component({
   selector: 'app-change-password',
@@ -13,7 +13,7 @@ export class ChangePasswordComponent {
   formChangePassword: FormGroup;
 
   hide = false;
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) { }
+  constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.formChangePassword = this.fb.group({
       email: ['', Validators.required, Validators.email],
@@ -33,7 +33,7 @@ export class ChangePasswordComponent {
 
   onSubmit() {
     if (this.formChangePassword?.valid) {
-      
+
     }
   }
 }

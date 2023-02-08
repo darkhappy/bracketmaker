@@ -1,11 +1,7 @@
-import {Component, NgModule} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  Validators
-} from "@angular/forms";
-import {UserService} from "@data/services/user.service";
+import { Component } from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {AuthService} from "@data/services/auth.service";
+import { ValidationErrors } from "@angular/forms";
 import {Router} from "@angular/router";
 
 @Component({
@@ -18,9 +14,7 @@ export class RegisterComponent {
   formRegister: FormGroup;
 
   hide = false;
-
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
-  }
+  constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.formRegister = this.fb.group({
