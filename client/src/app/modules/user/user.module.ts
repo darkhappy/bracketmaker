@@ -11,6 +11,10 @@ import { ChangePasswordComponent } from './components/forms/change-password/chan
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { ProfileContentComponent } from './components/profile-content/profile-content.component';
 import {MatTabsModule} from "@angular/material/tabs";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatListModule } from "@angular/material/list";
+import { MatSliderModule } from "@angular/material/slider";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -19,15 +23,19 @@ import {MatTabsModule} from "@angular/material/tabs";
     ProfileHeaderComponent,
     ProfileContentComponent,
   ],
-    imports: [
-        userRoutes,
-        CommonModule,
-        FormsModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatTabsModule,
-    ]
+  imports: [
+    userRoutes,
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatListModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+  ],
 })
 export class UserModule { }
