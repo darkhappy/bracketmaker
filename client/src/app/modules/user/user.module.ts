@@ -15,6 +15,9 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
+import { SettingsAccountComponent } from './components/settings-account/settings-account.component';
+import { SettingsSecurityComponent } from './components/settings-security/settings-security.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -22,6 +25,9 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
     ChangePasswordComponent,
     ProfileHeaderComponent,
     ProfileContentComponent,
+    SettingsProfileComponent,
+    SettingsAccountComponent,
+    SettingsSecurityComponent,
   ],
   imports: [
     userRoutes,

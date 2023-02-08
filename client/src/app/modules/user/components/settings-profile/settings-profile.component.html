@@ -1,0 +1,27 @@
+  <h1>Profile</h1>
+  <form class="vertical-form">
+    <div>
+      <h2>Nom public</h2>
+      <p>Le nom public est affiché partout sur le site. Si vous souhaitez utiliser votre nom d'utilisateur, laissez
+        ce champ vide.</p>
+      <mat-form-field>
+        <mat-label>Nom public</mat-label>
+        <input matInput placeholder="Display Name">
+      </mat-form-field>
+    </div>
+    <div>
+      <h2>À propos</h2>
+      <p>Vous pouvez ajouter une courte description de vous-même ici.</p>
+      <mat-form-field>
+        <mat-label>À propos</mat-label>
+        <textarea matInput placeholder="About"></textarea>
+      </mat-form-field>
+    </div>
+    <mat-slide-toggle>
+      Afficher mon courriel
+    </mat-slide-toggle>
+    <div class="button-row">
+      <button mat-raised-button color="primary">Sauvegarder les changements</button>
+      <button mat-raised-button>Annuler</button>
+    </div>
+  </form>
