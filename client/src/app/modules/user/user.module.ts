@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { SettingsComponent } from './pages/settings/settings.component';
-import { HeaderComponent } from './components/header/header.component';
+import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import {userRoutes} from "./user-routing.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -14,7 +14,7 @@ import { UserSettingsComponent } from './components/forms/user-settings/user-set
   declarations: [
     ProfileComponent,
     SettingsComponent,
-    HeaderComponent,
+    ProfileHeaderComponent,
     ChangePasswordComponent,
     UserSettingsComponent,
   ],

@@ -16,7 +16,6 @@ export class ChangePasswordComponent {
   constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
   ngOnInit(): void {
     this.formChangePassword = this.fb.group({
-      email: ['', Validators.required, Validators.email],
       password: ['', Validators.required],
       newPassword: ['', Validators.required],
       confirm : ['', Validators.required]
