@@ -11,6 +11,24 @@ function getAllUsers (req, res) {
   })
 }
 
+function getUser (req, res) {
+  User.findOneById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    return res.json({
+      username: user.username,
+      email: user.email,
+      display_name: user.display_name,
+      about: user.about,
+      avatar: user.avatar,
+      subscriptions: user.subscriptions,
+      tournaments: user.tournaments
+    })
+  })
+}
+
+
 function login (req, res) {
   User.findOne({ username: req.body.username },
     (err, user) => {
