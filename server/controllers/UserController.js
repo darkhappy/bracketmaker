@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const fs = require('fs')
+const dotenv = require("dotenv");
 
 function getAllUsers (req, res) {
   User.find().exec((err, users) => {
@@ -10,7 +11,7 @@ function getAllUsers (req, res) {
   })
 }
 
-function getUser (req, res) {
+function login (req, res) {
   User.findOne({ username: req.body.username },
     (err, user) => {
       if (err) {
@@ -21,7 +22,10 @@ function getUser (req, res) {
         const key = crypto.randomBytes(16)
         const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
 
-        fs.writeFileSync('.env', 'SECRET_KEY=' + key)
+        const result = dotenv.config()
+        let conn = result.parsed.CONNECTION_STRING
+
+        fs.writeFileSync('.env', 'SECRET_KEY="' + key+'"\nCONNECTION_STRING="' + conn + '"')
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
@@ -167,4 +171,4 @@ function generate_token (length) {
   return b.join('')
 }
 
-module.exports = { getAllUsers, createUser, updateUser, getUser, deleteUser, createToken, updatePassword, getToken, activateUser }
+module.exports = { getAllUsers, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }
