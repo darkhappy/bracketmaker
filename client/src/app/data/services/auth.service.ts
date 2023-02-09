@@ -15,7 +15,7 @@ export class AuthService {
   }
 
   login(user: any) {
-    return this.http.post<any>('/api/user/', user);
+    return this.http.post<any>('/api/user/login', user);
   }
 
   createUser(user: any) {
