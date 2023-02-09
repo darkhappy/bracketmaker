@@ -13,6 +13,10 @@ router
   .delete(userController.deleteUser)
 
 router
+  .route('/user/activate')
+  .get(userController.activateUser)
+
+router
   .route('/tournament')
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)

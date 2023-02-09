@@ -11,6 +11,7 @@ import {CoreModule} from "@app/core.module";
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import {MatCardModule} from "@angular/material/card";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     RegisterComponent,
     LoginComponent,
     ForgotPasswordComponent,
+    ValidateEmailComponent,
   ],
     imports: [
         CommonModule,
