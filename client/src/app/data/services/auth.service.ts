@@ -34,4 +34,7 @@ export class AuthService {
     return this.http.get<any>(`/api/password/${token}`);
   }
 
+  activateEmail(token: any) {
+    return this.http.get<any>(`/api/user/activate/?token=${token.token}`);
+  }
 }
