@@ -29,6 +29,12 @@ const routes: Routes = [
         loadChildren: () => {
           return import('@modules/auth/auth.module').then(m => m.AuthModule);
         }
+      },
+      {
+        path: 'auth/validate',
+        loadChildren: () => {
+          return import('@modules/auth/auth.module').then(m => m.AuthModule);
+        }
       }
     ],
   },

@@ -29,8 +29,8 @@ export class RegisterComponent {
   onSubmit() {
     if (this.formRegister?.valid) {
       this.userService.createUser(this.formRegister.value).subscribe({
-        next: () => {
-          alert("User registered successfully!");
+        next: res => {
+          alert(res.message);
         },
         error: (error) => {
           if(error.status === 409){

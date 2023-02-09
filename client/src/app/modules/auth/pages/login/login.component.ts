@@ -25,11 +25,10 @@ export class LoginComponent {
     if (this.formLogin?.valid) {
       this.userService.login(this.formLogin.value).subscribe( {
         next: () => {
-          alert('good');
+          this.router.navigate(['/']);
         },
         error: (error) => {
-          //this.hide = true;
-          alert('nope');
+          alert("nom d'utilisateur ou mot de passe incorrect");
         }
       });
     }
