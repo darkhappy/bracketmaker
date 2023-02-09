@@ -1,18 +1,29 @@
-<div id="parent">
-  <form id="form" (ngSubmit)="onSubmit()" [formGroup]="formRegister"
-        appMismatch
-        firstField="password"
-        secondField="confirm">
-    <h1 id="title">Bracket Blitz</h1>
-    <p>Nom d'utilisateur</p>
-    <mat-form-field>
+<div class="main">
+
+  <form id="form" (ngSubmit)="onSubmit()" [formGroup]="formRegister">
+
+    <h1>Bracket Blitz</h1>
+    <p>Commence à gérer tes tournois et événements facilement en t'inscrivant !</p>
+
+    <p class="center">Se connecter avec</p>
+    <div class="social">
+      <button mat-raised-button color="warm" id="google" (click)="googleRegister()">
+        <fa-icon [icon]="google"></fa-icon> Google</button>
+      <button mat-raised-button color="primary" id="discord" (click)="discordRegister()">
+        <fa-icon [icon]="discord"></fa-icon> Discord</button>
+    </div>
+
+    <p class="center">ou</p>
+
+    <mat-form-field [hideRequiredMarker]="true">
       <mat-label>Nom d'utilisateur</mat-label>
       <input matInput formControlName="username" type="text">
       <mat-error *ngIf="formRegister.get('email')?.hasError('required')">Le nom d'utilisateur est requis</mat-error>
       <mat-error *ngIf="hide">Le nom d'utilisateur existe déjà</mat-error>
     </mat-form-field>
+
     <p>Adresse courriel</p>
-    <mat-form-field>
+    <mat-form-field [hideRequiredMarker]="true">
       <mat-label>exemple@domaine.com</mat-label>
       <input matInput formControlName="email" type="email">
       <mat-error *ngIf="formRegister.get('email')?.hasError('required')">
@@ -21,33 +32,26 @@
       <mat-error *ngIf="formRegister.get('email')?.hasError('email')">
         Le courriel n'est pas valide
       </mat-error>
-    </mat-form-field>
+    </mat-form-field >
+
     <p>Mot de passe</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" [hideRequiredMarker]="true">
       <mat-label>Mot de passe</mat-label>
       <input type="password" matInput formControlName="password">
       <mat-error *ngIf="formRegister.get('password')?.hasError('required')">
         Le mot de passe est requis
       </mat-error>
     </mat-form-field>
+
     <p>Confirmer mot de passe</p>
-    <mat-form-field appearance="fill">
+    <mat-form-field appearance="fill" [hideRequiredMarker]="true">
       <mat-label>Confirmer le mot de passe</mat-label>
       <input type="password" matInput formControlName="confirm">
       <mat-error *ngIf="formRegister.get('confirm')?.hasError('required')">
         La confirmation du mot de passe est requise
       </mat-error>
-      <mat-error *ngIf="formRegister.hasError('mismatch')">
-        Les mots de passe ne correspondent pas
-      </mat-error>
     </mat-form-field>
+
     <button mat-raised-button color="primary" type="submit">Créer un compte</button>
   </form>
-  <div id="partenaire">
-    <p>Partenaires de connexion</p>
-    <br>
-    <button mat-raised-button color="warm" id="google" (click)="googleLogin()">Google</button>
-    <button mat-raised-button color="primary" id="facebook" (click)="facebookLogin()">Facebook</button>
-  </div>
 </div>
-

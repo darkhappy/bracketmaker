@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   getUsers() {
-    return this.http.get<User[]>('/api/'); //Mettre la bonne route
+    return this.http.get<User[]>('/api/user');
   }
 
   login(user: any) {
@@ -21,4 +21,17 @@ export class AuthService {
   createUser(user: any) {
     return this.http.post<any>('/api/user/', user);
   }
+
+  createToken(user: any) {
+    return this.http.post<any>('/api/token/', user);
+  }
+
+  changePassword(token: string, user: any) {
+    return this.http.put<any>(`/api/password/${token}`, user);
+  }
+
+  tokenExist(token: string) {
+    return this.http.get<any>(`/api/password/${token}`);
+  }
+
 }
