@@ -7,7 +7,6 @@ const playerController = require('./controllers/playerController')
 const router = express.Router()
 router
   .route('/user')
-  .get(userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
@@ -15,6 +14,10 @@ router
 router
   .route('/user/activate')
   .get(userController.activateUser)
+
+router
+    .route('/user/login')
+    .post(userController.login)
 
 router
   .route('/tournament')
@@ -45,4 +48,5 @@ router
   .route('/password/:token')
   .get(userController.getToken)
   .put(userController.updatePassword)
+
 module.exports = router
