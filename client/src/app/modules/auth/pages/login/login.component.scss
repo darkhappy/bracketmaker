@@ -1,34 +1,28 @@
-mat-error + mat-error {
-    display: none;
+.main{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-#title {
+.social{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
   text-align: center;
-  font-size: 3em;
-  font-weight: bold;
-  margin-bottom: 1em;
-}
-#partner{
-  text-align: center;
+  margin: 1em;
 }
 
-#partner button{
-  width: 50%;
-}
-
-.links {
-  margin-top: 5%;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-bottom: 2em;
-}
-
-mat-card {
-  max-width: 25%;
-  margin-top: 10%;
-  margin-left: 35%;
-}
-
-mat-card form{
-  margin-left: 26%;
+h1 {
+  font-size: 2em;
 }

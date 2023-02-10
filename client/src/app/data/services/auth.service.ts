@@ -38,8 +38,9 @@ export class AuthService {
     return this.http.get<any>(`/api/user/activate/?token=${token.token}`);
   }
 
-  googleLogin(credential: string) {
-    return this.http.post<any>(`/api/google`, credential)
+  googleLogin(user: any) {
+    console.log(user)
+    return this.http.post<any>(`/api/google`, user)
   }
 
   googleLogout(){

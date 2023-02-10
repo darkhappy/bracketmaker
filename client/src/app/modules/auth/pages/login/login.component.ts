@@ -23,20 +23,14 @@ export class LoginComponent {
               private socialAuthService: SocialAuthService,
   ) { }
   ngOnInit(): void {
+    this.socialAuthService.authState.subscribe(async (user) => {
+      await this.userService.googleLogin(user).subscribe({
+        next: res => {
+          //put token into cookie
 
-      /*this.authService.accounts.id.renderButton(
-        // @ts-ignore
-        document.getElementById('google'),
-        {theme: 'outline', size: 'large', width: '100%'}
-      );
-      // @ts-ignore
-      google.accounts.id.prompt((notification: PromptMomentNotification) => {
+          //redirect to home
+        }
       });
-    };*/
-    this.socialAuthService.authState.subscribe((user) => {
-      this.socialUser = user;
-      this.isLoggedin = user != null;
-      console.log(this.socialUser);
     });
     this.formLogin = this.fb.group({
       username: ['', Validators.required],
