@@ -16,8 +16,12 @@ router
   .get(userController.activateUser)
 
 router
-    .route('/user/login')
-    .post(userController.login)
+  .route('/user/login')
+  .post(userController.login)
+
+router
+  .route('/google')
+  .post(userController.googleLogin)
 
 router
   .route('/tournament')

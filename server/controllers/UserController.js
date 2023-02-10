@@ -171,4 +171,8 @@ function generate_token (length) {
   return b.join('')
 }
 
+async function googleLogin (req, res) {
+
+}
+
 module.exports = { getAllUsers, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }

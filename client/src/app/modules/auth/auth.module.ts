@@ -12,7 +12,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import {MatCardModule} from "@angular/material/card";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
-
+import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@abacritt/angularx-social-login";
 
 @NgModule({
   declarations: [
@@ -21,16 +21,36 @@ import { ValidateEmailComponent } from './pages/validate-email/validate-email.co
     ForgotPasswordComponent,
     ValidateEmailComponent,
   ],
-    imports: [
-        CommonModule,
-        MatFormFieldModule,
-        MatInputModule,
-        ReactiveFormsModule,
-        MatButtonModule,
-        authRoutes,
-        CoreModule,
-        MatCardModule,
-        FontAwesomeModule
-    ]
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule,
+    authRoutes,
+    CoreModule,
+    MatCardModule,
+    FontAwesomeModule,
+    SocialLoginModule
+  ],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '782448365198-aopufr0qsg2km7spj0s9cjt82s3v2cl4'
+            )
+          },
+        ],
+        onError: (err: any) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    },
+    ],
 })
 export class AuthModule { }

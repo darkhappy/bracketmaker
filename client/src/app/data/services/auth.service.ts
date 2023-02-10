@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { User } from '../schemas/user'; // { User
 import { HttpClient } from '@angular/common/http';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -37,5 +36,13 @@ export class AuthService {
 
   activateEmail(token: any) {
     return this.http.get<any>(`/api/user/activate/?token=${token.token}`);
+  }
+
+  googleLogin(credential: string) {
+    return this.http.post<any>(`/api/google`, credential)
+  }
+
+  googleLogout(){
+    // detruit le token
   }
 }
