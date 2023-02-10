@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "@data/services/auth.service";
 import {Router} from "@angular/router";
+import {faDiscord, faGoogle} from "@fortawesome/free-brands-svg-icons";
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import {Router} from "@angular/router";
 export class LoginComponent {
   // @ts-ignore
   formLogin: FormGroup;
+  google = faGoogle;
+  discord = faDiscord;
 
   hide = false;
   constructor(private fb: FormBuilder, private userService: AuthService, private router: Router) { }
@@ -32,5 +35,11 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+  googleLogin() {
+  }
+
+  discordLogin() {
   }
 }
