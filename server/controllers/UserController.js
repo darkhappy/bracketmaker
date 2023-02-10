@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const fs = require('fs')
-const dotenv = require("dotenv");
+const dotenv = require('dotenv')
 
 function getAllUsers (req, res) {
   User.find().exec((err, users) => {
@@ -23,9 +23,9 @@ function login (req, res) {
         const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
 
         const result = dotenv.config()
-        let conn = result.parsed.CONNECTION_STRING
+        const conn = result.parsed.CONNECTION_STRING
 
-        fs.writeFileSync('.env', 'SECRET_KEY="' + key+'"\nCONNECTION_STRING="' + conn + '"')
+        fs.writeFileSync('.env', 'SECRET_KEY="' + key + '"\nCONNECTION_STRING="' + conn + '"')
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
@@ -172,7 +172,31 @@ function generate_token (length) {
 }
 
 async function googleLogin (req, res) {
-
+  console.log(req.body)
+  const { email, idToken } = req.body
+  const sameEmail = await User.find({ email }).exec()
+  if (sameEmail.length > 0) {
+    console.log('Email already in use' + email)
+    return res.status(409).json({ message: 'Email already in use' })
+  }
+  const user = new User({
+    username: '',
+    email,
+    password: '',
+    token: '',
+    isVerified: true,
+    firstname: '',
+    lastname: '',
+    about: '',
+    avatar: '',
+    googleAuth: idToken
+  })
+  user.save().then(() => {
+    console.log('User created via google')
+    return res.status(200).json({ message: idToken })
+  }).catch((err) => {
+    return res.status(500).json(err)
+  })
 }
 
-module.exports = { getAllUsers, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }
+module.exports = { getAllUsers, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser, googleLogin }

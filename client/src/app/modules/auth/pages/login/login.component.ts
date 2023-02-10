@@ -27,7 +27,7 @@ export class LoginComponent {
       await this.userService.googleLogin(user).subscribe({
         next: res => {
           //put token into cookie
-
+            console.log(res)
           //redirect to home
         }
       });

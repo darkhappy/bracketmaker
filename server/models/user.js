@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   lastname: String,
   about: String,
   avatar: String,
+  googleAuth: String,
   subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }],
   tournaments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }]
 }, {
