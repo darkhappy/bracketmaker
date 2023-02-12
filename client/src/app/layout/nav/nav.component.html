@@ -1,10 +1,11 @@
-<mat-toolbar color="primary">
-  <span class="logo" (click)="navigate('/home')"><img alt="logo" src="assets/logo.svg"></span>
-  <button mat-button (click)="navigate('/tour')">Tournois</button>
-  <button mat-button (click)="navigate('/orgs')">Organisateurs</button>
-  <span class="spacing"></span>
-  <div>
-    <button mat-button (click)="navigate('/auth/login')">Connexion</button>
-    <button mat-button (click)="navigate('/auth/register')" color="accent">Inscription</button>
+<mat-toolbar class="flex flex-row justify-between">
+  <div class="flex flex-row justify-start items-center">
+    <img (click)="navigate('/home')" alt="logo" src="assets/logo-simple.svg">
+    <button mat-button class="font-bold uppercase" (click)="navigate('/tour')">Tournois</button>
+    <button mat-button class="font-bold uppercase" (click)="navigate('/orgs')">Organisateurs</button>
+  </div>
+  <div class="flex flex-row">
+    <button mat-button class="font-bold uppercase" (click)="navigate('/auth/login')">Connexion</button>
+    <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/register')" color="accent">Inscription</button>
   </div>
 </mat-toolbar>

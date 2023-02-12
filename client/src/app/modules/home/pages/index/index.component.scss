@@ -5,6 +5,9 @@
   justify-content: center;
   height: 100%;
   width: 100%;
+  background-image: url("/assets/background-image.png");
+  background-size: cover;
+  @apply backdrop-blur;
 }
 
 .home-content {
