@@ -1,11 +1,9 @@
 export interface User {
-  id: any,
-  username: string,
-  password: string,
-  email: string,
-  firstName: string,
-  lastName: string,
-  about: string,
-  avatar: string,
-
+  username: String,
+  email: String,
+  display_name: String,
+  about: String,
+  avatar: String,
+  subsctiptions: [String],
+  tournaments: [String],
 }

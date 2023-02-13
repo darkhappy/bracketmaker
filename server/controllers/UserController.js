@@ -12,6 +12,7 @@ function getAllUsers (req, res) {
 }
 
 function getUser (req, res) {
+  console.log(req.payload.id)
   User.findOneById(req.payload.id).exec((err, user) => {
     if (err) {
       return res.sendStatus(401)
@@ -36,7 +37,7 @@ function login (req, res) {
         return res.sendStatus(401)
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        const payload = { id: user.id }
+        const payload = { id: user._id }
         const key = crypto.randomBytes(16)
         const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
 
@@ -47,7 +48,7 @@ function login (req, res) {
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
-
+        console.log(payload.id)
         return res.sendStatus(204)
       }
       return res.sendStatus(401)
@@ -189,4 +190,4 @@ function generate_token (length) {
   return b.join('')
 }
 
-module.exports = { getAllUsers, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }
+module.exports = { getAllUsers, getUser, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }

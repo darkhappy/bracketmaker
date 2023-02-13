@@ -7,6 +7,7 @@ const playerController = require('./controllers/playerController')
 const router = express.Router()
 router
   .route('/user')
+  .get(userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
