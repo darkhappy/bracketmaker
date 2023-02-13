@@ -1,5 +1,5 @@
   <h1>Profile</h1>
-  <form class="vertical-form">
+  <form class="vertical-form" [formGroup]="formProfile" (ngSubmit)="onSubmit()">
     <div>
       <h2>Nom public</h2>
       <p>Le nom public est affiché partout sur le site. Si vous souhaitez utiliser votre nom d'utilisateur, laissez
