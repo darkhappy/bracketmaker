@@ -6,7 +6,7 @@
         ce champ vide.</p>
       <mat-form-field>
         <mat-label>Nom public</mat-label>
-        <input matInput placeholder="Display Name">
+        <input matInput placeholder="Display Name" formControlName="display_name">
       </mat-form-field>
     </div>
     <div>
@@ -14,10 +14,10 @@
       <p>Vous pouvez ajouter une courte description de vous-même ici.</p>
       <mat-form-field>
         <mat-label>À propos</mat-label>
-        <textarea matInput placeholder="About"></textarea>
+        <textarea matInput placeholder="About" formControlname="about"></textarea>
       </mat-form-field>
     </div>
-    <mat-slide-toggle>
+    <mat-slide-toggle formControlName="showEmail">
       Afficher mon courriel
     </mat-slide-toggle>
     <div class="button-row">

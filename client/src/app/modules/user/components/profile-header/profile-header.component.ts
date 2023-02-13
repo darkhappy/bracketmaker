@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
-
+import { Input } from '@angular/core';
 @Component({
   selector: 'app-profile-header',
   templateUrl: './profile-header.component.html',
@@ -13,6 +13,7 @@ export class ProfileHeaderComponent {
     email: '',
     display_name: '',
     about: '',
+    showEmail: false,
     avatar: '',
     subsctiptions: [''],
     tournaments: [''],

@@ -14,4 +14,8 @@ export class UserService {
     return this.http.get<User>('/api/user');
   }
 
+  updateProfile(user: User) : Observable<User> {
+    return this.http.put<User>('/api/user/profile', user);
+  }
+
 }

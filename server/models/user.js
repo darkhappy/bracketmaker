@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   isVerified: Boolean,
   password: String,
   display_name: String,
+  show_email: Boolean,
   about: String,
   avatar: String,
   subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }],

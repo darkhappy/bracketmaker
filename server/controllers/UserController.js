@@ -190,4 +190,24 @@ function generate_token (length) {
   return b.join('')
 }
 
-module.exports = { getAllUsers, getUser, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }
+function updateProfile(req, res) {
+  let display_name = req.body.display_name != '' ? req.body.display_name : ''
+  let about = req.body.about != '' ? req.body.about : ''
+
+  const filter = { _id: req.payload.id }
+  const update = {
+    $set: {
+      display_name: display_name,
+      about: about,
+      showEmail: req.body.showEmail,
+    }
+  }
+  const options = { upsert: true }
+  User.updateOne(filter, update, options).then(() => {
+    return res.sendStatus(204)
+  }).catch((err) => {
+    return res.status(400).json(err)
+  })
+}
+
+module.exports = { getAllUsers, getUser, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser, updateProfile }

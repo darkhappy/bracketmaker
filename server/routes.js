@@ -21,6 +21,10 @@ router
     .post(userController.login)
 
 router
+    .route('/user/profile')
+    .put(userController.updateProfile)
+
+router
   .route('/tournament')
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
