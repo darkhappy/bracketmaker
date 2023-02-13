@@ -4,17 +4,14 @@ const dotenv = require("dotenv");
 const isAuth = (req, res, next) => {
     let token = req.cookies['SESSIONID'] ?? null;
     if(!token){
+        console.log("sdfjg");
         return res.sendStatus(401);
     }
 
-    const result = dotenv.config()
-    if (result.error) {
-        return res.sendStatus(401)
-    }
-    let key = result.parsed.SECRET_KEY
-
-    jwt.verify(token, key, (err, payload) =>{
+    jwt.verify(token, process.env.SECRET_KEY, (err, payload) =>{
         if(err){
+            console.log("shit");
+            console.error(err);
             return res.sendStatus(401);
         }
         req.payload = payload;

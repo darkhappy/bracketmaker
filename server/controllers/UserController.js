@@ -38,13 +38,7 @@ function login (req, res) {
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const payload = { id: user._id }
-        const key = crypto.randomBytes(16)
-        const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
-
-        const result = dotenv.config()
-        let conn = result.parsed.CONNECTION_STRING
-
-        fs.writeFileSync('.env', 'SECRET_KEY="' + key+'"\nCONNECTION_STRING="' + conn + '"')
+        const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
