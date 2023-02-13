@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 
-const isAuth = (res, req, next) => {
+const isAuth = (req, res, next) => {
     let token = req.cookies['SESSIONID'] ?? null;
     if(!token){
         return res.sendStatus(401);

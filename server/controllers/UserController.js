@@ -12,7 +12,7 @@ function getAllUsers (req, res) {
 }
 
 function getUser (req, res) {
-  console.log(req.payload.id)
+  console.log(req.payload)
   User.findOneById(req.payload.id).exec((err, user) => {
     if (err) {
       return res.sendStatus(401)
@@ -191,15 +191,15 @@ function generate_token (length) {
 }
 
 function updateProfile(req, res) {
-  let display_name = req.body.display_name != '' ? req.body.display_name : ''
-  let about = req.body.about != '' ? req.body.about : ''
-
-  const filter = { _id: req.payload.id }
+  const displayName = req.body.display_name !== '' ? req.body.display_name : ''
+  const about = req.body.about !== '' ? req.body.about : ''
+  console.log(req.payload)
+  const filter = { _id: req.payload }
   const update = {
     $set: {
-      display_name: display_name,
+      display_name: displayName,
       about: about,
-      showEmail: req.body.showEmail,
+      showEmail: req.body.showEmail
     }
   }
   const options = { upsert: true }
