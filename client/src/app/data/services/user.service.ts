@@ -15,6 +15,7 @@ export class UserService {
   }
 
   updateProfile(user: User) : Observable<User> {
+    console.log(user);
     return this.http.put<User>('/api/user/profile', {
       displayName: user.display_name,
       about: user.about,
