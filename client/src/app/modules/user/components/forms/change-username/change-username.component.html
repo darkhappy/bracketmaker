@@ -1,9 +1,8 @@
 <div class="flex flex-col p-8 gap-4">
   <div class="mb-4">
     <h1 class="text-xl font-bold">Changer votre nom d'utilisateur</h1>
-    <p class="text-lg font-medium">Présentement, votre nom est <strong>darkhappy</strong>.</p>
   </div>
-  <form class="flex flex-col gap-2">
+  <form class="flex flex-col gap-2" [formGroup]="formChangeUsername">
     <mat-form-field>
       <input matInput placeholder="Nouveau nom d'utilisateur" name="username" value="darkhappy" required>
     </mat-form-field>

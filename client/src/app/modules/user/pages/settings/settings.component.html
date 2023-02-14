@@ -7,7 +7,7 @@
   <main class="col-span-5 flex flex-col gap-4">
     <app-settings-profile id="profile" (event)="updateProfile($event)"></app-settings-profile>
     <hr>
-    <app-settings-account id="account"></app-settings-account>
+    <app-settings-account id="account" (onEdit)="updateProfile($event)"></app-settings-account>
     <hr>
     <app-settings-security id="security"></app-settings-security>
   </main>
