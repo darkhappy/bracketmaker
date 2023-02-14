@@ -26,9 +26,7 @@ export class LoginComponent {
     this.socialAuthService.authState.subscribe(async (user) => {
       await this.userService.googleLogin(user).subscribe({
         next: res => {
-          //put token into cookie
-            console.log(res)
-          //redirect to home
+          this.router.navigate(['/auth/username']);
         }
       });
     });
@@ -49,22 +47,6 @@ export class LoginComponent {
         }
       });
     }
-  }
-
-  loginWithGoogle(): void {
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-  }
-  /*async handleCredentialResponse(response: CredentialResponse) {
-    await this.userService.googleLogin(response.credential).subscribe( {
-      next: res => {
-        //put token into cookie
-
-        //redirect to home
-      }
-    });
-  }*/
-
-  googleLogin() {
   }
 
   discordLogin() {
