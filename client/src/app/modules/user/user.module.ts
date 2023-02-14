@@ -18,6 +18,8 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsAccountComponent } from './components/settings-account/settings-account.component';
 import { SettingsSecurityComponent } from './components/settings-security/settings-security.component';
+import { ChangeUsernameComponent } from './components/forms/change-username/change-username.component';
+import { MatDialogModule } from "@angular/material/dialog";
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -28,12 +30,14 @@ import { SettingsSecurityComponent } from './components/settings-security/settin
     SettingsProfileComponent,
     SettingsAccountComponent,
     SettingsSecurityComponent,
+    ChangeUsernameComponent,
   ],
   imports: [
     userRoutes,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
