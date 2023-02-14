@@ -23,7 +23,7 @@ router
 
 router
     .route('/user/profile')
-    .put(userController.updateProfile)
+    .put(middleware.isAuth, userController.updateProfile)
 
 router
   .route('/tournament')

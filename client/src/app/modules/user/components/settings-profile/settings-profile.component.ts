@@ -1,9 +1,6 @@
 import { Component, importProvidersFrom } from '@angular/core';
-import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { EventEmitter } from '@angular/core';
-import { Output } from '@angular/core';
 @Component({
   selector: 'app-settings-profile',
   templateUrl: './settings-profile.component.html',
@@ -16,9 +13,9 @@ export class SettingsProfileComponent {
 
   ngOnInit(): void {
     this.formProfile = this.fb.group({
-      display_name: '',
-      about : '',
-      showEmail : '',
+      display_name: [''],
+      about : [''],
+      showEmail : [false],
     });
   }
   onSubmit() {

@@ -12,8 +12,8 @@ function getAllUsers (req, res) {
 }
 
 function getUser (req, res) {
-  console.log(req.payload)
-  User.findOneById(req.payload.id).exec((err, user) => {
+  console.log(req.payload.id)
+  User.findById(req.payload.id).exec((err, user) => {
     if (err) {
       return res.sendStatus(401)
     }
@@ -42,7 +42,6 @@ function login (req, res) {
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
-        console.log(payload.id)
         return res.sendStatus(204)
       }
       return res.sendStatus(401)
@@ -65,10 +64,12 @@ async function createUser (req, res) {
     password: bcrypt.hashSync(password, 10),
     token: generate_token(15),
     isVerified: false,
-    firstname: '',
-    lastname: '',
+    show_email: false,
+    display_name: '',
     about: '',
-    avatar: ''
+    avatar: '',
+    subscriptions: [],
+    tournaments: []
   })
   user.save().then(() => {
     console.log('User created')
@@ -99,6 +100,7 @@ const createToken = async (req, res) => {
     if (err || user.length === 0) {
       return res.status(401).json(err)
     } else {
+      console.log(user[0].token)
       const email = generate_token(20)
       const filter = { _id: user[0]._id }
       const update = {
@@ -185,10 +187,10 @@ function generate_token (length) {
 }
 
 function updateProfile(req, res) {
-  const displayName = req.body.display_name !== '' ? req.body.display_name : ''
+  console.log(req.body)
+  const displayName = req.body.displayName !== '' ? req.body.displayName : ''
   const about = req.body.about !== '' ? req.body.about : ''
-  console.log(req.payload)
-  const filter = { _id: req.payload }
+  const filter = { _id: req.payload.id }
   const update = {
     $set: {
       display_name: displayName,

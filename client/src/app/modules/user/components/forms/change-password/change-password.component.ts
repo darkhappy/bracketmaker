@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Inject} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthService} from "@data/services/auth.service";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
+import { SettingsSecurityComponent } from '../../settings-security/settings-security.component';
 
+export interface DialogData {
+  oldPassword: string;
+  newPassword: string;
+}
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
@@ -18,7 +24,6 @@ export class ChangePasswordComponent {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     this.token = urlParams.get('token') || '';
-    console.log(this.token);
     this.authService.tokenExist(this.token).subscribe({
       error: () => {
         this.router.navigate(['/auth/login']);
