@@ -18,26 +18,34 @@ router
   .get(userController.activateUser)
 
 router
-    .route('/user/login')
-    .post(userController.login)
+  .route("/user/login")
+  .post(userController.login)
 
 router
-    .route('/user/profile')
-    .put(middleware.isAuth, userController.updateProfile)
+  .route("/user/profile")
+  .put(middleware.isAuth, userController.updateProfile);
 
 router
-    .route('/user/password')
-    .put(middleware.isAuth, userController.changePassword)
+  .route("/user/password")
+  .put(middleware.isAuth, userController.changePassword);
 
 router
-  .route('/tournament')
+  .route("/user/username")
+  .put(middleware.isAuth, userController.changeUsername);
+
+router
+  .route("/user/email")
+  .put(middleware.isAuth, userController.changeEmail);
+
+router
+  .route("/tournament")
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
   .put(tournamentController.updateTournament)
-  .delete(tournamentController.deleteTournament)
+  .delete(tournamentController.deleteTournament);
 
 router
-  .route('/match')
+  .route("/match")
   .get(matchController.getMatch)
   .post(matchController.createMatch)
   .put(matchController.updateMatch)

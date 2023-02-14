@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from "@angular/core";
+import { AuthService } from "@data/services/auth.service";
 
 @Component({
   selector: 'app-change-username',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./change-username.component.scss']
 })
 export class ChangeUsernameComponent {
+  constructor(private authService: AuthService) { }
 
+  onSubmit() {
+
+  }
 }

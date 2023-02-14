@@ -214,15 +214,80 @@ function updateProfile(req, res) {
     $set: {
       display_name: displayName,
       about: about,
-      show_email: showEmail
-    }
-  }
-  const options = { upsert: true }
+      show_email: showEmail,
+    },
+  };
+  const options = { upsert: true };
   User.updateOne(filter, update, options).then(() => {
-    return res.sendStatus(204)
+    return res.sendStatus(204);
   }).catch((err) => {
-    return res.status(400).json(err)
-  })
+    return res.status(400).json(err);
+  });
 }
 
-module.exports = { getAllUsers, getUser, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser, updateProfile, changePassword}
+const changeUsername = async (req, res) => {
+  User.findById(req.payload.id).exec(async (err, user) => {
+    if (!user) {
+      return res.status(401).json(err);
+    }
+
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+
+    const sameUsername = await User.find({ username }).exec();
+    if (sameUsername.length > 0) {
+      return res.status(409).json({ message: "Username already exists" });
+    }
+
+    user.username = req.body.username;
+    user.save().then(() => {
+      return res.sendStatus(204);
+    }).catch((err) => {
+      return res.status(500).json(err);
+    });
+  });
+};
+
+const changeEmail = async (req, res) => {
+  // same exact thing as changeUsername
+  User.findById(req.payload.id).exec(async (err, user) => {
+    if (!user) {
+      return res.status(401).json(err);
+    }
+
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+
+    const sameEmail = await User.find({ email }).exec();
+    if (sameEmail.length > 0) {
+      return res.status(409).json({ message: "Email already exists" });
+    }
+
+    user.email = req.body.email;
+    user.save().then(() => {
+      return res.sendStatus(204);
+    }).catch((err) => {
+      return res.status(500).json(err);
+    });
+  });
+};
+
+module.exports = {
+  changeUsername,
+  getAllUsers,
+  getUser,
+  changeEmail,
+  createUser,
+  updateUser,
+  login,
+  deleteUser,
+  createToken,
+  updatePassword,
+  getToken,
+  activateUser,
+  updateProfile,
+  changePassword,
+};
+
