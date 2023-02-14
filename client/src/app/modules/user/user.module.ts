@@ -20,6 +20,7 @@ import { SettingsAccountComponent } from './components/settings-account/settings
 import { SettingsSecurityComponent } from './components/settings-security/settings-security.component';
 import { ChangeUsernameComponent } from './components/forms/change-username/change-username.component';
 import { MatDialogModule } from "@angular/material/dialog";
+import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -31,6 +32,7 @@ import { MatDialogModule } from "@angular/material/dialog";
     SettingsAccountComponent,
     SettingsSecurityComponent,
     ChangeUsernameComponent,
+    ChangeEmailComponent
   ],
   imports: [
     userRoutes,
