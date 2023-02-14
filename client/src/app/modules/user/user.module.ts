@@ -21,6 +21,7 @@ import { SettingsSecurityComponent } from './components/settings-security/settin
 import { ChangeUsernameComponent } from './components/forms/change-username/change-username.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
+import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -32,7 +33,8 @@ import { ChangeEmailComponent } from "@modules/user/components/forms/change-emai
     SettingsAccountComponent,
     SettingsSecurityComponent,
     ChangeUsernameComponent,
-    ChangeEmailComponent
+    ChangeEmailComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     userRoutes,
@@ -48,6 +50,7 @@ import { ChangeEmailComponent } from "@modules/user/components/forms/change-emai
     MatListModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatDialogModule,
   ],
 })
 export class UserModule { }

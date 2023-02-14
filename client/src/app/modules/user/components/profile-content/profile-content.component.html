@@ -12,7 +12,7 @@
     </mat-tab>
     <mat-tab label="Paramètres">
       <ng-template matTabContent>
-        <app-settings></app-settings>
+        <app-settings (event)="updateProfile($event)"></app-settings>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

@@ -8,22 +8,28 @@ import { Input } from '@angular/core';
   styleUrls: ['./profile-header.component.scss']
 })
 export class ProfileHeaderComponent {
-  user: User = {
+
+  @Input() user: any = {
     username: '',
     email: '',
     display_name: '',
     about: '',
     showEmail: false,
     avatar: '',
-    subsctiptions: [''],
-    tournaments: [''],
   }
   constructor(private userService : UserService) { }
 
   ngOnInit(): void {
     this.userService.getUser().subscribe({
       next: user => {
-        this.user = user;
+        this.user = {
+          username: user.username,
+          email: user.email,
+          display_name: user.display_name,
+          about: user.about,
+          showEmail: user.showEmail,
+          avatar: user.avatar,          
+        };
       },
       error: (error) => {
         console.log(error);

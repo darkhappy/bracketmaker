@@ -5,7 +5,7 @@
     <button>Sécurité</button>
   </aside>
   <main class="col-span-5 flex flex-col gap-4">
-    <app-settings-profile id="profile"></app-settings-profile>
+    <app-settings-profile id="profile" (event)="updateProfile($event)"></app-settings-profile>
     <hr>
     <app-settings-account id="account"></app-settings-account>
     <hr>

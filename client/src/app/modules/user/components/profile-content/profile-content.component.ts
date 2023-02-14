@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-profile-content',
@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class ProfileContentComponent {
 
+  @Output() event = new EventEmitter<any>();
+  updateProfile(user: any) {
+    this.event.emit(user);
+  }
 }
