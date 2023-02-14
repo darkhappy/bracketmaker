@@ -18,6 +18,8 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
 import { SettingsAccountComponent } from './components/settings-account/settings-account.component';
 import { SettingsSecurityComponent } from './components/settings-security/settings-security.component';
+import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
+import {MatDialogModule} from "@angular/material/dialog";
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -28,6 +30,7 @@ import { SettingsSecurityComponent } from './components/settings-security/settin
     SettingsProfileComponent,
     SettingsAccountComponent,
     SettingsSecurityComponent,
+    ChangePasswordDialogComponent,
   ],
   imports: [
     userRoutes,
@@ -42,6 +45,7 @@ import { SettingsSecurityComponent } from './components/settings-security/settin
     MatListModule,
     MatSliderModule,
     MatSlideToggleModule,
+    MatDialogModule,
   ],
 })
 export class UserModule { }

@@ -22,4 +22,8 @@ export class UserService {
     });
   }
 
+  changePassword(data: any) : Observable<any> {
+    return this.http.put<any>('/api/user/password', data);
+  }
+
 }

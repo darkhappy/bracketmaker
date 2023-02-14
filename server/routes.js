@@ -26,6 +26,10 @@ router
     .put(middleware.isAuth, userController.updateProfile)
 
 router
+    .route('/user/password')
+    .put(middleware.isAuth, userController.changePassword)
+
+router
   .route('/tournament')
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)

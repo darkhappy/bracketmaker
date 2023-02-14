@@ -12,7 +12,6 @@ function getAllUsers (req, res) {
 }
 
 function getUser (req, res) {
-  console.log(req.payload.id)
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
       return res.sendStatus(401)
@@ -26,6 +25,24 @@ function getUser (req, res) {
       subscriptions: user.subscriptions,
       tournaments: user.tournaments
     })
+  })
+}
+
+function changePassword (req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
+      user.password = bcrypt.hashSync(req.body.newPassword, 10)
+      user.save().then(() => {
+        return res.sendStatus(204)
+      }).catch((err) => {
+        return res.status(500).json(err)
+      })
+    } else {
+      return res.sendStatus(401)
+    }
   })
 }
 
@@ -72,7 +89,6 @@ async function createUser (req, res) {
     tournaments: []
   })
   user.save().then(() => {
-    console.log('User created')
     return res.status(201).json({ message: 'http://localhost:4200/auth/activate/?token=' + user.token })
   }).catch((err) => {
     return res.status(500).json(err)
@@ -100,7 +116,6 @@ const createToken = async (req, res) => {
     if (err || user.length === 0) {
       return res.status(401).json(err)
     } else {
-      console.log(user[0].token)
       const email = generate_token(20)
       const filter = { _id: user[0]._id }
       const update = {
@@ -127,7 +142,6 @@ function updatePassword (req, res) {
   }
   const options = { upsert: true }
   User.updateOne(filter, update, options).then(() => {
-    console.log('Password updated')
     const filter = { token: req.params.token }
     const update = {
       $set: {
@@ -165,7 +179,6 @@ function activateUser (req, res) {
         user.isVerified = true
         user.token = ''
         user.save().then(() => {
-          console.log('User activated')
           return res.status(201).json({ message: 'User activated' })
         }).catch((err) => {
           return res.status(500).json(err)
@@ -187,7 +200,6 @@ function generate_token (length) {
 }
 
 function updateProfile(req, res) {
-  console.log(req.body)
   const displayName = req.body.displayName !== '' ? req.body.displayName : ''
   const about = req.body.about !== '' ? req.body.about : ''
   const filter = { _id: req.payload.id }
@@ -206,4 +218,4 @@ function updateProfile(req, res) {
   })
 }
 
-module.exports = { getAllUsers, getUser, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser, updateProfile }
+module.exports = { getAllUsers, getUser, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser, updateProfile, changePassword}

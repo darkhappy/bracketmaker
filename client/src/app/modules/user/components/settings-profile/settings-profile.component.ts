@@ -9,13 +9,30 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SettingsProfileComponent {
   // @ts-ignore
   formProfile : FormGroup
+  user: any = {
+    display_name: '',
+    about: '',
+    showEmail: false,
+  };
   constructor(private userService : UserService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.userService.getUser().subscribe({
+      next: (user) => {
+        this.user = {
+          display_name: user.display_name,
+          about: user.about,
+          showEmail: user.showEmail,
+        };
+      },
+      error: (error) => {
+        alert("There was an error loading the profile. Please try again later.");
+      }
+    });
     this.formProfile = this.fb.group({
-      display_name: [''],
-      about : [''],
-      showEmail : [false],
+      display_name: [this.user.display_name],
+      about: [this.user.about],
+      showEmail: [this.user.showEmail],
     });
   }
   onSubmit() {
