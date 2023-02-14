@@ -1,0 +1,7 @@
+<div class="px-16">
+  <h1 class="text-3xl font-bold">Tournament</h1>
+  <p class="text-xl font-medium">All tournaments</p>
+  <div class="grid grid-cols-4 gap-16 mt-4">
+    <app-tournament-card *ngFor="let tournament of tournaments" [tournament]="tournament"></app-tournament-card>
+  </div>
+</div>
