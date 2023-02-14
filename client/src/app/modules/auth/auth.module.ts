@@ -9,6 +9,9 @@ import { LoginComponent } from './pages/login/login.component';
 import {authRoutes} from "@modules/auth/auth-routing.module";
 import {CoreModule} from "@app/core.module";
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
+import {MatCardModule} from "@angular/material/card";
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
 
 
 @NgModule({
@@ -16,15 +19,18 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
     RegisterComponent,
     LoginComponent,
     ForgotPasswordComponent,
+    ValidateEmailComponent,
   ],
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    ReactiveFormsModule,
-    MatButtonModule,
-    authRoutes,
-    CoreModule
-  ]
+    imports: [
+        CommonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        ReactiveFormsModule,
+        MatButtonModule,
+        authRoutes,
+        CoreModule,
+        MatCardModule,
+        FontAwesomeModule
+    ]
 })
 export class AuthModule { }

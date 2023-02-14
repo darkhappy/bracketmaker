@@ -1,0 +1,27 @@
+<div class="flex flex-col p-8 gap-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-bold">Changer votre nom d'utilisateur</h1>
+    <p class="text-lg font-medium">Présentement, votre nom est <strong>darkhappy</strong>.</p>
+  </div>
+  <form class="flex flex-col gap-2">
+    <mat-form-field>
+      <input matInput placeholder="Nouveau nom d'utilisateur" name="username" value="darkhappy" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Mot de passe" name="password" type="password" required>
+    </mat-form-field>
+    <div class="grid md:grid-cols-2 gap-2">
+      <button mat-raised-button color="primary" type="submit">Changer</button>
+      <button mat-raised-button type="submit">Annuler</button>
+    </div>
+  </form>
+
+  <div class="bg-amber-600 text-amber-900 p-4 rounded-xl">
+    <h2 class="text-lg font-bold">Important!</h2>
+    <ul class="list-disc list-inside">
+      <li>Nous n'allons pas créer de redirection pour votre ancienne page de profil.</li>
+      <li>Nous n'allons pas créer de redirection pour vos tournois.</li>
+      <li>L'ancien nom d'utilisateur sera disponible pour un autre utilisateur.</li>
+    </ul>
+  </div>
+</div>

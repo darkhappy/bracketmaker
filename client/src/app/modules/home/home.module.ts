@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IndexComponent } from './pages/index/index.component';
 import {homeRoutes} from "@modules/home/home-routing.module";
+import {MatButtonModule} from "@angular/material/button";
 
 
 
@@ -9,9 +10,10 @@ import {homeRoutes} from "@modules/home/home-routing.module";
   declarations: [
     IndexComponent
   ],
-  imports: [
-    homeRoutes,
-    CommonModule
-  ]
+    imports: [
+        homeRoutes,
+        CommonModule,
+        MatButtonModule
+    ]
 })
 export class HomeModule { }

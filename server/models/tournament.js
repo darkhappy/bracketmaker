@@ -8,8 +8,6 @@ const tournamentSchema = new mongoose.Schema({
     bracket_type : String,
     category : String,
     date : Date,
-    likes : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
-    dislikes : [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     players : [Player.schema],
     matches : [Match.schema]
 });

@@ -21,7 +21,7 @@
         <span><fa-icon [icon]="gear"></fa-icon> Paramètres</span>
       </ng-template>
       <ng-template matTabContent>
-        <p>Paramètres component</p>
+        <app-settings (event)="updateProfile($event)"></app-settings>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

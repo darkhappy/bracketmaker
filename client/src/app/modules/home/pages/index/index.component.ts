@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-index',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
+  constructor(private router: Router) {
+  }
 
+  navigate(path: string) {
+    this.router.navigate([path]);
+  }
 }

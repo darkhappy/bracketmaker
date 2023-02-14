@@ -1,0 +1,27 @@
+h1 {
+  @apply text-2xl font-bold mb-4;
+}
+
+h2 {
+  @apply text-lg font-medium mb-2;
+}
+
+button {
+  @apply my-2;
+}
+
+form {
+  @apply flex flex-col gap-4;
+
+  mat-form-field {
+    @apply w-full;
+  }
+}
+
+.button-row {
+  @apply flex flex-row gap-2;
+
+  button {
+    @apply w-fit;
+  }
+}

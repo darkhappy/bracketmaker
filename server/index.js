@@ -1,15 +1,28 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
 
-mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://127.0.0.1:27017/test', { useNewUrlParser: true, useUnifiedTopology: true })
+const result = dotenv.config()
+if (result.error) {
+  throw result.error
+}
+const conn = result.parsed.CONNECTION_STRING
 
-const app = express();
-let router = require('./routes'); 
-app.use(express.json());
+mongoose.set('strictQuery', false)
+mongoose.connect(conn, { useNewUrlParser: true, useUnifiedTopology: true })
+
+const app = express()
+const router = require('./routes')
+app.use(express.json())
+app.use(cookieParser())
 app.use(router);
-app.listen(3000, () => {
-    console.log('Server started on port 3000');
+app.get('/health', (req, res) => {
+  res.status(200).json({ message: 'Server is running' })
 });
 
- 
+app.listen(3000, () => {
+  console.log('Server started on port 3000')
+});
+
+module.exports = app;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { User } from "@data/schemas/user";
-import { UserService } from "@data/services/user.service";
+import { UserService } from '@data/services/user.service';
+import { Input } from '@angular/core';
 
 @Component({
   selector: 'app-profile-header',
@@ -8,16 +8,33 @@ import { UserService } from "@data/services/user.service";
   styleUrls: ['./profile-header.component.scss']
 })
 export class ProfileHeaderComponent {
-  //@ts-ignore
-  user: User;
 
-  constructor(private usersService: UserService) {
-
+  @Input() user: any = {
+    username: '',
+    email: '',
+    display_name: '',
+    about: '',
+    showEmail: false,
+    avatar: '',
   }
+  constructor(private userService : UserService) { }
 
   ngOnInit(): void {
-    this.usersService.getUser().subscribe(user => {
-      this.user = user;
+    this.userService.getUser().subscribe({
+      next: user => {
+        this.user = {
+          username: user.username,
+          email: user.email,
+          display_name: user.display_name,
+          about: user.about,
+          showEmail: user.showEmail,
+          avatar: user.avatar,
+        };
+      },
+      error: (error) => {
+        console.log(error);
+      }
     });
   }
+
 }
