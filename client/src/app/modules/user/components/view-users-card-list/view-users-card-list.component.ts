@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { UserService } from '@data/services/user.service';
 
 @Component({
@@ -7,19 +7,6 @@ import { UserService } from '@data/services/user.service';
   styleUrls: ['./view-users-card-list.component.scss']
 })
 export class ViewUsersCardListComponent {
-  users : any[] = [];
+  @Input() users : any[] = [];
 
-  constructor(private userService: UserService) {
-  }
-  ngOnInit() {
-    this.userService.getUsers().subscribe({
-      next: (users) => {
-        console.log(users);
-        this.users = users;
-      },
-      error: (err) => {
-        console.log(err);
-      }
-    });
-  }
 }

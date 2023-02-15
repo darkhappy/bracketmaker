@@ -25,6 +25,8 @@ import { ChangePasswordDialogComponent } from './components/forms/change-passwor
 import { ViewUsersCardComponent } from './components/view-users-card/view-users-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { ViewUsersCardListComponent } from './components/view-users-card-list/view-users-card-list.component';
+import { ViewUsersComponent } from './pages/view-users/view-users.component';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -40,6 +42,7 @@ import { ViewUsersCardListComponent } from './components/view-users-card-list/vi
     ChangePasswordDialogComponent,
     ViewUsersCardComponent,
     ViewUsersCardListComponent,
+    ViewUsersComponent,
   ],
   imports: [
     userRoutes,
@@ -57,6 +60,7 @@ import { ViewUsersCardListComponent } from './components/view-users-card-list/vi
     MatSlideToggleModule,
     MatDialogModule,
     MatCardModule,
+    MatSelectModule,
   ],
 })
 export class UserModule { }
