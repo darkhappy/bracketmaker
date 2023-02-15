@@ -1,0 +1,17 @@
+<div class="profile-header-container">
+  <div class="profile-picture">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRz7bNEIBR9uOkoAM2_x24ysyDNYiJIsFVlf6j0PX4UD7hn77tOg6ekZ2N2EVNKl8a-fuE&usqp=CAU" alt="Profile Picture" class="rounded-full">
+    <div class="profile-credentials">
+      <h1 class="profile-username">{{user.username}}</h1>
+      <h2 class="profile-full-name">{{user.display_name}}</h2>
+      <h3 class="profile-email">{{user.email}}</h3>
+    </div>
+  </div>
+  <div class="profile-description">
+    <h1>À propos :</h1>
+    <p>
+      {{user.about}}
+    </p>
+  </div>
+</div>
+<hr>

@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CookieService} from "ngx-cookie";
-import {AuthService} from "@data/services/auth.service";
+import {UserService} from "@data/services/user.service";
 
 @Component({
   selector: 'app-username',
@@ -15,7 +15,7 @@ export class UsernameComponent {
   formUsername: FormGroup;
   // @ts-ignore
   googleToken : String;
-  constructor(private fb: FormBuilder, private authService : AuthService) { }
+  constructor(private fb: FormBuilder, private userService : UserService) { }
 
   ngOnInit(): void {
     this.formUsername = this.fb.group({
@@ -28,7 +28,8 @@ export class UsernameComponent {
       console.log(SESSION_INFO);
       if(SESSION_INFO !== undefined) {
         let SessionInfo: any = JSON.parse(SESSION_INFO);
-        this.authService.googleChangeUsername(SessionInfo.id).subscribe((data: any) => {
+        SessionInfo.username = this.formUsername.value.username;
+        this.userService.updateProfile(SessionInfo).subscribe((data: any) => {
           console.log(data);
           // todo: backend + redirect to home page
         })

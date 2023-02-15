@@ -1,0 +1,55 @@
+name: CI
+run-name: Seeing if ${{ github.actor }}'s code can be merged to main! 🚀
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-front:
+
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Front End (Angular)
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./client
+        run: npm install
+      - name: Build!
+        working-directory: ./client
+        run: npm run build
+
+  build-back:
+
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        node-version: [ 16.x ]
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Back End (Node)
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        working-directory: ./server
+        run: npm install
+      - name: Run tests
+        working-directory: ./server
+        run: npm run test

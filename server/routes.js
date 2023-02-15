@@ -24,14 +24,30 @@ router
   .post(userController.googleLogin)
 
 router
-  .route('/tournament')
+  .route("/user/profile")
+  .put(middleware.isAuth, userController.updateProfile);
+
+router
+  .route("/user/password")
+  .put(middleware.isAuth, userController.changePassword);
+
+router
+  .route("/user/username")
+  .put(middleware.isAuth, userController.changeUsername);
+
+router
+  .route("/user/email")
+  .put(middleware.isAuth, userController.changeEmail);
+
+router
+  .route("/tournament")
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
   .put(tournamentController.updateTournament)
-  .delete(tournamentController.deleteTournament)
+  .delete(tournamentController.deleteTournament);
 
 router
-  .route('/match')
+  .route("/match")
   .get(matchController.getMatch)
   .post(matchController.createMatch)
   .put(matchController.updateMatch)

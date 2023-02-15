@@ -1,0 +1,26 @@
+  <h1>Profile</h1>
+  <form mat-form-field class="vertical-form" [formGroup]="formProfile" (ngSubmit)="onSubmit()">
+    <div>
+      <h2>Nom public</h2>
+      <p>Le nom public est affiché partout sur le site. Si vous souhaitez utiliser votre nom d'utilisateur, laissez
+        ce champ vide.</p>
+      <mat-form-field>
+        <mat-label>Nom public</mat-label>
+        <input matInput placeholder="Display Name" formControlName="display_name">
+      </mat-form-field>
+    </div>
+    <div>
+      <h2>À propos</h2>
+      <p>Vous pouvez ajouter une courte description de vous-même ici.</p>
+      <mat-form-field>
+        <mat-label>À propos</mat-label>
+        <textarea matInput placeholder="About" formControlName="about"></textarea>
+      </mat-form-field>
+    </div>
+    <mat-slide-toggle formControlName="showEmail">
+      Afficher mon courriel
+    </mat-slide-toggle>
+    <div class="button-row">
+      <button mat-raised-button type="submit" color="primary">Sauvegarder les changements</button>
+    </div>
+  </form>

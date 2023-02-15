@@ -1,4 +1,4 @@
-// const Match = require('../models/matchModel')
+//const Match = require('../models/matchModel')
 
 function getMatch (req, res) {
   // todo: a faire

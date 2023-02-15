@@ -1,1 +1,8 @@
-<p>profile works!</p>
+<div class="profile-container">
+  <header>
+    <app-profile-header [user]="user"></app-profile-header>
+  </header>
+  <div class="profile-content">
+    <app-profile-content (event)="updateProfile($event)"></app-profile-content>
+  </div>
+</div>

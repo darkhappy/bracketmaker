@@ -1,14 +1,13 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-  id: mongoose.Schema.Types.ObjectId,
   username: String,
   email: String,
   token: String,
   isVerified: Boolean,
   password: String,
-  firstname: String,
-  lastname: String,
+  display_name: String,
+  show_email: Boolean,
   about: String,
   avatar: String,
   googleAuth: String,
