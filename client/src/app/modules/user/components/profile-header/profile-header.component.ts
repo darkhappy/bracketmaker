@@ -22,6 +22,7 @@ export class ProfileHeaderComponent {
   ngOnInit(): void {
     this.userService.getUser().subscribe({
       next: user => {
+        console.log(user);
         this.user = {
           username: user.username,
           email: user.email,
@@ -30,11 +31,16 @@ export class ProfileHeaderComponent {
           showEmail: user.showEmail,
           avatar: user.avatar,          
         };
+        if (!this.user.showEmail) {
+          this.user.email = '';
+        }
+        console.log(this.user.username);
       },
       error: (error) => {
         console.log(error);
       }
-    });    
+    });
+    
   }
 
 }

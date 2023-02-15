@@ -17,6 +17,7 @@ function getUser (req, res) {
     if (err) {
       return res.sendStatus(401)
     }
+    console.log(user)
     return res.json({
       username: user.username,
       email: user.email,

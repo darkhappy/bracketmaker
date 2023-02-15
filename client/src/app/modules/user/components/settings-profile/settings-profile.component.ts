@@ -43,7 +43,6 @@ export class SettingsProfileComponent {
   onSubmit() {
     this.userService.updateProfile(this.formProfile.value).subscribe({
       next: () => {
-        alert("Profile updated successfully!");
         this.userService.getUser().subscribe({
           next: (user) => {
             console.log(user);
@@ -66,7 +65,6 @@ export class SettingsProfileComponent {
                 avatar: user.avatar,
               };
             }
-            console.log(this.user);
             this.event.emit(this.user);
           },
           error: (error) => {
@@ -82,6 +80,10 @@ export class SettingsProfileComponent {
     
   }
   cancel() {
-    this.formProfile.reset();
+    this.formProfile = this.fb.group({
+      display_name: [''],
+      about: [''],
+      showEmail: [''],
+    });
   }
 }
