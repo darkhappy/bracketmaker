@@ -68,6 +68,7 @@ function login (req, res) {
 }
 
 function logout (req, res) {
+  console.log('logout server')
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
   return res.sendStatus(204)

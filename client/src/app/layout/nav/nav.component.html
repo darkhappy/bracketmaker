@@ -9,6 +9,6 @@
     <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/register')" color="accent">Inscription</button>
   </div>
   <div *ngIf="userConnected()" class="flex flex-row items-center m-3">
-    <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/logout')" color="accent">Déconnexion</button>
+    <button mat-raised-button class="font-bold uppercase" (click)="logout()" color="accent">Déconnexion</button>
   </div>
 </div>
