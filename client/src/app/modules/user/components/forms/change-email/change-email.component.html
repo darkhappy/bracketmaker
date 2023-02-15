@@ -3,7 +3,7 @@
     <h1 class="text-xl font-bold">Changer votre nom courriel</h1>
     <p class="text-lg font-medium">Présentement, votre courriel est <strong>test@darkh.app</strong>.</p>
   </div>
-  <form class="flex flex-col gap-2">
+  <form class="flex flex-col gap-2" [formGroup]="formChangeEmail">
     <mat-form-field>
       <input matInput placeholder="Nouveau courriel" name="email" type="email" required>
     </mat-form-field>

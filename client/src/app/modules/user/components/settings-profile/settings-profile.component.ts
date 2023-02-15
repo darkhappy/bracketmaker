@@ -7,8 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./settings-profile.component.scss']
 })
 export class SettingsProfileComponent {
-  // @ts-ignore
-  formProfile : FormGroup
+  formProfile!: FormGroup
   user : any = {
     username: '',
     email: '',
@@ -22,6 +21,11 @@ export class SettingsProfileComponent {
   constructor(private userService : UserService, private fb: FormBuilder) { }
 
   ngOnInit(): void {
+    this.formProfile = this.fb.group({
+      display_name: [''],
+      about: [''],
+      showEmail: [''],
+    });
     this.userService.getUser().subscribe({
       next: (user) => {
         this.user = {
@@ -29,21 +33,20 @@ export class SettingsProfileComponent {
           about: user.about,
           showEmail: user.showEmail,
         };
+        this.formProfile = this.fb.group({
+          display_name: [this.user.display_name],
+          about: [this.user.about],
+          showEmail: [this.user.showEmail],
+        });
       },
       error: (error) => {
         alert("There was an error loading the profile. Please try again later.");
       }
     });
-    this.formProfile = this.fb.group({
-      display_name: [''],
-      about: [''],
-      showEmail: [''],
-    });
   }
   onSubmit() {
     this.userService.updateProfile(this.formProfile.value).subscribe({
       next: () => {
-        alert("Profile updated successfully!");
         this.userService.getUser().subscribe({
           next: (user) => {
             console.log(user);
@@ -66,7 +69,6 @@ export class SettingsProfileComponent {
                 avatar: user.avatar,
               };
             }
-            console.log(this.user);
             this.event.emit(this.user);
           },
           error: (error) => {
@@ -82,6 +84,10 @@ export class SettingsProfileComponent {
     
   }
   cancel() {
-    this.formProfile.reset();
+    this.formProfile = this.fb.group({
+      display_name: [''],
+      about: [''],
+      showEmail: [''],
+    });
   }
 }

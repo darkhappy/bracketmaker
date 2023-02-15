@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
 
@@ -30,11 +31,13 @@ export class ProfileHeaderComponent {
           showEmail: user.showEmail,
           avatar: user.avatar,
         };
+        if (!this.user.showEmail) {
+          this.user.email = '';
+        }
       },
       error: (error) => {
         console.log(error);
       }
     });
   }
-
 }

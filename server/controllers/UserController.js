@@ -60,11 +60,18 @@ function login (req, res) {
         const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
-        res.cookie('sessioninfo', payload)
+        res.cookie('sessioninfo', JSON.stringify(payload))
         return res.sendStatus(204)
       }
       return res.sendStatus(401)
     })
+}
+
+function logout (req, res) {
+  console.log('logout server')
+  res.clearCookie('SESSIONID')
+  res.clearCookie('sessioninfo')
+  return res.sendStatus(204)
 }
 
 async function createUser (req, res) {
@@ -81,7 +88,7 @@ async function createUser (req, res) {
     username,
     email,
     password: bcrypt.hashSync(password, 10),
-    token: generate_token(15),
+    token: generateToken(15),
     isVerified: false,
     show_email: false,
     display_name: '',
@@ -118,7 +125,7 @@ const createToken = async (req, res) => {
     if (err || user.length === 0) {
       return res.status(401).json(err)
     } else {
-      const email = generate_token(20)
+      const email = generateToken(20)
       const filter = { _id: user[0]._id }
       const update = {
         $set: {
@@ -135,7 +142,7 @@ const createToken = async (req, res) => {
   })
 }
 
-function updatePassword (req, res) {
+function resetPassword (req, res) {
   const filter = { token: req.params.token }
   const update = {
     $set: {
@@ -191,7 +198,7 @@ function activateUser (req, res) {
 }
 
 // eslint-disable-next-line camelcase
-function generate_token (length) {
+function generateToken (length) {
   const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('')
   const b = []
   for (let i = 0; i < length; i++) {
@@ -284,10 +291,11 @@ module.exports = {
   login,
   deleteUser,
   createToken,
-  updatePassword,
+  resetPassword,
   getToken,
   activateUser,
   updateProfile,
   changePassword,
+  logout,
 };
 
