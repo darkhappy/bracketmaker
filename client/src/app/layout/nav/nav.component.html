@@ -4,12 +4,11 @@
     <button mat-button color="warn" class="font-bold uppercase" (click)="navigate('/tour')">Tournois</button>
     <button mat-button color="warn" class="font-bold uppercase" (click)="navigate('/orgs')">Organisateurs</button>
   </div>
-  <div class="flex flex-row items-center m-3">
+  <div *ngIf="!userConnected()" class="flex flex-row items-center m-3">
     <button mat-button class="font-bold uppercase" (click)="navigate('/auth/login')">Connexion</button>
     <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/register')" color="accent">Inscription</button>
-    <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/logout')" color="accent">Déconnexion</button>
   </div>
-  <div *ngIf="false" class="flex flex-row items-center m-3">
+  <div *ngIf="userConnected()" class="flex flex-row items-center m-3">
     <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/logout')" color="accent">Déconnexion</button>
   </div>
 </div>

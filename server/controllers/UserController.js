@@ -60,7 +60,7 @@ function login (req, res) {
         const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
-        res.cookie('sessioninfo', payload)
+        res.cookie('sessioninfo', JSON.stringify(payload))
         return res.sendStatus(204)
       }
       return res.sendStatus(401)

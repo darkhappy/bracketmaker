@@ -1,22 +1,35 @@
 import { Injectable } from '@angular/core';
 import { User } from '../schemas/user'; // { User
 import { HttpClient } from '@angular/common/http';
-
+import {CookieService} from "ngx-cookie-service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   getUsers() {
     return this.http.get<User[]>('/api/user');
   }
 
+  getUserId(): string | null {
+    let sessioninfo = this.cookieService.get('sessioninfo');
+    if (!sessioninfo)
+      return null;
+    let sessioninfo_json = JSON.parse(sessioninfo);
+    return sessioninfo_json.id;
+  }
+
   login(user: User) {
     console.log(user)
     return this.http.post<any>('/api/user/login', user);
+  }
+
+  logout() : Observable<any> {
+    return this.http.post<any>('/api/user/logout', {});
   }
 
   createUser(user: any) {
