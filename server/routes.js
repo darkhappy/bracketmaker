@@ -38,6 +38,9 @@ router
   .put(middleware.isAuth, userController.changeEmail);
 
 router
+  .route("/users")
+  .get(userController.getUsers);
+router
   .route("/tournament")
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)

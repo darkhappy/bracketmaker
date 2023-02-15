@@ -6,9 +6,12 @@ const fs = require('fs')
 const dotenv = require("dotenv");
 const { CONNREFUSED } = require('dns')
 
-function getAllUsers (req, res) {
-  User.find().exec((err, users) => {
-    res.json(users)
+function getUsers (req, res) {
+  User.find({}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    return res.json(users)
   })
 }
 
@@ -277,7 +280,7 @@ const changeEmail = async (req, res) => {
 
 module.exports = {
   changeUsername,
-  getAllUsers,
+  getUsers,
   getUser,
   changeEmail,
   createUser,

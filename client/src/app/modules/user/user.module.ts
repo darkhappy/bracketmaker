@@ -22,6 +22,9 @@ import { ChangeUsernameComponent } from './components/forms/change-username/chan
 import { MatDialogModule } from "@angular/material/dialog";
 import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
 import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
+import { ViewUsersCardComponent } from './components/view-users-card/view-users-card.component';
+import { MatCardModule } from '@angular/material/card';
+import { ViewUsersCardListComponent } from './components/view-users-card-list/view-users-card-list.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -35,6 +38,8 @@ import { ChangePasswordDialogComponent } from './components/forms/change-passwor
     ChangeUsernameComponent,
     ChangeEmailComponent,
     ChangePasswordDialogComponent,
+    ViewUsersCardComponent,
+    ViewUsersCardListComponent,
   ],
   imports: [
     userRoutes,
@@ -51,6 +56,7 @@ import { ChangePasswordDialogComponent } from './components/forms/change-passwor
     MatSliderModule,
     MatSlideToggleModule,
     MatDialogModule,
+    MatCardModule,
   ],
 })
 export class UserModule { }
