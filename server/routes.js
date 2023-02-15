@@ -1,5 +1,5 @@
 const express = require('express')
-const userController = require('./controllers/UserController')
+const userController = require('./controllers/usercontroller')
 const middleware = require('./middlewares/UserMiddleware')
 const tournamentController = require('./controllers/tournamentController')
 const matchController = require('./controllers/matchController')
@@ -38,6 +38,10 @@ router
   .put(middleware.isAuth, userController.changeEmail);
 
 router
+    .route("/user/logout")
+    .post(middleware.isAuth, userController.logout)
+
+router
   .route("/tournament")
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
@@ -65,6 +69,6 @@ router
 router
   .route('/password/:token')
   .get(userController.getToken)
-  .put(userController.updatePassword)
+  .put(userController.resetPassword)
 
 module.exports = router
