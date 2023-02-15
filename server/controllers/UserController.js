@@ -102,7 +102,7 @@ async function createUser (req, res) {
     username,
     email,
     password: bcrypt.hashSync(password, 10),
-    token: generate_token(15),
+    token: generateToken(15),
     isVerified: false,
     show_email: false,
     display_name: '',
@@ -234,7 +234,7 @@ function updateProfile (req, res) {
   const update = {
     $set: {
       display_name: displayName,
-      about,
+      about: about,
       show_email: showEmail
     }
   }
@@ -317,8 +317,6 @@ async function googleLogin (req, res) {
     password: '',
     token: '',
     isVerified: true,
-    firstname: '',
-    lastname: '',
     about: '',
     avatar: '',
     googleAuth: idToken

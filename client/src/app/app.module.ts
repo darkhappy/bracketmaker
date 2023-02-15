@@ -36,9 +36,6 @@ import { ReactiveFormsModule } from "@angular/forms";
     MatInputModule,
     ReactiveFormsModule,
   ],
-  providers: [
-
-  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -47,7 +47,6 @@ export class AuthService {
   }
 
   googleLogin(user: any) {
-    console.log(user)
     return this.http.post<any>(`/api/google`, user)
   }
 
