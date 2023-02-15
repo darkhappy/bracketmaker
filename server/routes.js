@@ -1,5 +1,5 @@
 const express = require('express')
-const userController = require('./controllers/UserController')
+const userController = require('./controllers/usercontroller')
 const middleware = require('./middlewares/UserMiddleware')
 const tournamentController = require('./controllers/tournamentController')
 const matchController = require('./controllers/matchController')
@@ -8,47 +8,63 @@ const playerController = require('./controllers/playerController')
 const router = express.Router()
 router
   .route('/user')
-  .get(middleware.isAuth, userController.getUser)
+  .get(userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
+
+router
+  .route('/user/:_id')
+  .get(userController.getUserById)
 
 router
   .route('/user/activate')
   .get(userController.activateUser)
 
 router
-  .route("/user/login")
+  .route('/user/login')
   .post(userController.login)
 
 router
-  .route("/user/profile")
+  .route('/google')
+  .post(userController.googleLogin)
+
+router
+  .route('/user/profile')
   .put(middleware.isAuth, userController.updateProfile);
 
 router
-  .route("/user/password")
+    .route('/user/update')
+    .put(userController.updateUser);
+
+router
+  .route('/user/password')
   .put(middleware.isAuth, userController.changePassword);
 
 router
-  .route("/user/username")
+  .route('/user/username')
   .put(middleware.isAuth, userController.changeUsername);
 
 router
-  .route("/user/email")
+  .route('/user/email')
   .put(middleware.isAuth, userController.changeEmail);
 
 router
   .route("/users")
   .get(userController.getUsers);
 router
-  .route("/tournament")
+    .route("/user/logout")
+    .post(middleware.isAuth, userController.logout)
+
+router
+  .route('/tournament')
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
   .put(tournamentController.updateTournament)
   .delete(tournamentController.deleteTournament);
 
 router
-  .route("/match")
+  .route('/match')
   .get(matchController.getMatch)
   .post(matchController.createMatch)
   .put(matchController.updateMatch)
@@ -68,6 +84,6 @@ router
 router
   .route('/password/:token')
   .get(userController.getToken)
-  .put(userController.updatePassword)
+  .put(userController.resetPassword)
 
 module.exports = router
