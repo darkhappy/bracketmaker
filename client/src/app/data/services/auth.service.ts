@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import { User } from '../schemas/user'; // { User
 import { HttpClient } from '@angular/common/http';
 
@@ -50,4 +50,9 @@ export class AuthService {
     console.log(user)
     return this.http.post<any>(`/api/google`, user)
   }
+
+  googleChangeUsername(id: string){
+    return this.http.put(`/api/google/`, {id: id})
+  }
+
 }

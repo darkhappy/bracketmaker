@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CookieService} from "ngx-cookie";
 import {UserService} from "@data/services/user.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-username',
@@ -10,12 +10,10 @@ import {UserService} from "@data/services/user.service";
 })
 export class UsernameComponent {
   // @ts-ignore
-  cookieService=inject(CookieService);
-  // @ts-ignore
   formUsername: FormGroup;
   // @ts-ignore
   googleToken : String;
-  constructor(private fb: FormBuilder, private userService : UserService) { }
+  constructor(private fb: FormBuilder, private userService : UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.formUsername = this.fb.group({
@@ -24,10 +22,15 @@ export class UsernameComponent {
   }
   onSubmit() {
     if (this.formUsername?.valid) {
-      this.userService.getUser().subscribe((data: any) => {
-        data.username = this.formUsername.value.username;
-        this.userService.updateProfile(data).subscribe((data: any) => {
+      this.userService.getOneUser().subscribe((data: any) => {
+        data.message.username = this.formUsername.value.username;
+        console.log(data)
+        this.userService.updateUser(data).subscribe( {
+          error: (error) => {
+            alert(error)
+          }
           })
+        this.router.navigate(['/'])
         })
       }
     }

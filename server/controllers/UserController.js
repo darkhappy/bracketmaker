@@ -11,6 +11,15 @@ function getAllUsers (req, res) {
   })
 }
 
+function getUserById (req, res) {
+  User.findById(req.params._id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    return res.status(200).json({ message: user })
+  })
+}
+
 function getUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -55,8 +64,14 @@ function login (req, res) {
         return res.sendStatus(401)
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        const payload = { id: user._id }
-        const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
+        const payload = { id: user.id }
+        const key = crypto.randomBytes(16)
+        const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
+
+        const result = dotenv.config()
+        const conn = result.parsed.CONNECTION_STRING
+
+        fs.writeFileSync('.env', 'SECRET_KEY="' + key + '"\nCONNECTION_STRING="' + conn + '"')
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
@@ -98,15 +113,16 @@ async function createUser (req, res) {
 }
 
 function updateUser (req, res) {
-  const user = User.findById(req.body)
-  user.username = req.body.username
-  user.email = req.body.email
-  user.password = req.body.password
-  user.save().then(() => {
-    return res.status(204)
-  }).catch((err) => {
-    return res.status(500).json(err)
+  const { _id, username } = req.body.message
+  User.findById(_id).exec((err, user) => {
+    user.username = username
+    user.save().then(() => {
+      return res.status(200)
+    }).catch((err) => {
+      return res.status(500).json(err)
+    })
   })
+
 }
 
 function deleteUser (req, res) {
@@ -233,7 +249,7 @@ const changeUsername = async (req, res) => {
     if (!bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(401).json({ message: 'Wrong password' })
     }
-
+    const username = user.username
     const sameUsername = await User.find({ username }).exec()
     if (sameUsername.length > 0) {
       return res.status(409).json({ message: 'Username already exists' })
@@ -303,6 +319,12 @@ async function googleLogin (req, res) {
   })
   user.save().then(() => {
     console.log('User created via google')
+
+    const payload = { id: user._id }
+    const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
+
+    res.cookie('SESSIONID', jwtToken, { httpOnly: true })
+    res.cookie('sessioninfo', JSON.stringify(payload))
     return res.status(200).json({ message: user })
   }).catch((err) => {
     return res.status(500).json(err)
@@ -324,5 +346,6 @@ module.exports = {
   activateUser,
   updateProfile,
   changePassword,
-  googleLogin
+  googleLogin,
+  getUserById
 }

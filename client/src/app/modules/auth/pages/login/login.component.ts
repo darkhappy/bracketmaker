@@ -26,12 +26,17 @@ export class LoginComponent {
     this.socialAuthService.authState.subscribe(async (user) => {
       this.userService.googleLogin(user).subscribe({
         next: res => {
+          console.log(res.message.username)
+          if (res.message.username === ' ' || res.message.username === "") {
 
-          console.log(res.message.username + ' : username');
-          if (typeof res.message.username !== "undefined" || res.message.username !== " " || res.message.username !== "") { // todo : fix, rentre meme si le username est vide
+            this.router.navigate(['/auth/username']);
+          }
+          else {
             this.router.navigate(['/']);
           }
-          this.router.navigate(['/auth/username']);
+        },
+        error: (error) => {
+          alert(error)
         }
       });
     });

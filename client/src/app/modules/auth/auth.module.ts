@@ -14,6 +14,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@abacritt/angularx-social-login";
 import {UsernameComponent} from "@modules/auth/pages/username/username.component";
+import {CookieService} from "ngx-cookie-service";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {UsernameComponent} from "@modules/auth/pages/username/username.component
     CoreModule,
     MatCardModule,
     FontAwesomeModule,
-    SocialLoginModule
+    SocialLoginModule,
+    HttpClientModule,
   ],
   providers: [
     {

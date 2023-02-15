@@ -4,13 +4,19 @@ const tournamentController = require('./controllers/tournamentController')
 const matchController = require('./controllers/matchController')
 const playerController = require('./controllers/playerController')
 const middleware = require('./middlewares/UserMiddleware')
+const {isAuth} = require("./middlewares/UserMiddleware");
 
 const router = express.Router()
 router
   .route('/user')
+  .get(userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
+
+router
+  .route('/user/:_id')
+  .get(userController.getUserById)
 
 router
   .route('/user/activate')
@@ -27,6 +33,10 @@ router
 router
   .route('/user/profile')
   .put(middleware.isAuth, userController.updateProfile);
+
+router
+    .route('/user/update')
+    .put(userController.updateUser);
 
 router
   .route('/user/password')
