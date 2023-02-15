@@ -12,7 +12,7 @@ const isAuth = (req, res, next) => {
             console.error(err);
             return res.sendStatus(401);
         }
-        req.payload = payload;
+        req.payload = JSON.stringify(payload);
         next();
     });
 }

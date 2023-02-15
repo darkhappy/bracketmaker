@@ -2,7 +2,7 @@
   <div class="flex flex-row justify-start items-center m-3 text-xl text-theme-red font-bold gap-8">
     <img (click)="navigate('/home')" alt="logo" src="assets/logo-simple.svg">
     <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/tournament/view')">Tournois</button>
-    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/orgs')">Organisateurs</button>
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/user/view')">Organisateurs</button>
   </div>
   <div *ngIf="!userConnected()" class="text-xl font-bold flex flex-row items-center gap-8">
     <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/auth/login')">Connexion</button>
