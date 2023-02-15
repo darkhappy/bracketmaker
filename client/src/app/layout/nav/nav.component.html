@@ -1,14 +1,14 @@
 <div class="flex flex-row justify-between border-b-2 border-white bg-gradient-to-r from-theme-beige to-theme-dark-blue">
-  <div class="flex flex-row justify-start items-center m-3">
+  <div class="flex flex-row justify-start items-center m-3 text-xl text-theme-red font-bold gap-8">
     <img (click)="navigate('/home')" alt="logo" src="assets/logo-simple.svg">
-    <button mat-button color="warn" class="font-bold uppercase" (click)="navigate('/tour')">Tournois</button>
-    <button mat-button color="warn" class="font-bold uppercase" (click)="navigate('/orgs')">Organisateurs</button>
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/tournament/view')">Tournois</button>
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/orgs')">Organisateurs</button>
   </div>
-  <div *ngIf="!userConnected()" class="flex flex-row items-center m-3">
-    <button mat-button class="font-bold uppercase" (click)="navigate('/auth/login')">Connexion</button>
-    <button mat-raised-button class="font-bold uppercase" (click)="navigate('/auth/register')" color="accent">Inscription</button>
+  <div *ngIf="!userConnected()" class="text-xl font-bold flex flex-row items-center gap-8">
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/auth/login')">Connexion</button>
+    <button class="uppercase from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue rounded-lg px-5 py-2.5 text-center mr-2 mb-2" (click)="navigate('/auth/register')">Inscription</button>
   </div>
-  <div *ngIf="userConnected()" class="flex flex-row items-center m-3">
-    <button mat-raised-button class="font-bold uppercase" (click)="logout()" color="accent">Déconnexion</button>
+  <div *ngIf="userConnected()" class="text-xl font-bold flex flex-row items-center m-3">
+    <button class="uppercase from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue rounded-lg px-5 py-2.5 text-center mr-2 mb-2" (click)="logout()">Déconnexion</button>
   </div>
 </div>

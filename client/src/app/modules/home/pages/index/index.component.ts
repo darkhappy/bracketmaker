@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {Router} from "@angular/router";
+import {AuthService} from "@data/services/auth.service";
 
 @Component({
   selector: 'app-index',
@@ -7,7 +8,20 @@ import {Router} from "@angular/router";
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent {
-  constructor(private router: Router) {
+
+  images = ["bg-hockey", "bg-chess", "bg-soccer", "bg-gaming", "bg-volley"];
+  background: string = "bg-hockey";
+
+  constructor(private router: Router, private authService: AuthService) {
+  }
+
+  ngOnInit(): void {
+    const index = Math.floor(Math.random() * this.images.length);
+    this.background = this.images[index];
+  }
+
+  userConnected(): Boolean {
+    return this.authService.getUserId() !== null;
   }
 
   navigate(path: string) {
