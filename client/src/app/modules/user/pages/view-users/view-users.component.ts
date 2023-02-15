@@ -25,4 +25,8 @@ export class ViewUsersComponent {
       }
     });
   }
+
+  onOptionsSelected(event: any) {
+    console.log("yo");
+  }
 }
