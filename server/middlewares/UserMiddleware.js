@@ -1,20 +1,15 @@
 const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 
-const isAuth = (res, req, next) => {
+const isAuth = (req, res, next) => {
     let token = req.cookies['SESSIONID'] ?? null;
     if(!token){
         return res.sendStatus(401);
     }
 
-    const result = dotenv.config()
-    if (result.error) {
-        return res.sendStatus(401)
-    }
-    let key = result.parsed.SECRET_KEY
-
-    jwt.verify(token, key, (err, payload) =>{
+    jwt.verify(token, process.env.SECRET_KEY, (err, payload) =>{
         if(err){
+            console.error(err);
             return res.sendStatus(401);
         }
         req.payload = payload;

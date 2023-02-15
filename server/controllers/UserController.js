@@ -4,12 +4,51 @@ const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const fs = require('fs')
 const dotenv = require("dotenv");
+const { CONNREFUSED } = require('dns')
 
 function getAllUsers (req, res) {
   User.find().exec((err, users) => {
     res.json(users)
   })
 }
+
+function getUser (req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    console.log(user)
+    return res.json({
+      username: user.username,
+      email: user.email,
+      display_name: user.display_name,
+      showEmail: user.show_email,
+      about: user.about,
+      avatar: user.avatar,
+      subscriptions: user.subscriptions,
+      tournaments: user.tournaments
+    })
+  })
+}
+
+function changePassword (req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
+      user.password = bcrypt.hashSync(req.body.newPassword, 10)
+      user.save().then(() => {
+        return res.sendStatus(204)
+      }).catch((err) => {
+        return res.status(500).json(err)
+      })
+    } else {
+      return res.sendStatus(401)
+    }
+  })
+}
+
 
 function login (req, res) {
   User.findOne({ username: req.body.username },
@@ -18,18 +57,11 @@ function login (req, res) {
         return res.sendStatus(401)
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        const payload = { id: user.id }
-        const key = crypto.randomBytes(16)
-        const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
-
-        const result = dotenv.config()
-        let conn = result.parsed.CONNECTION_STRING
-
-        fs.writeFileSync('.env', 'SECRET_KEY="' + key+'"\nCONNECTION_STRING="' + conn + '"')
+        const payload = { id: user._id }
+        const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', payload)
-
         return res.sendStatus(204)
       }
       return res.sendStatus(401)
@@ -52,13 +84,14 @@ async function createUser (req, res) {
     password: bcrypt.hashSync(password, 10),
     token: generate_token(15),
     isVerified: false,
-    firstname: '',
-    lastname: '',
+    show_email: false,
+    display_name: '',
     about: '',
-    avatar: ''
+    avatar: '',
+    subscriptions: [],
+    tournaments: []
   })
   user.save().then(() => {
-    console.log('User created')
     return res.status(201).json({ message: 'http://localhost:4200/auth/activate/?token=' + user.token })
   }).catch((err) => {
     return res.status(500).json(err)
@@ -112,7 +145,6 @@ function updatePassword (req, res) {
   }
   const options = { upsert: true }
   User.updateOne(filter, update, options).then(() => {
-    console.log('Password updated')
     const filter = { token: req.params.token }
     const update = {
       $set: {
@@ -150,7 +182,6 @@ function activateUser (req, res) {
         user.isVerified = true
         user.token = ''
         user.save().then(() => {
-          console.log('User activated')
           return res.status(201).json({ message: 'User activated' })
         }).catch((err) => {
           return res.status(500).json(err)
@@ -171,4 +202,93 @@ function generate_token (length) {
   return b.join('')
 }
 
-module.exports = { getAllUsers, createUser, updateUser, login, deleteUser, createToken, updatePassword, getToken, activateUser }
+function updateProfile(req, res) {
+  
+  let showEmail = req.body.showEmail;
+  const displayName = req.body.displayName !== '' ? req.body.displayName : ''
+  const about = req.body.about !== '' ? req.body.about : ''
+  if (showEmail === '') {
+    showEmail = false
+  }
+  const filter = { _id: req.payload.id }
+  const update = {
+    $set: {
+      display_name: displayName,
+      about: about,
+      show_email: showEmail,
+    },
+  };
+  const options = { upsert: true };
+  User.updateOne(filter, update, options).then(() => {
+    return res.sendStatus(204);
+  }).catch((err) => {
+    return res.status(400).json(err);
+  });
+}
+
+const changeUsername = async (req, res) => {
+  User.findById(req.payload.id).exec(async (err, user) => {
+    if (!user) {
+      return res.status(401).json(err);
+    }
+
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+
+    const sameUsername = await User.find({ username }).exec();
+    if (sameUsername.length > 0) {
+      return res.status(409).json({ message: "Username already exists" });
+    }
+
+    user.username = req.body.username;
+    user.save().then(() => {
+      return res.sendStatus(204);
+    }).catch((err) => {
+      return res.status(500).json(err);
+    });
+  });
+};
+
+const changeEmail = async (req, res) => {
+  // same exact thing as changeUsername
+  User.findById(req.payload.id).exec(async (err, user) => {
+    if (!user) {
+      return res.status(401).json(err);
+    }
+
+    if (!bcrypt.compareSync(req.body.password, user.password)) {
+      return res.status(401).json({ message: "Wrong password" });
+    }
+
+    const sameEmail = await User.find({ email }).exec();
+    if (sameEmail.length > 0) {
+      return res.status(409).json({ message: "Email already exists" });
+    }
+
+    user.email = req.body.email;
+    user.save().then(() => {
+      return res.sendStatus(204);
+    }).catch((err) => {
+      return res.status(500).json(err);
+    });
+  });
+};
+
+module.exports = {
+  changeUsername,
+  getAllUsers,
+  getUser,
+  changeEmail,
+  createUser,
+  updateUser,
+  login,
+  deleteUser,
+  createToken,
+  updatePassword,
+  getToken,
+  activateUser,
+  updateProfile,
+  changePassword,
+};
+

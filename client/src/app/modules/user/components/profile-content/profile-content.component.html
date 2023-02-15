@@ -1,0 +1,19 @@
+<mat-tab-nav-panel>
+  <mat-tab-group>
+    <mat-tab label="Mes Tournois">
+      <ng-template matTabContent>
+        <p>liste mes tournois le component va la genre</p>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Tournois suivis">
+      <ng-template matTabContent>
+        <p>Tournois suivis component</p>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Paramètres">
+      <ng-template matTabContent>
+        <app-settings (event)="updateProfile($event)"></app-settings>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</mat-tab-nav-panel>

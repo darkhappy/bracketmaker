@@ -27,6 +27,14 @@ export class AuthService {
     return this.http.post<any>('/api/token/', user);
   }
 
+  changeUsername(user: any) {
+    return this.http.put<any>('/api/user/username', user);
+  }
+
+  changeEmail(user: any) {
+    return this.http.put<any>('/api/user/email', user);
+  }
+
   changePassword(token: string, user: any) {
     return this.http.put<any>(`/api/password/${token}`, user);
   }
