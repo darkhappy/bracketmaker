@@ -1,17 +1,14 @@
-<div class="home-container flex flex-col justify-center items-center h-screen bg-">
-  <img alt="logo" src="assets/logo.svg">
-  <h1 class="text-6xl">Rassemblez, jouez, célébrez.</h1>
-  <h1 class="text-5xl">Révolutionnez votre expérience de tournoi !</h1>
-  <div class="home-buttons mt-6">
-    <h1 class="text-4xl">Rejoignez la communauté des champions</h1>
-    <div class="join mt-4">
-      <button mat-raised-button color="primary" (click)="navigate('/auth/login')">Se connecter</button>
-      <button mat-raised-button color="accent" (click)="navigate('/auth/register')">S'inscrire</button>
-    </div>
-    <h1 class="text-4xl mt-6">Jetez un coup d'oeuil</h1>
-    <div class="take-a-look mt-4">
-      <button mat-raised-button color="primary" (click)="navigate('')">Événements</button>
-      <button mat-raised-button color="accent" (click)="navigate('')">Tournois</button>
+<div class="home-container flex flex-col justify-center items-center bg-cover h-full" [ngClass]="background">
+  <div class="flex flex-col justify-center items-center p-16 backdrop-blur-md rounded-3xl bg-theme-dark-blue bg-opacity-50">
+    <img alt="logo" src="assets/logo.svg">
+    <h1 class="text-6xl">Rassemblez, jouez, célébrez.</h1>
+    <h1 class="text-5xl">Révolutionnez votre expérience de tournoi !</h1>
+    <div class="home-buttons mt-6">
+      <div class="m-4 flex flex-row justify-center items-center gap-8 text-3xl">
+        <button *ngIf="userConnected()" class="from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl" (click)="navigate('/tournament/create')">Créer un tournoi</button>
+        <button *ngIf="!userConnected()" class="from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl" (click)="navigate('/auth/register')">Créer un tournoi</button>
+        <button class="from-theme-light-blue to-theme-dark-blue hover:bg-gradient-to-bl" (click)="navigate('/tournament/view')">Voir les tournois</button>
+      </div>
     </div>
   </div>
 </div>
