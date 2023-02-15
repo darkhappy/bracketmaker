@@ -3,6 +3,7 @@ const userController = require('./controllers/UserController')
 const tournamentController = require('./controllers/tournamentController')
 const matchController = require('./controllers/matchController')
 const playerController = require('./controllers/playerController')
+const middleware = require('./middlewares/UserMiddleware')
 
 const router = express.Router()
 router
@@ -24,30 +25,30 @@ router
   .post(userController.googleLogin)
 
 router
-  .route("/user/profile")
+  .route('/user/profile')
   .put(middleware.isAuth, userController.updateProfile);
 
 router
-  .route("/user/password")
+  .route('/user/password')
   .put(middleware.isAuth, userController.changePassword);
 
 router
-  .route("/user/username")
+  .route('/user/username')
   .put(middleware.isAuth, userController.changeUsername);
 
 router
-  .route("/user/email")
+  .route('/user/email')
   .put(middleware.isAuth, userController.changeEmail);
 
 router
-  .route("/tournament")
+  .route('/tournament')
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
   .put(tournamentController.updateTournament)
   .delete(tournamentController.deleteTournament);
 
 router
-  .route("/match")
+  .route('/match')
   .get(matchController.getMatch)
   .post(matchController.createMatch)
   .put(matchController.updateMatch)

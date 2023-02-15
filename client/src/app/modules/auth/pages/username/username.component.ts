@@ -24,17 +24,11 @@ export class UsernameComponent {
   }
   onSubmit() {
     if (this.formUsername?.valid) {
-      let SESSION_INFO = this.cookieService.get('sessioninfo');
-      console.log(SESSION_INFO);
-      if(SESSION_INFO !== undefined) {
-        let SessionInfo: any = JSON.parse(SESSION_INFO);
-        SessionInfo.username = this.formUsername.value.username;
-        this.userService.updateProfile(SessionInfo).subscribe((data: any) => {
-          console.log(data);
-          // todo: backend + redirect to home page
+      this.userService.getUser().subscribe((data: any) => {
+        data.username = this.formUsername.value.username;
+        this.userService.updateProfile(data).subscribe((data: any) => {
+          })
         })
       }
     }
-  }
-
 }

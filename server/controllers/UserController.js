@@ -275,11 +275,11 @@ const changeEmail = async (req, res) => {
 
 async function googleLogin (req, res) {
   console.log(req.body)
-  let { email, idToken, firstName } = req.body
+  let { email, idToken, name } = req.body
 
-  const sameUsername = await User.find({ username: firstName }).exec()
+  const sameUsername = await User.find({ username: name }).exec()
   if (sameUsername.length > 0) {
-    firstName = ''
+    name = ''
   }
   const sameEmail = await User.find({ email }).exec()
   if (sameEmail.length > 0) {
@@ -290,7 +290,7 @@ async function googleLogin (req, res) {
     return res.status(200).json({ message: sameEmail })
   }
   const user = new User({
-    username: firstName,
+    username: name,
     email,
     password: '',
     token: '',

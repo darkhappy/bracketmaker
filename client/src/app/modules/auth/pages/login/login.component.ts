@@ -24,9 +24,11 @@ export class LoginComponent {
   ) { }
   ngOnInit(): void {
     this.socialAuthService.authState.subscribe(async (user) => {
-      await this.userService.googleLogin(user).subscribe({
+      this.userService.googleLogin(user).subscribe({
         next: res => {
-          if(res.username !== '') {
+
+          console.log(res.message.username + ' : username');
+          if (typeof res.message.username !== "undefined" || res.message.username !== " " || res.message.username !== "") { // todo : fix, rentre meme si le username est vide
             this.router.navigate(['/']);
           }
           this.router.navigate(['/auth/username']);
