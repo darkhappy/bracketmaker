@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const fs = require('fs')
-const dotenv = require('dotenv')
+const dotenv = require("dotenv");
+const { CONNREFUSED } = require('dns')
 
 function getAllUsers (req, res) {
   User.find().exec((err, users) => {
@@ -74,8 +75,7 @@ function login (req, res) {
         fs.writeFileSync('.env', 'SECRET_KEY="' + key + '"\nCONNECTION_STRING="' + conn + '"')
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
-        res.cookie('sessioninfo', payload)
-
+        res.cookie('sessioninfo', JSON.stringify(payload))
         return res.sendStatus(204)
       }
       return res.sendStatus(401)
