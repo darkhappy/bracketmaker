@@ -22,6 +22,7 @@ import { ChangeUsernameComponent } from './components/forms/change-username/chan
 import { MatDialogModule } from "@angular/material/dialog";
 import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
 import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -51,6 +52,7 @@ import { ChangePasswordDialogComponent } from './components/forms/change-passwor
     MatSliderModule,
     MatSlideToggleModule,
     MatDialogModule,
+    FontAwesomeModule,
   ],
 })
 export class UserModule { }
