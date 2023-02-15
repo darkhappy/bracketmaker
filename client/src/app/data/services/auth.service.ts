@@ -42,8 +42,4 @@ export class AuthService {
     console.log(user)
     return this.http.post<any>(`/api/google`, user)
   }
-
-  googleLogout(){
-    // detruit le token
-  }
 }

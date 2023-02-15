@@ -26,6 +26,9 @@ export class LoginComponent {
     this.socialAuthService.authState.subscribe(async (user) => {
       await this.userService.googleLogin(user).subscribe({
         next: res => {
+          if(res.username !== '') {
+            this.router.navigate(['/']);
+          }
           this.router.navigate(['/auth/username']);
         }
       });

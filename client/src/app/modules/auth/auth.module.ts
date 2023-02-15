@@ -13,6 +13,7 @@ import {MatCardModule} from "@angular/material/card";
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { ValidateEmailComponent } from './pages/validate-email/validate-email.component';
 import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@abacritt/angularx-social-login";
+import {UsernameComponent} from "@modules/auth/pages/username/username.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from "@
     LoginComponent,
     ForgotPasswordComponent,
     ValidateEmailComponent,
+    UsernameComponent,
   ],
   imports: [
     CommonModule,

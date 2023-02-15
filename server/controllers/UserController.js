@@ -173,14 +173,22 @@ function generate_token (length) {
 
 async function googleLogin (req, res) {
   console.log(req.body)
-  const { email, idToken } = req.body
+  let { email, idToken, firstName } = req.body
+
+  const sameUsername = await User.find({ username: firstName }).exec()
+  if (sameUsername.length > 0) {
+    firstName = ''
+  }
   const sameEmail = await User.find({ email }).exec()
   if (sameEmail.length > 0) {
-    console.log('Email already in use' + email)
-    return res.status(409).json({ message: 'Email already in use' })
+    if (sameEmail[0].googleAuth === '') {
+      sameEmail[0].googleAuth = idToken
+      await sameEmail[0].save()
+    }
+    return res.status(200).json({ message: sameEmail })
   }
   const user = new User({
-    username: '',
+    username: firstName,
     email,
     password: '',
     token: '',
@@ -193,7 +201,7 @@ async function googleLogin (req, res) {
   })
   user.save().then(() => {
     console.log('User created via google')
-    return res.status(200).json({ message: idToken })
+    return res.status(200).json({ message: user })
   }).catch((err) => {
     return res.status(500).json(err)
   })
