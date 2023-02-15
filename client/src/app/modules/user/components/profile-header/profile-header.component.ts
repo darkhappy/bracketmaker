@@ -40,4 +40,8 @@ export class ProfileHeaderComponent {
       }
     });
   }
+
+  changeAvatar() {
+    //TODO: method to change avatar
+  }
 }

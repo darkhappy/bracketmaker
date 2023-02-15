@@ -1,6 +1,9 @@
 <div class="profile-header-container">
   <div class="profile-picture">
-    <img src="{{user.avatar}}" alt="Avatar de {{user.username}}">
+    <div class="flex flex-col justify-center items-center">
+      <img src="{{user.avatar}}" alt="Avatar de {{user.username}}">
+      <button (click)="changeAvatar()">Changer</button>
+    </div>
     <div class="profile-credentials">
       <h1 class="profile-username">{{user.username}}</h1>
       <h2 class="profile-full-name">{{user.display_name}}</h2>
