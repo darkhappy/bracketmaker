@@ -17,7 +17,6 @@ function getUser (req, res) {
     if (err) {
       return res.sendStatus(401)
     }
-    console.log(user)
     return res.json({
       username: user.username,
       email: user.email,
@@ -66,6 +65,12 @@ function login (req, res) {
       }
       return res.sendStatus(401)
     })
+}
+
+function logout (req, res) {
+  res.clearCookie('SESSIONID')
+  res.clearCookie('sessioninfo')
+  return res.sendStatus(204)
 }
 
 async function createUser (req, res) {
@@ -136,7 +141,7 @@ const createToken = async (req, res) => {
   })
 }
 
-function updatePassword (req, res) {
+function resetPassword (req, res) {
   const filter = { token: req.params.token }
   const update = {
     $set: {
@@ -192,7 +197,7 @@ function activateUser (req, res) {
 }
 
 // eslint-disable-next-line camelcase
-function generate_token (length) {
+function generateToken (length) {
   const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('')
   const b = []
   for (let i = 0; i < length; i++) {
@@ -285,10 +290,11 @@ module.exports = {
   login,
   deleteUser,
   createToken,
-  updatePassword,
+  resetPassword,
   getToken,
   activateUser,
   updateProfile,
   changePassword,
+  logout,
 };
 

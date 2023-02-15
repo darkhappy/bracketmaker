@@ -27,4 +27,8 @@ export class UserService {
     return this.http.put<any>('/api/user/password', data);
   }
 
+  logout() : Observable<any> {
+    return this.http.post<any>('/api/user/logout', {});
+  }
+
 }
