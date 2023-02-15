@@ -16,6 +16,13 @@ module.exports = {
         'theme-light-blue': '#6e8f94',
         'theme-dark-blue': '#2d5668'
       },
+      backgroundImage: {
+        'volley': "url('./src/assets/img/grid_2.png')",
+        'hockey': "url('./src/assets/img/grid_0.png')",
+        'chess' : "url('./src/assets/img/grid_4.png')",
+        'soccer' : "url('./src/assets/img/grid_3.png')",
+        'gaming' : "url('./src/assets/img/grid_1.png')"
+      }
     },
   },
   plugins: [],
