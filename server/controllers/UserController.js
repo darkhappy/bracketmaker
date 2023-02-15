@@ -87,7 +87,7 @@ async function createUser (req, res) {
     username,
     email,
     password: bcrypt.hashSync(password, 10),
-    token: generate_token(15),
+    token: generateToken(15),
     isVerified: false,
     show_email: false,
     display_name: '',
@@ -124,7 +124,7 @@ const createToken = async (req, res) => {
     if (err || user.length === 0) {
       return res.status(401).json(err)
     } else {
-      const email = generate_token(20)
+      const email = generateToken(20)
       const filter = { _id: user[0]._id }
       const update = {
         $set: {
