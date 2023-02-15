@@ -60,7 +60,7 @@ function login (req, res) {
         const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
-        res.cookie('sessioninfo', payload)
+        res.cookie('sessioninfo', JSON.stringify(payload))
         return res.sendStatus(204)
       }
       return res.sendStatus(401)
@@ -68,6 +68,7 @@ function login (req, res) {
 }
 
 function logout (req, res) {
+  console.log('logout server')
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
   return res.sendStatus(204)
