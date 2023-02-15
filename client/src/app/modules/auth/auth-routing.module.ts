@@ -4,6 +4,7 @@ import {RegisterComponent} from "@modules/auth/pages/register/register.component
 import {ForgotPasswordComponent} from "@modules/auth/pages/forgot-password/forgot-password.component";
 import {ChangePasswordComponent} from "@modules/user/components/forms/change-password/change-password.component";
 import {ValidateEmailComponent} from "@modules/auth/pages/validate-email/validate-email.component";
+import {UsernameComponent} from "@modules/auth/pages/username/username.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'activate',
     component: ValidateEmailComponent,
+  },
+  {
+    path: 'username',
+    component: UsernameComponent,
   }
 ];
 

@@ -12,6 +12,15 @@ function getAllUsers (req, res) {
   })
 }
 
+function getUserById (req, res) {
+  User.findById(req.params._id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    return res.status(200).json({ message: user })
+  })
+}
+
 function getUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -56,8 +65,14 @@ function login (req, res) {
         return res.sendStatus(401)
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
-        const payload = { id: user._id }
-        const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
+        const payload = { id: user.id }
+        const key = crypto.randomBytes(16)
+        const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
+
+        const result = dotenv.config()
+        const conn = result.parsed.CONNECTION_STRING
+
+        fs.writeFileSync('.env', 'SECRET_KEY="' + key + '"\nCONNECTION_STRING="' + conn + '"')
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', JSON.stringify(payload))
@@ -68,7 +83,6 @@ function login (req, res) {
 }
 
 function logout (req, res) {
-  console.log('logout server')
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
   return res.sendStatus(204)
@@ -105,15 +119,16 @@ async function createUser (req, res) {
 }
 
 function updateUser (req, res) {
-  const user = User.findById(req.body)
-  user.username = req.body.username
-  user.email = req.body.email
-  user.password = req.body.password
-  user.save().then(() => {
-    return res.status(204)
-  }).catch((err) => {
-    return res.status(500).json(err)
+  const { _id, username } = req.body.message
+  User.findById(_id).exec((err, user) => {
+    user.username = username
+    user.save().then(() => {
+      return res.status(200)
+    }).catch((err) => {
+      return res.status(500).json(err)
+    })
   })
+
 }
 
 function deleteUser (req, res) {
@@ -208,9 +223,8 @@ function generateToken (length) {
   return b.join('')
 }
 
-function updateProfile(req, res) {
-  
-  let showEmail = req.body.showEmail;
+function updateProfile (req, res) {
+  let showEmail = req.body.showEmail
   const displayName = req.body.displayName !== '' ? req.body.displayName : ''
   const about = req.body.about !== '' ? req.body.about : ''
   if (showEmail === '') {
@@ -221,65 +235,105 @@ function updateProfile(req, res) {
     $set: {
       display_name: displayName,
       about: about,
-      show_email: showEmail,
-    },
-  };
-  const options = { upsert: true };
+      show_email: showEmail
+    }
+  }
+  const options = { upsert: true }
   User.updateOne(filter, update, options).then(() => {
-    return res.sendStatus(204);
+    return res.sendStatus(204)
   }).catch((err) => {
-    return res.status(400).json(err);
-  });
+    return res.status(400).json(err)
+  })
 }
 
 const changeUsername = async (req, res) => {
   User.findById(req.payload.id).exec(async (err, user) => {
     if (!user) {
-      return res.status(401).json(err);
+      return res.status(401).json(err)
     }
 
     if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(401).json({ message: "Wrong password" });
+      return res.status(401).json({ message: 'Wrong password' })
     }
-
-    const sameUsername = await User.find({ username }).exec();
+    const username = user.username
+    const sameUsername = await User.find({ username }).exec()
     if (sameUsername.length > 0) {
-      return res.status(409).json({ message: "Username already exists" });
+      return res.status(409).json({ message: 'Username already exists' })
     }
 
-    user.username = req.body.username;
+    user.username = req.body.username
     user.save().then(() => {
-      return res.sendStatus(204);
+      return res.sendStatus(204)
     }).catch((err) => {
-      return res.status(500).json(err);
-    });
-  });
-};
+      return res.status(500).json(err)
+    })
+  })
+}
 
 const changeEmail = async (req, res) => {
   // same exact thing as changeUsername
   User.findById(req.payload.id).exec(async (err, user) => {
     if (!user) {
-      return res.status(401).json(err);
+      return res.status(401).json(err)
     }
 
     if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(401).json({ message: "Wrong password" });
+      return res.status(401).json({ message: 'Wrong password' })
     }
 
-    const sameEmail = await User.find({ email }).exec();
+    const sameEmail = await User.find({ email }).exec()
     if (sameEmail.length > 0) {
-      return res.status(409).json({ message: "Email already exists" });
+      return res.status(409).json({ message: 'Email already exists' })
     }
 
-    user.email = req.body.email;
+    user.email = req.body.email
     user.save().then(() => {
-      return res.sendStatus(204);
+      return res.sendStatus(204)
     }).catch((err) => {
-      return res.status(500).json(err);
-    });
-  });
-};
+      return res.status(500).json(err)
+    })
+  })
+}
+
+async function googleLogin (req, res) {
+  console.log(req.body)
+  let { email, idToken, name } = req.body
+
+  const sameUsername = await User.find({ username: name }).exec()
+  if (sameUsername.length > 0) {
+    name = ''
+  }
+  const sameEmail = await User.find({ email }).exec()
+  if (sameEmail.length > 0) {
+    if (sameEmail[0].googleAuth === '') {
+      sameEmail[0].googleAuth = idToken
+      await sameEmail[0].save()
+    }
+    return res.status(200).json({ message: sameEmail })
+  }
+  const user = new User({
+    username: name,
+    email,
+    password: '',
+    token: '',
+    isVerified: true,
+    about: '',
+    avatar: '',
+    googleAuth: idToken
+  })
+  user.save().then(() => {
+    console.log('User created via google')
+
+    const payload = { id: user._id }
+    const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
+
+    res.cookie('SESSIONID', jwtToken, { httpOnly: true })
+    res.cookie('sessioninfo', JSON.stringify(payload))
+    return res.status(200).json({ message: user })
+  }).catch((err) => {
+    return res.status(500).json(err)
+  })
+}
 
 module.exports = {
   changeUsername,
@@ -296,6 +350,7 @@ module.exports = {
   activateUser,
   updateProfile,
   changePassword,
-  logout,
-};
-
+  googleLogin,
+  getUserById,
+  logout
+}

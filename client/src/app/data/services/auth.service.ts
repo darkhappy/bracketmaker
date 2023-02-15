@@ -59,4 +59,13 @@ export class AuthService {
   activateEmail(token: any) {
     return this.http.get<any>(`/api/user/activate/?token=${token.token}`);
   }
+
+  googleLogin(user: any) {
+    return this.http.post<any>(`/api/google`, user)
+  }
+
+  googleChangeUsername(id: string){
+    return this.http.put(`/api/google/`, {id: id})
+  }
+
 }
