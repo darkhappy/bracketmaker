@@ -57,7 +57,6 @@ function changePassword (req, res) {
   })
 }
 
-
 function login (req, res) {
   User.findOne({ username: req.body.username },
     (err, user) => {
@@ -66,13 +65,11 @@ function login (req, res) {
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const payload = { id: user.id }
-        const key = crypto.randomBytes(16)
+        const key = process.env.SECRET_KEY;
         const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
 
         const result = dotenv.config()
         const conn = result.parsed.CONNECTION_STRING
-
-        fs.writeFileSync('.env', 'SECRET_KEY="' + key + '"\nCONNECTION_STRING="' + conn + '"')
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', JSON.stringify(payload))
@@ -85,7 +82,17 @@ function login (req, res) {
 function logout (req, res) {
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
-  return res.sendStatus(204)
+  User.findOne({ _id: req.payload.id }, (err, user) => {
+    if (err) {
+      return res.sendStatus(401)
+    }
+    user.token = ''
+    user.save().then(() => {
+      return res.sendStatus(204)
+    }).catch((err) => {
+      return res.status(500).json(err)
+    })
+  });
 }
 
 async function createUser (req, res) {
