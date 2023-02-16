@@ -1,0 +1,42 @@
+.profile-header-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5%;
+  height: 25%;
+}
+
+.profile-picture {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  border: azure 5px solid;
+  border-radius: 50%;
+  width: 10rem;
+  height: 10rem;
+}
+
+.profile-credentials {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 5%;
+}
+
+.profile-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 35%;
+}
+
+hr {
+  width: 100%;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}

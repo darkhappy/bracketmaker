@@ -1,0 +1,18 @@
+<div class="flex flex-col p-8 gap-4">
+  <div class="mb-4">
+    <h1 class="text-xl font-bold">Changer votre nom courriel</h1>
+    <p class="text-lg font-medium">Présentement, votre courriel est <strong>test@darkh.app</strong>.</p>
+  </div>
+  <form class="flex flex-col gap-2" [formGroup]="formChangeEmail">
+    <mat-form-field>
+      <input matInput placeholder="Nouveau courriel" name="email" type="email" required>
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Mot de passe" name="password" type="password" required>
+    </mat-form-field>
+    <div class="grid md:grid-cols-2 gap-2">
+      <button mat-raised-button color="primary" type="submit">Changer</button>
+      <button mat-raised-button type="submit">Annuler</button>
+    </div>
+  </form>
+</div>

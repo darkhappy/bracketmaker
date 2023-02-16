@@ -1,10 +1,14 @@
-<mat-toolbar color="primary">
-  <span class="logo" (click)="navigate('/home')"><img alt="logo" src="assets/logo.svg"></span>
-  <button mat-button (click)="navigate('/tour')">Tournois</button>
-  <button mat-button (click)="navigate('/orgs')">Organisateurs</button>
-  <span class="spacing"></span>
-  <div>
-    <button mat-button (click)="navigate('/auth/login')">Connexion</button>
-    <button mat-button (click)="navigate('/auth/register')" color="accent">Inscription</button>
+<div class="flex flex-row justify-between border-b-2 border-white bg-gradient-to-r from-theme-beige to-theme-dark-blue">
+  <div class="flex flex-row justify-start items-center m-3 text-xl text-theme-red font-bold gap-8">
+    <img (click)="navigate('/home')" alt="logo" src="assets/logo-simple.svg">
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/tournament/view')">Tournois</button>
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/orgs')">Organisateurs</button>
   </div>
-</mat-toolbar>
+  <div *ngIf="!userConnected()" class="text-xl font-bold flex flex-row items-center gap-8">
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/auth/login')">Connexion</button>
+    <button class="uppercase from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue rounded-lg px-5 py-2.5 text-center mr-2 mb-2" (click)="navigate('/auth/register')">Inscription</button>
+  </div>
+  <div *ngIf="userConnected()" class="text-xl font-bold flex flex-row items-center m-3">
+    <button class="uppercase from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue rounded-lg px-5 py-2.5 text-center mr-2 mb-2" (click)="logout()">Déconnexion</button>
+  </div>
+</div>
