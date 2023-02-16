@@ -10,7 +10,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
 import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
 import { ProfileContentComponent } from './components/profile-content/profile-content.component';
-import {MatTabsModule} from "@angular/material/tabs";
+import { MatTabsModule } from "@angular/material/tabs";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatSliderModule } from "@angular/material/slider";
@@ -22,6 +22,7 @@ import { ChangeUsernameComponent } from './components/forms/change-username/chan
 import { MatDialogModule } from "@angular/material/dialog";
 import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
 import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import { ViewUsersCardComponent } from './components/view-users-card/view-users-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { ViewUsersCardListComponent } from './components/view-users-card-list/view-users-card-list.component';
@@ -59,6 +60,7 @@ import {MatSelectModule} from '@angular/material/select';
     MatSliderModule,
     MatSlideToggleModule,
     MatDialogModule,
+    FontAwesomeModule,
     MatCardModule,
     MatSelectModule,
   ],

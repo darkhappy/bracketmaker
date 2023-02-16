@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
+
 @Component({
   selector: 'app-profile-header',
   templateUrl: './profile-header.component.html',
@@ -22,25 +23,25 @@ export class ProfileHeaderComponent {
   ngOnInit(): void {
     this.userService.getUser().subscribe({
       next: user => {
-        console.log(user);
         this.user = {
           username: user.username,
           email: user.email,
           display_name: user.display_name,
           about: user.about,
           showEmail: user.showEmail,
-          avatar: user.avatar,          
+          avatar: user.avatar,
         };
         if (!this.user.showEmail) {
           this.user.email = '';
         }
-        console.log(this.user.username);
       },
       error: (error) => {
         console.log(error);
       }
     });
-    
   }
 
+  changeAvatar() {
+    //TODO: method to change avatar
+  }
 }
