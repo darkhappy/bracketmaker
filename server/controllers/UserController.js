@@ -9,7 +9,7 @@ const { CONNREFUSED } = require('dns')
 function getUsers (req, res) {
   User.find({}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
     if (err) {
-      return res.sendStatus(401)
+      return res.status(401).json({message: "fuck"});
     }
     return res.json(users)
   })
@@ -18,7 +18,7 @@ function getUsers (req, res) {
 function getUserById (req, res) {
   User.findById(req.params._id).exec((err, user) => {
     if (err) {
-      return res.sendStatus(401)
+      return res.status(401).json({message: "a"});
     }
     return res.status(200).json({ message: user })
   })
@@ -27,7 +27,7 @@ function getUserById (req, res) {
 function getUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.sendStatus(401)
+      return res.status(401).json({message: "ab"});
     }
     return res.json({
       username: user.username,
@@ -45,7 +45,7 @@ function getUser (req, res) {
 function changePassword (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.sendStatus(401)
+      return res.status(401).json({message: "asdafb"});
     }
     if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
       user.password = bcrypt.hashSync(req.body.newPassword, 10)
@@ -55,7 +55,7 @@ function changePassword (req, res) {
         return res.status(500).json(err)
       })
     } else {
-      return res.sendStatus(401)
+      return res.status(401).json({message: "asdahdstfb"});
     }
   })
 }
@@ -64,7 +64,7 @@ function login (req, res) {
   User.findOne({ username: req.body.username },
     (err, user) => {
       if (err) {
-        return res.sendStatus(401)
+        return res.status(401).json({message: "asdahd658stfb"});
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const payload = { id: user.id }
@@ -78,16 +78,17 @@ function login (req, res) {
         res.cookie('sessioninfo', JSON.stringify(payload))
         return res.sendStatus(204)
       }
-      return res.sendStatus(401)
+      return res.status(401).json({message: "asdahd3476658stfb"});
     })
 }
 
 function logout (req, res) {
+  console.log(req.payload)
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
   User.findOne({ _id: req.payload.id }, (err, user) => {
     if (err) {
-      return res.sendStatus(401)
+      return res.status(401).json({message: "asdaerhd658stfb"});
     }
     user.token = ''
     user.save().then(() => {
@@ -201,6 +202,7 @@ function getToken (req, res) {
 }
 
 function activateUser (req, res) {
+  console.log("penis sticky yuh");
   User.find({ token: req.body.token }).exec((err, users) => {
     const token = req.query.token
     if (!token || err) return res.status(400).json({ message: 'Token not found' })

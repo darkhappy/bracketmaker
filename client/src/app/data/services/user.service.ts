@@ -30,7 +30,7 @@ export class UserService {
     let SESSION_INFO = this.cookieService.get('sessioninfo');
     let SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
     console.log(SESSION_INFO_JSON.id)
-    return this.http.get<User>('/api/user/' + SESSION_INFO_JSON.id);
+    return this.http.get<User>('/api/getUser/' + SESSION_INFO_JSON.id);
   }
 
   updateUser(user: User) : Observable<User> {

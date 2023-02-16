@@ -6,6 +6,16 @@ const matchController = require('./controllers/matchController')
 const playerController = require('./controllers/playerController')
 
 const router = express.Router()
+
+router
+  .use((req, res, next) => {
+    console.log('Time:', Date.now().toLocaleString());
+    console.log('Request Type:', req.method);
+    console.log('Request URL:', req.originalUrl);
+    console.log('Request Body:', req.body);
+    next()
+  })
+
 router
   .route('/user')
   .get(userController.getUser)
@@ -14,7 +24,7 @@ router
   .delete(userController.deleteUser)
 
 router
-  .route('/user/:_id')
+  .route('/getUser/:_id')
   .get(userController.getUserById)
 
 router
@@ -52,6 +62,7 @@ router
 router
   .route("/users")
   .get(userController.getUsers);
+
 router
     .route("/user/logout")
     .post(middleware.isAuth, userController.logout)
