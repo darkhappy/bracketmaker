@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import { FooterComponent } from './layout/footer/footer.component';
 import { NavComponent } from './layout/nav/nav.component';
 import { ContentLayoutComponent } from './layout/content-layout/content-layout.component';
@@ -36,7 +36,6 @@ import { ReactiveFormsModule } from "@angular/forms";
     MatInputModule,
     ReactiveFormsModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

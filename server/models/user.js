@@ -10,6 +10,7 @@ const userSchema = new mongoose.Schema({
   show_email: Boolean,
   about: String,
   avatar: String,
+  googleAuth: String,
   subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }],
   tournaments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }]
 }, {

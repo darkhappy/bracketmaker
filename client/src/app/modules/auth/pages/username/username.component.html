@@ -1,0 +1,14 @@
+<div class="main">
+  <form (ngSubmit)="onSubmit()" [formGroup]="formUsername">
+    <h1 id="title">Bracket Blitz</h1>
+    <p>Il est maintenant temps de choisir un nom d'utilisateur!</p>
+    <mat-form-field>
+      <mat-label>Nom d'utilisateur</mat-label>
+      <input matInput formControlName="username" type="text">
+      <mat-error *ngIf="formUsername.get('username')?.hasError('required')">Le nom d'utilisateur est requis</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Confirmer</button>
+  </form>
+
+</div>
