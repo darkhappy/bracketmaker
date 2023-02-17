@@ -7,7 +7,7 @@
                     <h4>Rechercher</h4>
                     <mat-form-field appearance="fill">
                         <mat-label>Rechercher un organisateur</mat-label>
-                        <input matInput type="text" class="w-full h-full" placeholder="Rechercher un organisateur" [(ngModel)]="search">
+                        <input matInput type="text" class="w-full h-full" (change)="onSearchChange()" placeholder="Rechercher un organisateur" [(ngModel)]="search">
                     </mat-form-field>
                 </div>
             </div>

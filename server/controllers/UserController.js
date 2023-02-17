@@ -9,7 +9,8 @@ const { CONNREFUSED } = require('dns')
 function getUsers (req, res) {
   User.find({}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
     if (err) {
-      return res.status(401).json({message: "fuck"});
+      console.log("Yo")
+      return res.status(400);
     }
     return res.json(users)
   })
@@ -39,6 +40,97 @@ function getUser (req, res) {
       subscriptions: user.subscriptions,
       tournaments: user.tournaments
     })
+  })
+}
+
+function createUsers(req, res) {
+  const users = [
+  new User({
+    username: "test",
+    email: "test@test",
+    token: "",
+    isVerified: true,
+    password: bcrypt.hashSync("test", 10),
+    display_name: "Jean-Philippe Miguel",
+    show_email: true,
+    about: "I am a test user",
+    avatar: "",
+    googleAuth: "",
+    subscriptions: [],
+    tournaments: []
+  }),
+  new User({
+    username: "test2",
+    email: "test2@test",
+    token: "",
+    isVerified: true,
+    password: bcrypt.hashSync("test", 10),
+    display_name: "Jean-Philippe Miguel",
+    show_email: true,
+    about: "I am a test user",
+    avatar: "",
+    googleAuth: "",
+    subscriptions: [],
+    tournaments: []
+  }),
+  new User({
+    username: "test3",
+    email: "test3@test",
+    token: "",
+    isVerified: true,
+    password: bcrypt.hashSync("test", 10),
+    display_name: "Jean-Philippe Miguel",
+    show_email: true,
+    about: "I am a test user",
+    avatar: "",
+    googleAuth: "",
+    subscriptions: [],
+    tournaments: []
+  }),
+  new User({
+    username: "Coucou",
+    email: "coucou@coucou",
+    token: "",
+    isVerified: true,
+    password: bcrypt.hashSync("test", 10),
+    display_name: "Je suis coucou",
+    show_email: true,
+    about: "hey",
+    avatar: "",
+    googleAuth: "",
+    subscriptions: [],
+    tournaments: []
+  }),
+  new User({
+    username: "Raph",
+    email: "Raph@raph",
+    token: "",
+    isVerified: true,
+    password: bcrypt.hashSync("test", 10),
+    display_name: "Raphael Rail",
+    show_email: true,
+    about: "Je suis Raph",
+    avatar: "",
+    googleAuth: "",
+    subscriptions: [],
+    tournaments: []
+  })
+  ]
+  User.insertMany(users, (err, docs) => {
+    if (err) {
+      return res.status(400).json(err)
+    }
+    return res.status(200).json(docs)
+  })
+}
+
+function search(req, res) {
+  let search = new RegExp('.*' + req.params.search + '.*')
+  User.find({'username': search}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
+    if (err) {
+      return res.status(400);
+    }
+    return res.json(users)
   })
 }
 
@@ -364,5 +456,7 @@ module.exports = {
   changePassword,
   googleLogin,
   getUserById,
-  logout
+  logout,
+  createUsers,
+  search
 }

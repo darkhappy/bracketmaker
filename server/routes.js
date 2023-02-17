@@ -7,6 +7,8 @@ const playerController = require('./controllers/playerController')
 
 const router = express.Router()
 
+router.route("/createUsers").get(userController.createUsers)
+
 router
   .use((req, res, next) => {
     console.log('Time:', Date.now().toLocaleString());
@@ -62,6 +64,10 @@ router
 router
   .route("/users")
   .get(userController.getUsers);
+
+router
+  .route("/users/search/:search")
+  .get(userController.search)
 
 router
     .route("/user/logout")

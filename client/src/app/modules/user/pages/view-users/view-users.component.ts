@@ -29,4 +29,13 @@ export class ViewUsersComponent {
   onOptionsSelected(event: any) {
     console.log("yo");
   }
+
+  onSearchChange() {
+    this.userService.searchUsers(this.search).subscribe({
+      next: (users) => {
+        
+        this.organizers = users;
+      }
+    });
+  }
 }

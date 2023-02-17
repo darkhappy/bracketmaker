@@ -52,4 +52,8 @@ export class UserService {
     return this.http.get<any[]>('/api/users');
   }
 
+  searchUsers(search: string) : Observable<any[]> {
+    return this.http.get<any[]>('/api/users/search/' + search);
+  }
+
 }
