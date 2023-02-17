@@ -44,12 +44,15 @@ export class CreateComponent {
         }
       });
     }
+    this.name = '';
   }
 
   ajouter(): void {
     let player = new PlayerModel();
-    player.name= this.name
+    player.name= this.name;
+    this.name = '';
     this.players.push(player);
+
   }
 
   setType(type : String){
