@@ -5,6 +5,7 @@ function getTournament (req, res) {
 }
 
 function createTournament (req, res) {
+    console.log(req.body)
     let tournament = new Tournament(req.body);
 
     tournament.save().then(() => {

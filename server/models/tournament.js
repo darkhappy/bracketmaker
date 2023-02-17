@@ -11,7 +11,7 @@ const tournamentSchema = new mongoose.Schema({
     visibility: String,
     location: String,
     game: String,
-    players : [Player.schema],
+    players : [],
     matches : [Match.schema]
 });
 

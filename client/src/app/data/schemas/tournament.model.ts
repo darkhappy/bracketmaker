@@ -9,5 +9,5 @@ export class TournamentModel {
   visibility : String = "";
   location: String = "";
   game: String = "";
-  player: PlayerModel[] = [];
+  players: PlayerModel[] = [];
 }

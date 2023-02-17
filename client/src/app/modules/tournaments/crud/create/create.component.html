@@ -21,18 +21,18 @@
     </mat-form-field>
 
     <h2>Visibilité</h2>
-    <mat-radio-group >
-      <mat-radio-button value="1" [checked]="true">Publique</mat-radio-button>
-      <mat-radio-button value="2">privé</mat-radio-button>
-      <mat-radio-button value="3">Non listé</mat-radio-button>
+    <mat-radio-group formControlName="bracket_type" [ngModel]="selectedRadio">
+      <mat-radio-button (click)="setType('public')" [checked]="true">Publique</mat-radio-button>
+      <mat-radio-button (click)="setType('private')">privé</mat-radio-button>
+      <mat-radio-button (click)="setType('unlisted')">Non listé</mat-radio-button>
     </mat-radio-group><br>
 
     <h2>Type</h2>
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
       <mat-select formControlName="bracket_type">
-        <mat-option value="Élimination Simple">Élimination Simple</mat-option>
-        <mat-option value="Double Élimination">Double Élimination</mat-option>
+        <mat-option value="Simple">Élimination Simple</mat-option>
+        <mat-option value="Double">Double Élimination</mat-option>
         <mat-option value="Round Robin">Round Robin</mat-option>
       </mat-select>
     </mat-form-field>
@@ -52,13 +52,13 @@
     <h2>Nom des participants</h2>
     <mat-form-field>
       <mat-label>Nom des participants</mat-label>
-      <input matInput formControlName="player" type="text" [(ngModel)]="name">
+      <input matInput formControlName="players" type="text" [(ngModel)]="name">
     </mat-form-field>
     <button mat-raised-button color="primary" type="button" (click) = "ajouter()">Ajouter</button>
 
     <ul>
-      <li *ngFor="let joueur of joueurs">
-        {{ joueur.name }}
+      <li *ngFor="let player of players">
+        {{ player.name }}
       </li>
     </ul>
 

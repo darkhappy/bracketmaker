@@ -11,8 +11,9 @@ import { TournamentService } from "@data/services/tournament.service";
 export class CreateComponent {
   // @ts-ignore
   formCreate : FormGroup;
-  joueurs: PlayerModel[] = [];
+  players: PlayerModel[] = [];
   name: String = "";
+  selectedRadio: String = "";
 
   constructor(private fb: FormBuilder, private tournamentService: TournamentService) { }
 
@@ -22,14 +23,17 @@ export class CreateComponent {
       description: ['', Validators.required],
       date: ['', Validators.required],
       bracket_type: ['', Validators.required],
-      //visibility: ['', Validators.required],
+      visibility: ['', Validators.required],
       location: ['', Validators.required],
       game: ['', Validators.required],
-      player: ['', Validators.required],
+      players: [''],
     });
   }
   onSubmit(){
-  this.formCreate
+    this.formCreate.patchValue({
+      players: this.players,
+      visibility:this.selectedRadio,
+    });
     if (this.formCreate?.valid) {
       this.tournamentService.createTournament(this.formCreate.value).subscribe( {
         next: () => {
@@ -48,6 +52,10 @@ export class CreateComponent {
   ajouter(): void {
     let player = new PlayerModel();
     player.name= this.name
-    this.joueurs.push(player);
+    this.players.push(player);
+  }
+
+  setType(type : String){
+      this.selectedRadio = type;
   }
 }
