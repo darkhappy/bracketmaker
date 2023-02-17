@@ -16,7 +16,7 @@
                     <h4>Trier</h4>
                     <mat-form-field appearance="fill">
                     <mat-label>Trier par</mat-label>
-                    <mat-select (change)="onOptionsSelected($event)">
+                    <mat-select (selectionChange)="onOptionsSelected()" [(ngModel)]="sort">
                         <mat-option *ngFor="let choice of choices" [value]="choice">
                         {{choice}}
                         </mat-option>

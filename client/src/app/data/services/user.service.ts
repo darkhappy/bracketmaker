@@ -53,6 +53,9 @@ export class UserService {
   }
 
   searchUsers(search: string) : Observable<any[]> {
+    if (search == '') {
+      return this.getUsers();
+    }
     return this.http.get<any[]>('/api/users/search/' + search);
   }
 

@@ -125,7 +125,7 @@ function createUsers(req, res) {
 }
 
 function search(req, res) {
-  let search = new RegExp('.*' + req.params.search + '.*')
+  let search = new RegExp('.*' + req.params.search + '.*', 'i')
   User.find({'username': search}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
     if (err) {
       return res.status(400);
@@ -294,7 +294,6 @@ function getToken (req, res) {
 }
 
 function activateUser (req, res) {
-  console.log("penis sticky yuh");
   User.find({ token: req.body.token }).exec((err, users) => {
     const token = req.query.token
     if (!token || err) return res.status(400).json({ message: 'Token not found' })
