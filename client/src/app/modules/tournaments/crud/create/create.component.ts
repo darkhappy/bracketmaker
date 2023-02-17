@@ -37,15 +37,12 @@ export class CreateComponent {
     if (this.formCreate?.valid) {
       this.tournamentService.createTournament(this.formCreate.value).subscribe( {
         next: () => {
-          alert('good');
+          alert('le tournoi a été créé');
         },
         error: (error) => {
-          alert("bad");
+          console.log(error);
         }
       });
-    }else{
-      console.log('erreur dan le form')
-      console.log(this.formCreate.value)
     }
   }
 
