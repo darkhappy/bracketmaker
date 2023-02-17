@@ -10,6 +10,7 @@ export class CreateComponent {
   // @ts-ignore
   formCreate : FormGroup;
   constructor(private fb: FormBuilder) { }
+
   ngOnInit(): void {
     this.formCreate = this.fb.group({
       name: ['', Validators.required],

@@ -35,6 +35,12 @@ const routes: Routes = [
         loadChildren: () => {
           return import('@modules/auth/auth.module').then(m => m.AuthModule);
         }
+      },
+      {
+        path: 'tournament',
+        loadChildren: () => {
+          return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
+        }
       }
     ],
   },

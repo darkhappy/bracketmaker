@@ -1,8 +1,61 @@
 <div class="main">
   <form (ngSubmit)="onSubmit()" [formGroup]="formCreate">
-    <h1 id="title">Nouveau Tournoi</h1>
+    <h2>Nom</h2>
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="name" type="text">
+    </mat-form-field>
 
+    <h2>Description</h2>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" type="text"></textarea>
+    </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Se connecter</button>
+    <h2>Date</h2>
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="picker">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <h2>Visibilité</h2>
+    <mat-radio-group name="visibility" formControlName="visibility">
+      <mat-radio-button value="1" [checked]="true">Publique</mat-radio-button>
+      <mat-radio-button value="2">privé</mat-radio-button>
+      <mat-radio-button value="3">Non listé</mat-radio-button>
+    </mat-radio-group><br>
+
+    <h2>Type</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select>
+        <mat-option value="1">Élimination Simple</mat-option>
+        <mat-option value="2">Double Élimination</mat-option>
+        <mat-option value="3">Round Robin</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h2>Location</h2>
+    <mat-form-field>
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" type="text">
+    </mat-form-field>
+
+    <h2>Jeux</h2>
+    <mat-form-field>
+      <mat-label>Jeux</mat-label>
+      <input matInput formControlName="game" type="text">
+    </mat-form-field>
+
+    <h2>Nom des participants</h2>
+    <mat-form-field>
+      <mat-label>Nom des participants</mat-label>
+      <input matInput formControlName="player" type="text">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="button">Ajouter</button>
+
+    <br><br><button mat-raised-button color="primary" type="submit">Créer le tournoi</button>
   </form>
 </div>
