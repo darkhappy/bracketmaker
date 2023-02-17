@@ -21,7 +21,7 @@
     </mat-form-field>
 
     <h2>Visibilité</h2>
-    <mat-radio-group name="visibility" formControlName="visibility">
+    <mat-radio-group >
       <mat-radio-button value="1" [checked]="true">Publique</mat-radio-button>
       <mat-radio-button value="2">privé</mat-radio-button>
       <mat-radio-button value="3">Non listé</mat-radio-button>
@@ -30,10 +30,10 @@
     <h2>Type</h2>
     <mat-form-field appearance="fill">
       <mat-label>Type</mat-label>
-      <mat-select>
-        <mat-option value="1">Élimination Simple</mat-option>
-        <mat-option value="2">Double Élimination</mat-option>
-        <mat-option value="3">Round Robin</mat-option>
+      <mat-select formControlName="bracket_type">
+        <mat-option value="Élimination Simple">Élimination Simple</mat-option>
+        <mat-option value="Double Élimination">Double Élimination</mat-option>
+        <mat-option value="Round Robin">Round Robin</mat-option>
       </mat-select>
     </mat-form-field>
 

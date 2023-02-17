@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PlayerModel} from "@data/schemas/Player.model";
+import { TournamentService } from "@data/services/tournament.service";
 
 @Component({
   selector: 'app-create',
@@ -13,7 +14,7 @@ export class CreateComponent {
   joueurs: PlayerModel[] = [];
   name: String = "";
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private tournamentService: TournamentService) { }
 
   ngOnInit(): void {
     this.formCreate = this.fb.group({
@@ -21,14 +22,27 @@ export class CreateComponent {
       description: ['', Validators.required],
       date: ['', Validators.required],
       bracket_type: ['', Validators.required],
-      visibility: ['', Validators.required],
+      //visibility: ['', Validators.required],
       location: ['', Validators.required],
       game: ['', Validators.required],
-      player: this.joueurs,
+      player: ['', Validators.required],
     });
   }
   onSubmit(){
-
+  this.formCreate
+    if (this.formCreate?.valid) {
+      this.tournamentService.createTournament(this.formCreate.value).subscribe( {
+        next: () => {
+          alert('good');
+        },
+        error: (error) => {
+          alert("bad");
+        }
+      });
+    }else{
+      console.log('erreur dan le form')
+      console.log(this.formCreate.value)
+    }
   }
 
   ajouter(): void {
