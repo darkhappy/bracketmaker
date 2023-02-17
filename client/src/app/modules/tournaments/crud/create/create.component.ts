@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {PlayerModel} from "@data/schemas/Player.model";
 
 @Component({
   selector: 'app-create',
@@ -9,6 +10,9 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class CreateComponent {
   // @ts-ignore
   formCreate : FormGroup;
+  joueurs: PlayerModel[] = [];
+  name: String = "";
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -20,10 +24,16 @@ export class CreateComponent {
       visibility: ['', Validators.required],
       location: ['', Validators.required],
       game: ['', Validators.required],
-      player: ['', Validators.required],
+      player: this.joueurs,
     });
   }
   onSubmit(){
 
+  }
+
+  ajouter(): void {
+    let player = new PlayerModel();
+    player.name= this.name
+    this.joueurs.push(player);
   }
 }

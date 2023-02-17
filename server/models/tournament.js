@@ -8,6 +8,9 @@ const tournamentSchema = new mongoose.Schema({
     bracket_type : String,
     category : String,
     date : Date,
+    visibility: String,
+    location: String,
+    game: String,
     players : [Player.schema],
     matches : [Match.schema]
 });
