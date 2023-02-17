@@ -12,7 +12,7 @@ export class CreateComponent {
   // @ts-ignore
   formCreate : FormGroup;
   players: PlayerModel[] = [];
-  name: String = "";
+  playerName: String = "";
   selectedRadio: String = "";
 
   constructor(private fb: FormBuilder, private tournamentService: TournamentService) { }
@@ -30,11 +30,9 @@ export class CreateComponent {
     });
   }
   onSubmit(){
-    this.formCreate.patchValue({
-      players: this.players,
-      visibility:this.selectedRadio,
-    });
+    this.formCreate.patchValue({visibility:this.selectedRadio,});
     if (this.formCreate?.valid) {
+      this.formCreate.patchValue({players:this.players,});
       this.tournamentService.createTournament(this.formCreate.value).subscribe( {
         next: () => {
           alert('le tournoi a été créé');
@@ -44,15 +42,13 @@ export class CreateComponent {
         }
       });
     }
-    this.name = '';
   }
 
   ajouter(): void {
     let player = new PlayerModel();
-    player.name= this.name;
-    this.name = '';
+    player.name= this.playerName;
+    this.playerName = '';
     this.players.push(player);
-
   }
 
   setType(type : String){
