@@ -11,14 +11,15 @@ export class ViewUsersComponent {
   choices : string[] = ['Aucun', 'A-Z', 'Z-A', 'Populaires', 'Moins populaires'];
   sort : string = 'Aucun';
   organizers : any[] = []
+  organizersCopy : any[] = []
 
   constructor(private userService: UserService) {
   }
   ngOnInit() {
     this.userService.getUsers().subscribe({
       next: (users) => {
-        console.log(users);
         this.organizers = users;
+        this.organizersCopy = users;
       },
       error: (err) => {
         console.log(err);
@@ -28,6 +29,9 @@ export class ViewUsersComponent {
 
   onOptionsSelected() {
     switch (this.sort) {
+      case 'Aucun':
+        this.ngOnInit();
+        break
       case 'A-Z':
         this.organizers.sort((a, b) => {
           if (a.username < b.username) {
