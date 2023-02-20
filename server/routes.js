@@ -20,7 +20,7 @@ router
 
 router
   .route('/user')
-  .get(userController.getUser)
+  .get(middleware.isAuth, userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)

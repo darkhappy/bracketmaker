@@ -26,7 +26,9 @@ function getUserById (req, res) {
 }
 
 function getUser (req, res) {
+  console.log("payload is " + req.payload)
   User.findById(req.payload.id).exec((err, user) => {
+    console.log("This user" + user)
     if (err) {
       return res.status(401).json({message: "ab"});
     }
