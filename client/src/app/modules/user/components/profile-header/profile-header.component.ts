@@ -42,6 +42,6 @@ export class ProfileHeaderComponent {
   }
 
   changeAvatar() {
-    //TODO: method to change avatar
+    console.log('change avatar');
   }
 }

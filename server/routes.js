@@ -8,13 +8,13 @@ const playerController = require('./controllers/playerController')
 const router = express.Router()
 router
   .route('/user')
-  .get(userController.getUser)
+  .get(middleware.isAuth, userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
 
 router
-  .route('/user/:_id')
+  .route('/user/getOneUser/:_id')
   .get(userController.getUserById)
 
 router

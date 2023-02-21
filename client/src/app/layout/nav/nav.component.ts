@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {AuthService} from "@data/services/auth.service";
-
+import {User} from "@data/schemas/user";
+import {UserService} from "@data/services/user.service";
+import {Observable} from "rxjs";
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -9,14 +11,30 @@ import {AuthService} from "@data/services/auth.service";
 })
 export class NavComponent {
 
-  constructor(private router: Router, private authService: AuthService) {
+  @Input() user: any = {
+    username: '',
+    avatar: '',
+  }
+
+  constructor(private router: Router, private authService: AuthService, private userService: UserService) {
   }
 
   userConnected(): Boolean {
     return this.authService.getUserId() !== null;
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.userService.getUser().subscribe({
+      next: user => {
+        this.user = {
+          username: user.username,
+          avatar: user.avatar,
+        };
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 
   navigate(path: string) {
