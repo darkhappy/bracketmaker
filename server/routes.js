@@ -13,9 +13,7 @@ router
   .put(userController.updateUser)
   .delete(userController.deleteUser)
 
-router
-  .route('/user/:_id')
-  .get(userController.getUserById)
+
 
 router
   .route('/user/activate')
