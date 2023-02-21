@@ -1,22 +1,3 @@
-.home-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-}
-
-.home-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 5% 20px 0;}
-
-.home-buttons {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+button {
+  @apply text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue font-medium rounded-lg px-5 py-2.5 text-center mr-2 mb-2;
 }

@@ -1,16 +1,25 @@
 <mat-tab-nav-panel>
   <mat-tab-group>
-    <mat-tab label="Mes Tournois">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span><fa-icon [icon]="boxArchive"></fa-icon> Mes Tournois</span>
+      </ng-template>
       <ng-template matTabContent>
-        <p>liste mes tournois le component va la genre</p>
+        <p>Tournois component</p>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Tournois suivis">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span><fa-icon [icon]="users"></fa-icon> Tournois Suivis</span>
+      </ng-template>
       <ng-template matTabContent>
-        <p>Tournois suivis component</p>
+        <p>Tournois Suivis component</p>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Paramètres">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span><fa-icon [icon]="gear"></fa-icon> Paramètres</span>
+      </ng-template>
       <ng-template matTabContent>
         <app-settings (event)="updateProfile($event)"></app-settings>
       </ng-template>

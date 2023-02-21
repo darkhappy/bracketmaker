@@ -5,6 +5,6 @@ export interface User {
   about: String,
   showEmail: Boolean,
   avatar: String,
-  subsctiptions: [String],
+  subscriptions: [String],
   tournaments: [String],
 }
