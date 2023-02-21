@@ -60,7 +60,7 @@ export class UserService {
   }
 
   getProfile(username: string) : Observable<any> {
-    return this.http.get<any>('/api/user/profile/' + username);
+    return this.http.get<any>('/api/user/getProfile/' + username);
   }
 
 }

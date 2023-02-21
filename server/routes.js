@@ -34,10 +34,10 @@ router
 
 router
   .route('/user/profile')
-  .get(middleware.isAuth, userController.updateProfile);
+  .put(middleware.isAuth, userController.updateProfile);
 
 router
-  .route('/user/profile/:username')
+  .route('/user/getProfile/:username')
   .get(userController.getProfile);
 
 router

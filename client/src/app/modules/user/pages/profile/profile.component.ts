@@ -31,6 +31,25 @@ export class ProfileComponent {
           console.log(this.user);
         }
       });
+    } else {
+      this.userService.getUser().subscribe({
+        next: user => {
+          this.user = {
+            username: user.username,
+            email: user.email,
+            display_name: user.display_name,
+            about: user.about,
+            showEmail: user.showEmail,
+            avatar: user.avatar,
+          };
+          if (!this.user.showEmail) {
+            this.user.email = '';
+          }
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
     }
   }
   updateProfile(user: any) {
