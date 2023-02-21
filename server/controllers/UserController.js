@@ -328,6 +328,17 @@ function generateToken (length) {
   return b.join('')
 }
 
+function getProfile(req, res) {
+  console.log(req.params.username)
+  
+  User.findOne({username: req.params.username}, {username:1, email:1, display_name:1, about:1, show_email:1, avatar:1}).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(400);
+    }
+    return res.status(200).json(user);
+  });
+}
+
 function updateProfile (req, res) {
   let showEmail = req.body.showEmail
   const displayName = req.body.displayName !== '' ? req.body.displayName : ''
@@ -459,5 +470,6 @@ module.exports = {
   getUserById,
   logout,
   createUsers,
-  search
+  search,
+  getProfile
 }

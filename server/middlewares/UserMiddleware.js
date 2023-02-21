@@ -15,7 +15,7 @@ const isAuth = (req, res, next) => {
         }
         req.payload = payload;
         console.log("the payload is " + JSON.stringify(payload))
-        next();
+        return next();
     });
 }
 

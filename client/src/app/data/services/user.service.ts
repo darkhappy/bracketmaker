@@ -59,4 +59,8 @@ export class UserService {
     return this.http.get<any[]>('/api/users/search/' + search);
   }
 
+  getProfile(username: string) : Observable<any> {
+    return this.http.get<any>('/api/user/profile/' + username);
+  }
+
 }

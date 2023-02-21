@@ -10,15 +10,6 @@ const router = express.Router()
 router.route("/createUsers").get(userController.createUsers)
 
 router
-  .use((req, res, next) => {
-    console.log('Time:', Date.now().toLocaleString());
-    console.log('Request Type:', req.method);
-    console.log('Request URL:', req.originalUrl);
-    console.log('Request Body:', req.body);
-    next()
-  })
-
-router
   .route('/user')
   .get(middleware.isAuth, userController.getUser)
   .post(userController.createUser)
@@ -43,7 +34,11 @@ router
 
 router
   .route('/user/profile')
-  .put(middleware.isAuth, userController.updateProfile);
+  .get(middleware.isAuth, userController.updateProfile);
+
+router
+  .route('/user/profile/:username')
+  .get(userController.getProfile);
 
 router
     .route('/user/update')

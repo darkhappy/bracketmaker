@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-view-users-card',
@@ -17,6 +18,8 @@ export class ViewUsersCardComponent {
     tournamentsCount : number = this.user.tournaments.length;
     subscriptionsCount : number = this.user.subscriptions.length;
 
+    constructor(private route: Router) { }
+
     ngOnInit() {
       console.log(this.user);
       if (!this.user.username) {
@@ -28,7 +31,7 @@ export class ViewUsersCardComponent {
 
     } 
     view() {
-
+      this.route.navigate(['/user/profile'],{state: {username: this.user.username}});
     }
 
 }

@@ -28,6 +28,7 @@ import { MatCardModule } from '@angular/material/card';
 import { ViewUsersCardListComponent } from './components/view-users-card-list/view-users-card-list.component';
 import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import {MatSelectModule} from '@angular/material/select';
+import { VisitorProfileContentComponent } from './components/visitor-profile-content/visitor-profile-content.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -44,6 +45,7 @@ import {MatSelectModule} from '@angular/material/select';
     ViewUsersCardComponent,
     ViewUsersCardListComponent,
     ViewUsersComponent,
+    VisitorProfileContentComponent,
   ],
   imports: [
     userRoutes,
