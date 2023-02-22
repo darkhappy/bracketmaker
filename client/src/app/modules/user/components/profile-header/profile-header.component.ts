@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
+import { AuthService } from '@data/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-header',
@@ -18,9 +20,25 @@ export class ProfileHeaderComponent {
     showEmail: false,
     avatar: '',
   }
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private authService: AuthService, private router: Router) { }
 
   changeAvatar() {
     //TODO: method to change avatar
+  }
+
+  follow() {
+    if (this.authService.getUserId() === null) {
+      this.router.navigate(['/auth/login']);
+    } else {
+      /*this.authService.followTournament(this.id).subscribe( {
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      }); */
+      
+    }
   }
 }
