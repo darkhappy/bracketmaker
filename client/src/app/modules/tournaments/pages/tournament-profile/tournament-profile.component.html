@@ -1,0 +1,59 @@
+<div class="flex flex-col w-4/5 m-auto mt-16">
+  <img src="/assets/img/maxresdefault.jpg" alt="Image" class="max-h-72"/>
+
+
+  <h1 class="text-center text-3xl mt-8">{{name}}</h1>
+
+  <div class="flex flex-row place-content-between mt-6">
+    <p>Organisé par : {{organizer}}</p>
+
+    <div class="flex flex-row">
+      <button mat-raised-button color="primary">
+        <fa-icon [icon]="envelope"></fa-icon>
+        Suivre
+      </button>
+      <button mat-raised-button color="primary">
+        <fa-icon [icon]="share"></fa-icon>
+      </button>
+    </div>
+
+  </div>
+
+
+  <div class="flex flex-row place-content-between mt-6">
+    <p>
+      <fa-icon [icon]="calender"></fa-icon>
+      Date
+    </p>
+    <p>
+      <fa-icon [icon]="users"></fa-icon>
+      {{nbPlayers}} joueurs
+    </p>
+    <p>
+      <fa-icon [icon]="trophy"></fa-icon>
+      {{sport}} </p>
+    <p>
+      <fa-icon [icon]="eye"></fa-icon>
+      {{privacy}} </p>
+  </div>
+
+  <mat-tab-nav-panel class="mt-4">
+    <mat-tab-group>
+      <mat-tab label="Information">
+        <ng-template matTabContent>
+          <p>Classement</p>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Arbre">
+        <ng-template matTabContent>
+          <p>Tournois suivis component</p>
+        </ng-template>
+      </mat-tab>
+      <mat-tab label="Classement">
+        <ng-template matTabContent>
+          <p>liste mes tournois le component va la genre</p>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-tab-nav-panel>
+</div>
