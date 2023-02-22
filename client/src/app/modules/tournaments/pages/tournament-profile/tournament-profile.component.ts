@@ -4,6 +4,7 @@ import {faUsers} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
 import {TournamentService} from "@data/services/tournament.service";
 import {TournamentModel} from "@data/schemas/tournament.model";
+import {UserService} from "@data/services/user.service";
 @Component({
   selector: 'app-tournament-profile',
   templateUrl: './tournament-profile.component.html',
@@ -18,10 +19,11 @@ export class TournamentProfileComponent {
   eye = faEye;
   //@ts-ignore
   tournament: TournamentModel;
+  organiserName: string = "";
 
   public href: string = "";
 
-  constructor(private router: Router, private tournamentService: TournamentService) { }
+  constructor(private router: Router, private tournamentService: TournamentService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.href = this.router.url;
@@ -40,6 +42,23 @@ export class TournamentProfileComponent {
         }
       }
     });
+  }
 
+  getOrganiserName() {
+    this.userService.getUser(this.tournament.organiserID).subscribe({
+      next: res => {
+        //@ts-ignore
+        this.organiserName = res.user.username
+      },
+      error: (error) => {
+        if(error.status === 404){
+          alert(error.error.message);
+        } else if(error.status === 500){
+          alert("Internal server error");
+        }
+      }
+    });
   }
 }
+
+
