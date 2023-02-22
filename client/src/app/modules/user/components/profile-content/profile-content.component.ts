@@ -4,7 +4,7 @@ import {
   faGear,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { Component, Output, EventEmitter} from '@angular/core';
+import { Component, Output, EventEmitter, Input} from '@angular/core';
 
 @Component({
   selector: 'app-profile-content',
@@ -17,6 +17,8 @@ export class ProfileContentComponent {
   users = faUsers;
   gear = faGear;
   user = faUser;
+
+  @Input() visitor: Boolean = false;
 
   @Output() event = new EventEmitter<any>();
   updateProfile(user: any) {
