@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
 import {FileUploadService} from "@data/services/file-upload.service";
+import {User} from "@data/schemas/user";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-profile-header',
@@ -11,40 +12,33 @@ import {FileUploadService} from "@data/services/file-upload.service";
 })
 export class ProfileHeaderComponent {
 
-  @Input() user: any = {
+  @Input() user: User = {
     username: '',
     email: '',
     display_name: '',
+    subscriptions: [''],
+    tournaments: [''],
     about: '',
     showEmail: false,
     avatar: '',
   }
-  constructor(private userService : UserService, private fileUploadService: FileUploadService) { }
+
+  userId: string = '';
+  constructor(private userService : UserService, private fileUploadService: FileUploadService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe({
-      next: user => {
-        this.user = {
-          username: user.username,
-          email: user.email,
-          display_name: user.display_name,
-          about: user.about,
-          showEmail: user.showEmail,
-          avatar: user.avatar,
-        };
-        if (!this.user.showEmail) {
-          this.user.email = '';
-        }
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+    const SESSION_INFO = this.cookieService.get('sessioninfo');
+    const SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
+    this.userId = SESSION_INFO_JSON.id;
   }
 
   changeAvatar(event: any) {
     const file = event.target.files[0];
-    this.fileUploadService.uploadAvatar(file, 'userTEST').subscribe({
+    const extension = file.name.split('.')[1];
+    const filName = `${this.userId}.${extension}`;
+    const formData = new FormData();
+    formData.append('img', file, filName);
+    this.fileUploadService.uploadAvatar(formData).subscribe({
       next: (res) => {
         this.user.avatar = res;
       },

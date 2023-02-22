@@ -43,7 +43,7 @@ router
 
 router
     .route('/user/avatar')
-    .put(middleware.isAuth, uploadController.uploadAvatar);
+    .post(middleware.isAuth, uploadController.uploadAvatar);
 
 router
     .route('/user/update')

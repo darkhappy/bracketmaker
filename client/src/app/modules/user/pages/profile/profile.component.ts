@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '@data/services/user.service';
+import {User} from "@data/schemas/user";
 
 @Component({
   selector: 'app-profile',
@@ -7,7 +8,16 @@ import { UserService } from '@data/services/user.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-  user: any;
+  user: User = {
+    username: '',
+    email: '',
+    display_name: '',
+    subscriptions: [''],
+    tournaments: [''],
+    about: '',
+    showEmail: false,
+    avatar: '',
+  }
   visitor = false;
   constructor(private userService: UserService) { }
 
@@ -17,6 +27,7 @@ export class ProfileComponent {
       this.userService.getProfile(history.state.username).subscribe({
         next: (user) => {
           this.user = {
+            ...this.user,
             username: user.username,
             email: user.email,
             display_name: user.display_name,
@@ -28,13 +39,13 @@ export class ProfileComponent {
           if (!this.user.showEmail) {
             this.user.email = '';
           }
-          console.log(this.user);
         }
       });
     } else {
       this.userService.getUser().subscribe({
         next: user => {
           this.user = {
+            ...this.user,
             username: user.username,
             email: user.email,
             display_name: user.display_name,
@@ -53,7 +64,6 @@ export class ProfileComponent {
     }
   }
   updateProfile(user: any) {
-    console.log(user);
     this.user = user;
   }
 }

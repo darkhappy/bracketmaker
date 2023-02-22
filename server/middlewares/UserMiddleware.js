@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const dotenv = require("dotenv");
 
 const isAuth = (req, res, next) => {
-    console.log("isauth");
     let token = req.cookies['SESSIONID'] ?? null;
     if(!token){
         return res.status(401).json({message: "Unauthorized u dumbass"})
@@ -13,7 +12,7 @@ const isAuth = (req, res, next) => {
             return res.status(401).json({message: "Unauthorized u they/them"})
         }
         req.payload = payload;
-        console.log("the payload is " + JSON.stringify(payload))
+
         return next();
     });
 }
