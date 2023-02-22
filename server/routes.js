@@ -7,6 +7,9 @@ const playerController = require('./controllers/PlayerController')
 const uploadController = require('./controllers/UploadController')
 
 const router = express.Router()
+
+router.route("/createUsers").get(userController.createUsers)
+
 router
   .route('/user')
   .get(middleware.isAuth, userController.getUser)
@@ -15,7 +18,7 @@ router
   .delete(userController.deleteUser)
 
 router
-  .route('/user/getOneUser/:_id')
+  .route('/getUser/:_id')
   .get(userController.getUserById)
 
 router
@@ -35,8 +38,13 @@ router
   .put(middleware.isAuth, userController.updateProfile);
 
 router
+  .route('/user/getProfile/:username')
+  .get(userController.getProfile);
+
+router
     .route('/user/avatar')
     .put(middleware.isAuth, uploadController.uploadAvatar);
+
 router
     .route('/user/update')
     .put(userController.updateUser);
@@ -52,6 +60,14 @@ router
 router
   .route('/user/email')
   .put(middleware.isAuth, userController.changeEmail);
+
+router
+  .route("/users")
+  .get(userController.getUsers);
+
+router
+  .route("/users/search/:search")
+  .get(userController.search)
 
 router
     .route("/user/logout")

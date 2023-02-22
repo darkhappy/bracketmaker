@@ -23,6 +23,12 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
 import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { ViewUsersCardComponent } from './components/view-users-card/view-users-card.component';
+import { MatCardModule } from '@angular/material/card';
+import { ViewUsersCardListComponent } from './components/view-users-card-list/view-users-card-list.component';
+import { ViewUsersComponent } from './pages/view-users/view-users.component';
+import {MatSelectModule} from '@angular/material/select';
+import { VisitorProfileContentComponent } from './components/visitor-profile-content/visitor-profile-content.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -36,6 +42,10 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     ChangeUsernameComponent,
     ChangeEmailComponent,
     ChangePasswordDialogComponent,
+    ViewUsersCardComponent,
+    ViewUsersCardListComponent,
+    ViewUsersComponent,
+    VisitorProfileContentComponent,
   ],
   imports: [
     userRoutes,
@@ -53,6 +63,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     MatSlideToggleModule,
     MatDialogModule,
     FontAwesomeModule,
+    MatCardModule,
+    MatSelectModule,
   ],
 })
 export class UserModule { }
