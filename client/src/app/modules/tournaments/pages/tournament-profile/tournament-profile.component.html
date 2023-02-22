@@ -8,7 +8,7 @@
     <p>Organisé par : {{organizer}}</p>
 
     <div class="flex flex-row">
-      <button mat-raised-button color="primary">
+      <button mat-raised-button (click)="follow()" color="primary">
         <fa-icon [icon]="envelope"></fa-icon>
         Suivre
       </button>
