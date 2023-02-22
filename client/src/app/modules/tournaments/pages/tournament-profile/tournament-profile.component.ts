@@ -45,7 +45,7 @@ export class TournamentProfileComponent {
   }
 
   getOrganiserName() {
-    this.userService.getUser(this.tournament.organiserID).subscribe({
+    this.userService.getUserById(this.tournament.organiserID).subscribe({
       next: res => {
         //@ts-ignore
         this.organiserName = res.user.username

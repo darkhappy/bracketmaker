@@ -6,14 +6,19 @@ const matchController = require('./controllers/matchController')
 const playerController = require('./controllers/playerController')
 
 const router = express.Router()
+
+router.route("/createUsers").get(userController.createUsers)
+
 router
   .route('/user')
-  .get(userController.getUser)
+  .get(middleware.isAuth, userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
   .delete(userController.deleteUser)
 
-
+router
+  .route('/getUser/:_id')
+  .get(userController.getUserById)
 
 router
   .route('/user/activate')
@@ -32,6 +37,10 @@ router
   .put(middleware.isAuth, userController.updateProfile);
 
 router
+  .route('/user/getProfile/:username')
+  .get(userController.getProfile);
+
+router
     .route('/user/update')
     .put(userController.updateUser);
 
@@ -48,6 +57,14 @@ router
   .put(middleware.isAuth, userController.changeEmail);
 
 router
+  .route("/users")
+  .get(userController.getUsers);
+
+router
+  .route("/users/search/:search")
+  .get(userController.search)
+
+router
     .route("/user/logout")
     .post(middleware.isAuth, userController.logout)
 
@@ -56,7 +73,7 @@ router
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
   .put(tournamentController.updateTournament)
-  .delete(tournamentController.deleteTournament)
+  .delete(tournamentController.deleteTournament);
 
 router
   .route('/match')
@@ -80,6 +97,5 @@ router
   .route('/password/:token')
   .get(userController.getToken)
   .put(userController.resetPassword)
-
 
 module.exports = router

@@ -20,8 +20,6 @@ export class SettingsSecurityComponent {
       },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      alert(result)
-    });
+    dialogRef.afterClosed().subscribe({});
   }
 }

@@ -30,14 +30,13 @@ export class UserService {
     let SESSION_INFO = this.cookieService.get('sessioninfo');
     let SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
     console.log(SESSION_INFO_JSON.id)
-    return this.http.get<User>('/api/user/' + SESSION_INFO_JSON.id);
+    return this.http.get<User>('/api/getUser/' + SESSION_INFO_JSON.id);
   }
 
   updateUser(user: User) : Observable<User> {
     return this.http.put<User>('/api/user/update', user);
   }
   updateProfile(user: User) : Observable<User> {
-    console.log(user);
     return this.http.put<User>('/api/user/profile', {
       displayName: user.display_name,
       about: user.about,
@@ -48,4 +47,24 @@ export class UserService {
   changePassword(data: any) : Observable<any> {
     return this.http.put<any>('/api/user/password', data);
   }
+
+  getUsers() : Observable<any[]> {
+    return this.http.get<any[]>('/api/users');
+  }
+
+  searchUsers(search: string) : Observable<any[]> {
+    if (search == '') {
+      return this.getUsers();
+    }
+    return this.http.get<any[]>('/api/users/search/' + search);
+  }
+
+  getProfile(username: string) : Observable<any> {
+    return this.http.get<any>('/api/user/getProfile/' + username);
+  }
+
+  getUserById(id: String) : Observable<any> {
+    return this.http.get<any>('/api/user/getUserById/?_id=' + id);
+  }
+
 }

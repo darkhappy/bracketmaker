@@ -1,0 +1,22 @@
+<mat-card class="example-card">
+    <mat-card-content>
+        <div class="profile-picture">
+            <img alt="image du profil" src="assets/profile-icon-9.png">
+        </div>
+        <p>
+            Nom: {{user.username}}
+        </p>
+        <p>
+           Nom d'affichage: {{user.display_name}}
+        </p>
+        <p>
+            {{subscriptionsCount}} abonnés
+        </p>
+        <p>
+            {{tournamentsCount}} tournois
+        </p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button class="view-button" mat-raised-button color="primary" (click)="view()">Voir profil</button>
+    </mat-card-actions>
+</mat-card>
