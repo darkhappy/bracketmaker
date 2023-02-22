@@ -56,7 +56,7 @@ router
   .get(tournamentController.getTournament)
   .post(tournamentController.createTournament)
   .put(tournamentController.updateTournament)
-  .delete(tournamentController.deleteTournament);
+  .delete(tournamentController.deleteTournament)
 
 router
   .route('/match')
@@ -80,5 +80,6 @@ router
   .route('/password/:token')
   .get(userController.getToken)
   .put(userController.resetPassword)
+
 
 module.exports = router

@@ -1,3 +1,9 @@
+import {
+  faBoxArchive,
+  faUsers,
+  faGear,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import { Component, Output, EventEmitter} from '@angular/core';
 
 @Component({
@@ -6,6 +12,11 @@ import { Component, Output, EventEmitter} from '@angular/core';
   styleUrls: ['./profile-content.component.scss']
 })
 export class ProfileContentComponent {
+
+  boxArchive = faBoxArchive;
+  users = faUsers;
+  gear = faGear;
+  user = faUser;
 
   @Output() event = new EventEmitter<any>();
   updateProfile(user: any) {
