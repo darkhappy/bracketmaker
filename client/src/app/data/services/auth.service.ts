@@ -59,7 +59,7 @@ export class AuthService {
   }
 
   activateEmail(token: any) {
-    return this.http.get<any>(`/api/user/activate/?token=${token.token}`);
+    return this.http.get<any>(`/api/user/activate`, {params: token});
   }
 
   googleLogin(user: any) {

@@ -1,0 +1,33 @@
+<div class="page">
+    <h1>Liste d'organisateurs</h1>
+    <div class="form">
+        <div class="flex flex-row mb-20">
+            <div>
+                <div class="search" >
+                    <h4>Rechercher</h4>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Rechercher un organisateur</mat-label>
+                        <input matInput type="text" class="w-full h-full" (change)="onSearchChange()" placeholder="Rechercher un organisateur" [(ngModel)]="search">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div>
+                <div class="trier">
+                    <h4>Trier</h4>
+                    <mat-form-field appearance="fill">
+                    <mat-label>Trier par</mat-label>
+                    <mat-select (selectionChange)="onOptionsSelected()" [(ngModel)]="sort">
+                        <mat-option *ngFor="let choice of choices" [value]="choice">
+                        {{choice}}
+                        </mat-option>
+                    </mat-select>
+                    </mat-form-field>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="list">
+        <app-view-users-card-list [users]="organizers"></app-view-users-card-list>
+    </div>
+</div>
