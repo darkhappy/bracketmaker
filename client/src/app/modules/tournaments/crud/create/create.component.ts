@@ -15,7 +15,7 @@ export class CreateComponent {
   players: PlayerModel[] = [];
   playerName: String = "";
   selectedRadio: String = "";
-  organiser: String | undefined = "";
+  organiser: String = "";
 
   constructor(private fb: FormBuilder, private tournamentService: TournamentService, private cookieService: CookieService) { }
 

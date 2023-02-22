@@ -14,6 +14,8 @@ const tournamentSchema = new mongoose.Schema({
     players : [],
     organiserID : String,
     matches : [Match.schema]
+}, {
+    versionKey: false
 });
 
 const Tournament = mongoose.model('Tournament', tournamentSchema);
