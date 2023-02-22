@@ -6,7 +6,7 @@ const routes: Routes = [
     path: '',
     component: IndexComponent,
     pathMatch: 'full'
-  }
+  },
 ];
 
 export const homeRoutes = RouterModule.forChild(routes);
