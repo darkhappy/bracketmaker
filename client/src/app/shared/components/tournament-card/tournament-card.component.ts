@@ -1,5 +1,5 @@
 import { Component, Input } from "@angular/core";
-import { Tournament } from "@data/schemas/tournament";
+import { TournamentModel } from "@data/schemas/tournament.model";
 import { faCalendar, faUser } from "@fortawesome/free-solid-svg-icons";
 
 @Component({
@@ -8,7 +8,7 @@ import { faCalendar, faUser } from "@fortawesome/free-solid-svg-icons";
   styleUrls: ['./tournament-card.component.scss']
 })
 export class TournamentCardComponent {
-  @Input() tournament!: Tournament
+  @Input() tournament!: TournamentModel;
 
   faPlayer = faUser;
   faDate = faCalendar;

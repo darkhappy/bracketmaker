@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Tournament } from "@data/schemas/tournament";
 import { TournamentService } from "@data/services/tournament.service";
+import { TournamentModel } from "@data/schemas/tournament.model";
 
 @Component({
   selector: 'app-tournament-list',
@@ -8,7 +8,7 @@ import { TournamentService } from "@data/services/tournament.service";
   styleUrls: ['./tournament-list.component.scss']
 })
 export class TournamentListComponent {
-  tournaments!: Tournament[];
+  tournaments!: TournamentModel[];
 
   constructor(private tournamentService: TournamentService) {
   }

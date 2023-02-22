@@ -1,23 +1,34 @@
 import { Injectable } from "@angular/core";
-import { Tournament } from "@data/schemas/tournament";
 import { of } from "rxjs";
+import { TournamentModel } from "@data/schemas/tournament.model";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
   providedIn: "root",
 })
 export class TournamentService {
-  testTournament: Tournament = {
-    id: 1,
+  testTournament: TournamentModel = {
+    _id: "1",
     name: "Awesome Tournament",
     description: "It's awesome",
     date: new Date(),
-    owner: "darkhappy",
-    participants: ["lighthappy", "darkhappy", "light", "dark"],
     game: "CAI Simulator",
-    status: "In progress",
+    bracket_type: "Single Elimination",
+    visibility: "Public",
+    location: "Online",
+    organiserID: "1",
+    players: [{ name: "1" }, { name: "2" }],
   };
 
-  testTournaments: Tournament[] = [
+  testTournaments: TournamentModel[] = [
+    this.testTournament,
+    this.testTournament,
+    this.testTournament,
+    this.testTournament,
+    this.testTournament,
+    this.testTournament,
+    this.testTournament,
+    this.testTournament,
     this.testTournament,
     this.testTournament,
     this.testTournament,
@@ -25,7 +36,11 @@ export class TournamentService {
     this.testTournament,
   ];
 
-  constructor() {
+  constructor(private http: HttpClient) {
+  }
+
+  createTournament(tournament: TournamentModel) {
+    return this.http.post<TournamentModel>("/api/tournament/", tournament);
   }
 
   getTournaments() {
