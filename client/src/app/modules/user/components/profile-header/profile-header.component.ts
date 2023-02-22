@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '@data/schemas/user';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
+import {FileUploadService} from "@data/services/file-upload.service";
 
 @Component({
   selector: 'app-profile-header',
@@ -18,7 +19,7 @@ export class ProfileHeaderComponent {
     showEmail: false,
     avatar: '',
   }
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private fileUploadService: FileUploadService) { }
 
   ngOnInit(): void {
     this.userService.getUser().subscribe({
@@ -41,7 +42,19 @@ export class ProfileHeaderComponent {
     });
   }
 
-  changeAvatar() {
-    console.log('change avatar');
+  changeAvatar(event: any) {
+    const file = event.target.files[0];
+    this.fileUploadService.uploadAvatar(file, 'userTEST').subscribe({
+      next: (res) => {
+        this.user.avatar = res;
+      },
+      error: (error) => {
+        if (error.status === 409) {
+          console.log(error.error.message);
+        } else if (error.status === 500) {
+          console.log("Internal server error");
+        }
+      }
+    });
   }
 }

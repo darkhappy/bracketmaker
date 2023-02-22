@@ -1,9 +1,10 @@
 const express = require('express')
 const userController = require('./controllers/usercontroller')
 const middleware = require('./middlewares/UserMiddleware')
-const tournamentController = require('./controllers/tournamentController')
-const matchController = require('./controllers/matchController')
-const playerController = require('./controllers/playerController')
+const tournamentController = require('./controllers/TournamentController')
+const matchController = require('./controllers/MatchController')
+const playerController = require('./controllers/PlayerController')
+const uploadController = require('./controllers/UploadController')
 
 const router = express.Router()
 router
@@ -33,6 +34,9 @@ router
   .route('/user/profile')
   .put(middleware.isAuth, userController.updateProfile);
 
+router
+    .route('/user/avatar')
+    .put(middleware.isAuth, uploadController.uploadAvatar);
 router
     .route('/user/update')
     .put(userController.updateUser);
