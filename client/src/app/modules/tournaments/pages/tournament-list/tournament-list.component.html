@@ -1,5 +1,5 @@
 <div class="flex flex-col justify-center items-center">
-  <div class=" w-full h-64 bg-cover bg-strategy bg-top">
+  <div class="w-full h-64 bg-cover bg-strategy bg-top border-b-4 border-neutral-400">
     <div class="backdrop-blur-sm bg-black bg-opacity-50 h-full w-full flex items-end justify-center">
       <div class="container py-8">
         <h1 class="text-5xl font-extrabold">Tournois</h1>
@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="container mt-8 grow">
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-4">
       <app-tournament-card *ngFor="let tournament of tournaments" [tournament]="tournament"></app-tournament-card>
     </div>
   </div>
