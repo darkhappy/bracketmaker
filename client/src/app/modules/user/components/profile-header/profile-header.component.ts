@@ -20,30 +20,6 @@ export class ProfileHeaderComponent {
   }
   constructor(private userService : UserService) { }
 
-  ngOnInit(): void {
-    if (this.user.username == '') { 
-      this.userService.getUser().subscribe({
-        next: user => {
-          this.user = {
-            username: user.username,
-            email: user.email,
-            display_name: user.display_name,
-            about: user.about,
-            showEmail: user.showEmail,
-            avatar: user.avatar,
-          };
-          if (!this.user.showEmail) {
-            this.user.email = '';
-          }
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
-    }
-    
-  }
-
   changeAvatar() {
     //TODO: method to change avatar
   }
