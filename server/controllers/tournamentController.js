@@ -3,7 +3,12 @@ const User = require('../models/User')
 const moment = require("moment");
 
 function getTournament (req, res) {
-  // todo: a faire
+    Tournament.findById(req.params._id).exec((err, tournament) => {
+        if (err) {
+            return res.status(401);
+        }
+        return tournament
+    })
 }
 
 async function createTournament(req, res) {
@@ -66,10 +71,6 @@ function updateTournament (req, res) {
 }
 
 async function deleteTournament(req, res) {
-    const user = await User.findById(req.payload.id).exec()
-    if (!user)
-        return res.status(401).json({message: 'id organisateur non valide'})
-
     let id = req.query.id
     Tournament.findOneAndDelete({_id : id, organizer_id : req.payload.id}).exec((error, result) => {
         if (error) {
