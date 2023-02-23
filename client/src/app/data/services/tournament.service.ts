@@ -12,4 +12,12 @@ export class TournamentService {
   createTournament(tournament: TournamentModel) {
     return this.http.post<TournamentModel>('/api/tournament/', tournament);
   }
+
+  updateTournament(tournament: TournamentModel) {
+    return this.http.put<TournamentModel>('/api/tournament/', tournament);
+  }
+
+  deleteTournament(id: String) {
+    return this.http.delete<TournamentModel>(`/api/tournament/${id}`);
+  }
 }

@@ -1,24 +1,24 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {PlayerModel} from "@data/schemas/Player.model";
 import {TournamentService} from "@data/services/tournament.service";
+import {PlayerModel} from "@data/schemas/Player.model";
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  selector: 'app-update-tournament',
+  templateUrl: './update-tournament.component.html',
+  styleUrls: ['./update-tournament.component.scss']
 })
-export class CreateComponent {
+export class UpdateTournamentComponent {
   // @ts-ignore
-  formCreate : FormGroup;
+  formUpdate : FormGroup;
   players: PlayerModel[] = [];
   playerName: String = "";
   selectedRadio: String = "";
 
-  constructor(private fb: FormBuilder, private tournamentService: TournamentService,) { }
+  constructor(private fb: FormBuilder, private tournamentService: TournamentService,) {}
 
-  ngOnInit(): void {
-    this.formCreate = this.fb.group({
+  ngOnInit(){
+    this.formUpdate = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
       date: ['', Validators.required],
@@ -31,12 +31,12 @@ export class CreateComponent {
   }
 
   onSubmit(){
-    this.formCreate.patchValue({visibility:this.selectedRadio});
-    if (this.formCreate?.valid) {
-      this.formCreate.patchValue({players:this.players,});
-      this.tournamentService.createTournament(this.formCreate.value).subscribe( {
+    this.formUpdate.patchValue({visibility:this.selectedRadio});
+    if (this.formUpdate?.valid) {
+      this.formUpdate.patchValue({players:this.players,});
+      this.tournamentService.updateTournament(this.formUpdate.value).subscribe( {
         next: () => {
-          alert('le tournoi a été créé');
+          alert('le tournoi a été modifié');
         },
         error: (error: any) => {
           console.log(error);
@@ -53,6 +53,6 @@ export class CreateComponent {
   }
 
   setType(type : String){
-      this.selectedRadio = type;
+    this.selectedRadio = type;
   }
 }
