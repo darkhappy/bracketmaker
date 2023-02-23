@@ -3,11 +3,12 @@ const User = require('../models/User')
 const moment = require("moment");
 
 function getTournament (req, res) {
-    Tournament.findById(req.params._id).exec((err, tournament) => {
-        if (err) {
-            return res.status(401);
+    const _id = req.query._id
+    Tournament.findOne({ _id }).exec((err, tournament) => {
+        if (err || !tournament) {
+            return res.status(401).json({ error: 'Tournament not found' })
         }
-        return tournament
+        return res.status(201).json({ tournament })
     })
 }
 
@@ -43,7 +44,7 @@ async function createTournament(req, res) {
 }
 
 function updateTournament (req, res) {
-    const { name, descripton, bracket_type, category, date, visibility, location, game, players} = req.body
+    const { _id, name, description, date, bracket_type, visibility, location, game, players} = req.body
     if (moment(date, "MM/DD/YYYY", false).isValid())
         return res.sendStatus(401).json({message: 'date non valide'})
     if (visibility !== 'public' && visibility !== 'private' && visibility !== 'unlisted')
@@ -51,11 +52,10 @@ function updateTournament (req, res) {
     if (bracket_type !== 'Simple' && bracket_type !== 'Double' && bracket_type !== 'Round Robin')
         return res.sendStatus(401).json({message: 'type de tournoi non valide'})
 
-    Tournament.findById(req.body._id).exec((err, tournament) => {
+    Tournament.findById(_id).exec((err, tournament) => {
         tournament.name = name
-        tournament.description = descripton
+        tournament.description = description
         tournament.bracket_type = bracket_type
-        tournament.category = category
         tournament.date = date
         tournament.visibility = visibility
         tournament.location = location
@@ -63,15 +63,15 @@ function updateTournament (req, res) {
         tournament.players = players
 
         tournament.save().then(() => {
-            return res.status(204)
-        }).catch((err) => {
-            return res.status(401).json(err)
-        })
+            return res.sendStatus(204)
+        }).catch(() => {
+            return res.sendStatus(401)
+        });
     })
 }
 
 async function deleteTournament(req, res) {
-    let id = req.query.id
+    const id = req.query._id
     Tournament.findOneAndDelete({_id : id, organizer_id : req.payload.id}).exec((error, result) => {
         if (error) {
             return res.status(401);

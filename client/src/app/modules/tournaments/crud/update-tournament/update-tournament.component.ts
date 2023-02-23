@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TournamentService} from "@data/services/tournament.service";
+import {ActivatedRoute, Router} from "@angular/router";
 import {PlayerModel} from "@data/schemas/Player.model";
+import {TournamentModel} from "@data/schemas/tournament.model";
 
 @Component({
   selector: 'app-update-tournament',
@@ -11,14 +13,35 @@ import {PlayerModel} from "@data/schemas/Player.model";
 export class UpdateTournamentComponent {
   // @ts-ignore
   formUpdate : FormGroup;
+  //@ts-ignore
+  details : string = "";
   players: PlayerModel[] = [];
   playerName: String = "";
   selectedRadio: String = "";
+  //@ts-ignore
+  tournament : TournamentModel;
 
-  constructor(private fb: FormBuilder, private tournamentService: TournamentService,) {}
+  constructor(private router: Router,private fb: FormBuilder, private tournamentService: TournamentService, private route: ActivatedRoute) {}
 
   ngOnInit(){
+    this.details = this.route.snapshot.paramMap.get("details")!;
+    this.tournamentService.getTournament(this.details).subscribe({
+      next: res => {
+        //@ts-ignore
+        this.tournament = res.tournament
+        this.players = this.tournament.players
+      },
+      error: (error) => {
+        if(error.status === 404){
+          alert(error.error.message);
+        } else if(error.status === 500){
+          alert("Internal server error");
+        }
+      }
+    });
+
     this.formUpdate = this.fb.group({
+      _id: [''],
       name: ['', Validators.required],
       description: ['', Validators.required],
       date: ['', Validators.required],
@@ -31,16 +54,16 @@ export class UpdateTournamentComponent {
   }
 
   onSubmit(){
-    this.formUpdate.patchValue({visibility:this.selectedRadio});
+    this.formUpdate.patchValue({visibility:this.selectedRadio, _id:this.details});
     if (this.formUpdate?.valid) {
       this.formUpdate.patchValue({players:this.players,});
       this.tournamentService.updateTournament(this.formUpdate.value).subscribe( {
         next: () => {
-          alert('le tournoi a été modifié');
+          this.router.navigate(['/tournament/', this.details]);
         },
         error: (error: any) => {
           console.log(error);
-        }
+        },
       });
     }
   }

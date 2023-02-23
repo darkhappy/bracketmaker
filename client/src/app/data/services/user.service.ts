@@ -63,4 +63,8 @@ export class UserService {
     return this.http.get<any>('/api/user/getProfile/' + username);
   }
 
+  getUserById(id: String) : Observable<any> {
+    return this.http.get<any>('/api/user/getUserById/?_id=' + id);
+  }
+
 }

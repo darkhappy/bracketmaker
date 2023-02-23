@@ -3,19 +3,19 @@
     <h2>Nom</h2>
     <mat-form-field>
       <mat-label>Nom</mat-label>
-      <input matInput formControlName="name" type="text">
+      <input matInput formControlName="name" type="text" [(ngModel)]="tournament.name">
     </mat-form-field>
 
     <h2>Description</h2>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description" type="text"></textarea>
+      <textarea matInput formControlName="description" type="text" [(ngModel)]="tournament.description"></textarea>
     </mat-form-field>
 
     <h2>Date</h2>
     <mat-form-field>
       <mat-label>Date</mat-label>
-      <input matInput formControlName="date" [matDatepicker]="picker">
+      <input matInput formControlName="date" [matDatepicker]="picker" [(ngModel)] = "tournament.date">
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -40,13 +40,13 @@
     <h2>Location</h2>
     <mat-form-field>
       <mat-label>Location</mat-label>
-      <input matInput formControlName="location" type="text">
+      <input matInput formControlName="location" type="text" [(ngModel)] = "tournament.location">
     </mat-form-field>
 
     <h2>Jeux</h2>
     <mat-form-field>
       <mat-label>Jeux</mat-label>
-      <input matInput formControlName="game" type="text">
+      <input matInput formControlName="game" type="text" [(ngModel)] = "tournament.game">
     </mat-form-field>
 
     <h2>Nom des participants</h2>
@@ -62,6 +62,6 @@
       </li>
     </ul>
 
-    <br><br><button mat-raised-button color="primary" type="button" (click) = "onSubmit()">Créer le tournoi</button>
+    <br><br><button mat-raised-button color="primary" type="button" (click) = "onSubmit()">update</button>
   </form>
 </div>
