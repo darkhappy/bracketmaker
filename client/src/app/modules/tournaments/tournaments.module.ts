@@ -12,6 +12,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
   declarations: [
@@ -30,6 +32,8 @@ import {MatSelectModule} from "@angular/material/select";
     MatRadioModule,
     MatSelectModule,
     SharedModule,
+    MatIconModule,
+    MatMenuModule,
   ],
 })
 export class TournamentsModule { }

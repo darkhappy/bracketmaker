@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { TournamentService } from "@data/services/tournament.service";
 import { TournamentModel } from "@data/schemas/tournament.model";
 import { Router } from "@angular/router";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: 'app-tournament-list',
@@ -11,7 +12,9 @@ import { Router } from "@angular/router";
 export class TournamentListComponent {
   tournaments!: TournamentModel[];
 
-  constructor(private tournamentService: TournamentService, private router: Router) {
+  searchForm!: FormGroup;
+
+  constructor(private tournamentService: TournamentService, private router: Router, private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -20,9 +23,21 @@ export class TournamentListComponent {
         this.tournaments = tournaments;
       }
     });
+
+    this.searchForm = this.formBuilder.group({
+      search: [""],
+    });
   }
 
   navigate(link: string) {
     this.router.navigate([link]);
   }
+
+  searchData() {}
+
+  sortData(sort: string) {}
+
+  filterData(filter: string) {}
+
+  orderData(order: string) {}
 }

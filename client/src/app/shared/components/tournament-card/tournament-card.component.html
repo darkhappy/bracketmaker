@@ -2,12 +2,20 @@
   <h1 class="text-center font-bold text-lg">{{tournament.name}}</h1>
   <ul class="py-4">
     <li>
-      <fa-icon [icon]="faDate"></fa-icon>{{' '}}
+      <fa-icon [icon]="faDate" class="mr-4"></fa-icon>
       <span>{{timestamp}}</span>
     </li>
     <li>
-      <fa-icon [icon]="faPlayer"></fa-icon>{{' '}}
+      <fa-icon [icon]="faPlayer" class="mr-4"></fa-icon>
       <span>{{tournament.players.length}} players</span>
+    </li>
+    <li>
+      <fa-icon [icon]="faGame" class="mr-4"></fa-icon>
+      <span>{{tournament.game}}</span>/
+    </li>
+    <li>
+      <fa-icon [icon]="faType" class="mr-4"></fa-icon>
+      <span>{{tournament.bracket_type}}</span>
     </li>
   </ul>
   <button class="w-full" mat-raised-button color="primary">View</button>
