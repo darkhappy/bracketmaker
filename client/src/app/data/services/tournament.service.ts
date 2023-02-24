@@ -16,7 +16,7 @@ export class TournamentService {
     bracket_type: "Single Elimination",
     visibility: "Public",
     location: "Online",
-    organiserID: "1",
+    organizer_id: "1",
     players: [{ name: "1" }, { name: "2" }],
   };
 
@@ -44,6 +44,6 @@ export class TournamentService {
   }
 
   getTournaments() {
-    return of(this.testTournaments);
+    return this.http.get<TournamentModel[]>("/api/tournament/");
   }
 }

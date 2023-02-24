@@ -1,7 +1,7 @@
 <div class="flex flex-row justify-between border-b-2 border-white bg-gradient-to-r from-theme-beige to-theme-dark-blue">
   <div class="flex flex-row justify-start items-center m-3 text-xl text-theme-red font-bold gap-8">
     <img (click)="navigate('/home')" alt="logo" src="assets/logo-simple.svg">
-    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/tournament/view')">Tournois</button>
+    <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/tournaments/list')">Tournois</button>
     <button class="uppercase hover:text-theme-dark-blue" (click)="navigate('/user/view')">Organisateurs</button>
     <button *ngIf="userConnected()" class="uppercase hover:text-theme-dark-blue" (click)="navigate('/user/profile')">Profil</button>
   </div>

@@ -5,8 +5,9 @@ const middleware = require("../middlewares/UserMiddleware");
 const bcrypt = require("bcrypt");
 const Match = require("../models/match");
 
-function getTournament (req, res) {
-  // todo: a faire
+async function getTournament (req, res) {
+    const tournaments = await Tournament.find().exec()
+    return res.json(tournaments)
 }
 
 async function createTournament(req, res) {

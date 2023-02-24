@@ -10,6 +10,14 @@ import { faCalendar, faUser } from "@fortawesome/free-solid-svg-icons";
 export class TournamentCardComponent {
   @Input() tournament!: TournamentModel;
 
+  timestamp: string = new Date().toDateString();
+
   faPlayer = faUser;
   faDate = faCalendar;
+
+  constructor() { }
+
+  ngOnInit(): void {
+    this.timestamp = new Date(this.tournament.date).toDateString();
+  }
 }

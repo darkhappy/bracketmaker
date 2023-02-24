@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TournamentService } from "@data/services/tournament.service";
 import { TournamentModel } from "@data/schemas/tournament.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-tournament-list',
@@ -10,7 +11,7 @@ import { TournamentModel } from "@data/schemas/tournament.model";
 export class TournamentListComponent {
   tournaments!: TournamentModel[];
 
-  constructor(private tournamentService: TournamentService) {
+  constructor(private tournamentService: TournamentService, private router: Router) {
   }
 
   ngOnInit() {
@@ -19,5 +20,9 @@ export class TournamentListComponent {
         this.tournaments = tournaments;
       }
     });
+  }
+
+  navigate(link: string) {
+    this.router.navigate([link]);
   }
 }
