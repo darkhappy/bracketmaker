@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import { CreateComponent } from './crud/create/create.component';
 import { TournamentProfileComponent } from './pages/tournament-profile/tournament-profile.component';
 import {ReactiveFormsModule} from "@angular/forms";
@@ -31,7 +31,10 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     MatRadioModule,
     MatSelectModule,
     MatTabsModule,
-    FontAwesomeModule
-  ]
+    FontAwesomeModule,
+  ],
+  providers: [
+    DatePipe
+    ]
 })
 export class TournamentsModule { }

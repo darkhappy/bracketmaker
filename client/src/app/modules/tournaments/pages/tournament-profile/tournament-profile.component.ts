@@ -5,6 +5,7 @@ import {Router} from "@angular/router";
 import {TournamentService} from "@data/services/tournament.service";
 import {TournamentModel} from "@data/schemas/tournament.model";
 import {UserService} from "@data/services/user.service";
+import {DatePipe} from "@angular/common";
 @Component({
   selector: 'app-tournament-profile',
   templateUrl: './tournament-profile.component.html',
@@ -20,10 +21,15 @@ export class TournamentProfileComponent {
   //@ts-ignore
   tournament: TournamentModel;
   organiserName: string = "";
+  tournamentDate: string | null = "";
 
   public href: string = "";
 
-  constructor(private router: Router, private tournamentService: TournamentService, private userService: UserService) { }
+  constructor(private router: Router,
+              private tournamentService: TournamentService,
+              private userService: UserService,
+              private datePipe: DatePipe
+  ) { }
 
   ngOnInit(): void {
     this.href = this.router.url;
@@ -32,7 +38,9 @@ export class TournamentProfileComponent {
       next: res => {
         //@ts-ignore
         this.tournament = res.tournament
-        //todo: get tournament organiser name, fix date format
+        this.getOrganiserName();
+        this.tournamentDate = this.datePipe.transform(this.tournament.date, 'yyyy-MM-dd');
+
       },
       error: (error) => {
         if(error.status === 404){
@@ -47,7 +55,6 @@ export class TournamentProfileComponent {
   getOrganiserName() {
     this.userService.getUserById(this.tournament.organiserID).subscribe({
       next: res => {
-        //@ts-ignore
         this.organiserName = res.user.username
       },
       error: (error) => {
@@ -58,6 +65,10 @@ export class TournamentProfileComponent {
         }
       }
     });
+  }
+
+  shareLink(){
+    navigator.clipboard.writeText(window.location.href);
   }
 }
 

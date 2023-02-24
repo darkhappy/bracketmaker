@@ -5,14 +5,14 @@
   <h1 class="text-center text-3xl mt-8">{{tournament.name}}</h1>
 
   <div class="flex flex-row place-content-between mt-6">
-    <p>Organisé par : {{tournament.organiserID}}</p>
+    <p>Organisé par : {{organiserName}}</p>
 
     <div class="flex flex-row">
       <button mat-raised-button color="primary">
         <fa-icon [icon]="envelope"></fa-icon>
         Suivre
       </button>
-      <button mat-raised-button color="primary">
+      <button mat-raised-button color="primary" (click)="shareLink()">
         <fa-icon [icon]="share"></fa-icon>
       </button>
     </div>
@@ -23,7 +23,7 @@
   <div class="flex flex-row place-content-between mt-6">
     <p>
       <fa-icon [icon]="calender"></fa-icon>
-      {{tournament.date}}
+      {{tournamentDate}}
     </p>
     <p>
       <fa-icon [icon]="users"></fa-icon>

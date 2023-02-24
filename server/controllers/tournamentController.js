@@ -2,6 +2,7 @@ const Tournament = require('../models/tournament')
 
 function getTournament (req, res) {
   const _id = req.query._id
+
   Tournament.findOne({ _id }).exec((err, tournament) => {
     if (err || !tournament) {
       return res.status(401).json({ error: 'Tournament not found' })

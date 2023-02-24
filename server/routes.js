@@ -17,7 +17,7 @@ router
   .delete(userController.deleteUser)
 
 router
-  .route('/getUser/:_id')
+  .route('/getUser')
   .get(userController.getUserById)
 
 router
