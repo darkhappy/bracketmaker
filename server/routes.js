@@ -76,7 +76,10 @@ router
   .delete(middleware.isAuth, tournamentController.deleteTournament);
 
 router
-  .route('/tournament/follow').post(middleware.isAuth, tournamentController.followTournament);
+  .route('/tournament/follow')
+  .get(middleware.isAuth, tournamentController.isFollowed)
+  .post(middleware.isAuth, tournamentController.followTournament);
+
 router
   .route('/tournament/unfollow').post(middleware.isAuth, tournamentController.unfollowTournament);
 //router

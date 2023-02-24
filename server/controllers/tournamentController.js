@@ -27,15 +27,16 @@ async function createTournament(req, res) {
         return res.sendStatus(401).json({message: 'type de tournoi non valide'})
 
     const tournament = new Tournament({
-        name : req.body.name,
-        description : req.body.description,
-        bracket_type : req.body.bracket_type,
+        name: req.body.name,
+        description: req.body.description,
+        bracket_type: req.body.bracket_type,
         category : req.body.category,
         date : req.body.date,
         visibility: req.body.visibility,
         location: req.body.location,
         game: req.body.game,
-        players : req.body.players,
+        players: req.body.players,
+        followers: [],
         organizer_id : req.payload.id
     })
 
@@ -55,6 +56,7 @@ function deleteTournament (req, res) {
 }
 
 function followTournament(req, res) {
+  Tournament.findById(req.body.id).exec((err, tournament) => {
     User.findById(req.payload.id).exec((err, user) => {
       if (err || !user) {
         return res.status(401).json({ error: 'User not found' })
@@ -62,35 +64,60 @@ function followTournament(req, res) {
       if (err || !tournament) {
         return res.status(401).json({ error: 'Tournament not found' })
       }
-
-      user.subscriptions.push(req.body.tournament_id)
-      user.save().then(() => {
-        return res.sendStatus(204)
+      console.log(tournament)
+      tournament.followers.push(req.payload.id)
+      tournament.save().then(() => {
+        user.subscriptions.push(tournament._id)
+        user.save().then(() => {
+          return res.sendStatus(204)
+        }).catch(() => {
+          return res.sendStatus(401)
+        });
       }).catch(() => {
         return res.sendStatus(401)
       });
+      
     
+    } )
   })
 }
 
 function unfollowTournament(req, res) {
+  Tournament.findById(req.body.id).exec((err, tournament) => {
+    User.findById(req.payload.id).exec((err, user) => {
+      if (err || !user) {
+        return res.status(401).json({ error: 'User not found' })
+      }
+      if (err || !tournament) {
+        return res.status(401).json({ error: 'Tournament not found' })
+      }
+      tournament.followers = tournament.followers.filter(follower => follower !== req.payload.id)
+      tournament.save().then(() => {
+        user.subscriptions = user.subscriptions.filter(subscription => subscription !== req.body.tournament_id)
+        user.save().then(() => {
+          return res.sendStatus(204)
+        }).catch(() => {
+          return res.sendStatus(401)
+        });
+      }).catch(() => {
+        return res.sendStatus(401)
+      });
+    })
+  })
+}
+
+function isFollowed(req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err || !user) {
       return res.status(401).json({ error: 'User not found' })
     } 
-    if (err || !tournament) {
-      return res.status(401).json({ error: 'Tournament not found' })
+    user.subscriptions = user.subscriptions.filter(subscription => subscription === req.body.tournament_id);
+    if (user.subscriptions.length > 0) {
+      return res.status(201).json({ isFollowed: true })
+    } else {
+      return res.status(201).json({ isFollowed: false })
     }
-
-    user.subscriptions = user.subscriptions.filter(subscription => subscription !== req.body.tournament_id)
-    user.save().then(() => {
-      return res.sendStatus(204)
-    }).catch(() => {
-      return res.sendStatus(401)
-    });
-    
   })
-    
 }
 
 /*function searchTournament(req, res) {
@@ -103,4 +130,4 @@ function unfollowTournament(req, res) {
     return res.status(201).json({ user.subscriptions })
   }
 } */
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, /*searchTournament */}
+module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, isFollowed/*searchTournament */}
