@@ -56,18 +56,28 @@ function deleteTournament (req, res) {
 
 function followTournament(req, res) {
   Tournament.findById(req.body.tournament_id).exec((err, tournament) => {
+    User.findById(req.payload.id).exec((err, user) => {
+      if (err || !user) {
+        return res.status(401).json({ error: 'User not found' })
+      } 
+      if (err || !tournament) {
+        return res.status(401).json({ error: 'Tournament not found' })
+      }
+  
+      tournament.players.push(req.payload.id)
 
-    if (err || !tournament) {
-      return res.status(401).json({ error: 'Tournament not found' })
-    }
-
-    tournament.players.push(req.payload.id)
+      tournament.save().then(() => {
+        user.subscriptions.push(req.body.tournament_id)
+        user.save().then(() => {
+          return res.sendStatus(204)
+        }).catch(() => {
+          return res.sendStatus(401)
+        });
+      }).catch(() => {
+        return res.sendStatus(401)
+      });
+    })
     
-    tournament.save().then(() => {
-      return res.sendStatus(204)
-    }).catch(() => {
-      return res.sendStatus(401)
-    });
   })
 }
 
