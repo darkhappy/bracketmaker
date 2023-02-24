@@ -6,7 +6,13 @@ const bcrypt = require("bcrypt");
 const Match = require("../models/match");
 
 function getTournament (req, res) {
-  // todo: a faire
+  const _id = req.query._id
+  Tournament.findOne({ _id }).exec((err, tournament) => {
+    if (err || !tournament) {
+      return res.status(401).json({ error: 'Tournament not found' })
+    }
+    return res.status(201).json({ tournament })
+  })
 }
 
 async function createTournament(req, res) {
