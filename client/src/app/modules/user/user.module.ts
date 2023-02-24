@@ -29,6 +29,11 @@ import { ViewUsersCardListComponent } from './components/view-users-card-list/vi
 import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import {MatSelectModule} from '@angular/material/select';
 import { VisitorProfileContentComponent } from './components/visitor-profile-content/visitor-profile-content.component';
+import { FollowedTournamentsComponent } from './components/followed-tournaments/followed-tournaments.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {getFrenchPaginatorIntl} from "@modules/user/french-paginator.intl";
+import {MatTableModule} from '@angular/material/table';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -46,6 +51,7 @@ import { VisitorProfileContentComponent } from './components/visitor-profile-con
     ViewUsersCardListComponent,
     ViewUsersComponent,
     VisitorProfileContentComponent,
+    FollowedTournamentsComponent,
   ],
   imports: [
     userRoutes,
@@ -65,6 +71,11 @@ import { VisitorProfileContentComponent } from './components/visitor-profile-con
     FontAwesomeModule,
     MatCardModule,
     MatSelectModule,
+    MatPaginatorModule,
+    MatTableModule
+  ],
+  providers: [
+    {provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() }
   ],
 })
 export class UserModule { }

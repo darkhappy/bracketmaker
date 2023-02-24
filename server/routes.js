@@ -77,7 +77,10 @@ router
 
 router
   .route('/tournament/follow').post(middleware.isAuth, tournamentController.followTournament);
-
+router
+  .route('/tournament/unfollow').post(middleware.isAuth, tournamentController.unfollowTournament);
+//router
+  //.route('/tournament/search/:search').get(middleware.isAuth, tournamentController.searchTournament);
 router
   .route('/match')
   .get(matchController.getMatch)

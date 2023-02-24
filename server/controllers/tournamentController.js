@@ -55,7 +55,6 @@ function deleteTournament (req, res) {
 }
 
 function followTournament(req, res) {
-  Tournament.findById(req.body.tournament_id).exec((err, tournament) => {
     User.findById(req.payload.id).exec((err, user) => {
       if (err || !user) {
         return res.status(401).json({ error: 'User not found' })
@@ -63,22 +62,45 @@ function followTournament(req, res) {
       if (err || !tournament) {
         return res.status(401).json({ error: 'Tournament not found' })
       }
-  
-      tournament.players.push(req.payload.id)
 
-      tournament.save().then(() => {
-        user.subscriptions.push(req.body.tournament_id)
-        user.save().then(() => {
-          return res.sendStatus(204)
-        }).catch(() => {
-          return res.sendStatus(401)
-        });
+      user.subscriptions.push(req.body.tournament_id)
+      user.save().then(() => {
+        return res.sendStatus(204)
       }).catch(() => {
         return res.sendStatus(401)
       });
-    })
     
   })
 }
 
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament}
+function unfollowTournament(req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err || !user) {
+      return res.status(401).json({ error: 'User not found' })
+    } 
+    if (err || !tournament) {
+      return res.status(401).json({ error: 'Tournament not found' })
+    }
+
+    user.subscriptions = user.subscriptions.filter(subscription => subscription !== req.body.tournament_id)
+    user.save().then(() => {
+      return res.sendStatus(204)
+    }).catch(() => {
+      return res.sendStatus(401)
+    });
+    
+  })
+    
+}
+
+/*function searchTournament(req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err || !user) {
+      return res.status(401).json({ error: 'User not found' })
+    } 
+    let search = new RegExp('.*' + req.params.search + '.*', 'i')
+    user.subscriptions = user.subscriptions.filter(subscription => subscription === search);
+    return res.status(201).json({ user.subscriptions })
+  }
+} */
+module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, /*searchTournament */}
