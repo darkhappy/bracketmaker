@@ -38,7 +38,7 @@ const routes: Routes = [
         }
       },
       {
-        path: 'tournaments',
+        path: 'tournament',
         loadChildren: () => {
           return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
         }
@@ -46,6 +46,12 @@ const routes: Routes = [
       {
         path: '404',
         component: NotFoundComponent,
+      },
+      {
+        path: 'tournament',
+        loadChildren: () => {
+          return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
+        }
       }
     ],
   },

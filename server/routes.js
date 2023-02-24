@@ -70,10 +70,10 @@ router
 
 router
   .route('/tournament')
-  .get(tournamentController.getTournament)
-  .post(tournamentController.createTournament)
-  .put(tournamentController.updateTournament)
-  .delete(tournamentController.deleteTournament);
+  .get(middleware.isAuth, tournamentController.getTournament)
+  .post(middleware.isAuth, tournamentController.createTournament)
+  .put(middleware.isAuth, tournamentController.updateTournament)
+  .delete(middleware.isAuth, tournamentController.deleteTournament);
 
 router
   .route('/match')
@@ -97,5 +97,6 @@ router
   .route('/password/:token')
   .get(userController.getToken)
   .put(userController.resetPassword)
+
 
 module.exports = router

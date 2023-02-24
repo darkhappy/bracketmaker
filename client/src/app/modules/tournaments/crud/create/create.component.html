@@ -1,0 +1,67 @@
+<div class="main">
+  <form [formGroup]="formCreate">
+    <h2>Nom</h2>
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput formControlName="name" type="text">
+    </mat-form-field>
+
+    <h2>Description</h2>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" type="text"></textarea>
+    </mat-form-field>
+
+    <h2>Date</h2>
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput formControlName="date" [matDatepicker]="picker">
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <h2>Visibilité</h2>
+    <mat-radio-group formControlName="visibility" [ngModel]="selectedRadio">
+      <mat-radio-button (click)="setType('public')">Publique</mat-radio-button>
+      <mat-radio-button (click)="setType('private')">Privé</mat-radio-button>
+      <mat-radio-button (click)="setType('unlisted')">Non répertorié</mat-radio-button>
+    </mat-radio-group><br>
+
+    <h2>Type</h2>
+    <mat-form-field appearance="fill">
+      <mat-label>Type</mat-label>
+      <mat-select formControlName="bracket_type">
+        <mat-option value="Simple">Élimination Simple</mat-option>
+        <mat-option value="Double">Double Élimination</mat-option>
+        <mat-option value="Round Robin">Round Robin</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h2>Location</h2>
+    <mat-form-field>
+      <mat-label>Location</mat-label>
+      <input matInput formControlName="location" type="text">
+    </mat-form-field>
+
+    <h2>Jeux</h2>
+    <mat-form-field>
+      <mat-label>Jeux</mat-label>
+      <input matInput formControlName="game" type="text">
+    </mat-form-field>
+
+    <h2>Nom des participants</h2>
+    <mat-form-field>
+      <mat-label>Nom des participants</mat-label>
+      <input matInput formControlName="players" type="text" [(ngModel)]="playerName">
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" (click) = "ajouter()">Ajouter</button>
+
+    <ul>
+      <li *ngFor="let player of players">
+        {{ player.name }}
+      </li>
+    </ul>
+
+    <br><br><button mat-raised-button color="primary" type="button" (click) = "onSubmit()">Créer le tournoi</button>
+  </form>
+</div>
