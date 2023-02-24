@@ -76,6 +76,9 @@ router
   .delete(middleware.isAuth, tournamentController.deleteTournament);
 
 router
+  .route('/tournament/follow').post(middleware.isAuth, tournamentController.followTournament);
+
+router
   .route('/match')
   .get(matchController.getMatch)
   .post(matchController.createMatch)

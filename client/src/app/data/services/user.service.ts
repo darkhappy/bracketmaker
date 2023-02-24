@@ -66,4 +66,8 @@ export class UserService {
     return this.http.get<any>('/api/user/getUserById/?_id=' + id);
   }
 
+  followUser(username: string) : Observable<any> {
+    return this.http.post<any>('/api/user/follow', {username: username});
+  }
+
 }

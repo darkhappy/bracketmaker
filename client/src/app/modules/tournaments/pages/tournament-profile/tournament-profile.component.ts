@@ -13,7 +13,7 @@ import {TournamentModel} from "@data/schemas/tournament.model";
   styleUrls: ['./tournament-profile.component.scss']
 })
 export class TournamentProfileComponent {
-  id = 1
+  id = "1"
   calender = faCalendar;
   envelope = faEnvelope;
   share = faShare;
@@ -67,14 +67,14 @@ export class TournamentProfileComponent {
     if (this.authService.getUserId() === null) {
       this.router.navigate(['/auth/login']);
     } else {
-      /*this.authService.followTournament(this.id).subscribe( {
+      this.tournamentService.followTournament(this.tournament._id).subscribe( {
         next: (response) => {
           console.log(response);
         },
         error: (error) => {
           console.log(error);
         }
-      }); */
+      }); 
       
     }
   }

@@ -27,18 +27,18 @@ export class ProfileHeaderComponent {
   }
 
   follow() {
-    if (this.authService.getUserId() === null) {
+    /*if (this.authService.getUserId() === null) {
       this.router.navigate(['/auth/login']);
     } else {
-      /*this.authService.followTournament(this.id).subscribe( {
+      this.userService.followUser(this.username).subscribe( {
         next: (response) => {
           console.log(response);
         },
         error: (error) => {
           console.log(error);
         }
-      }); */
+      }); 
       
-    }
+    } */
   }
 }

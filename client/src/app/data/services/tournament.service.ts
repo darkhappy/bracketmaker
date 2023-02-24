@@ -16,4 +16,8 @@ export class TournamentService {
   getTournament(id: string) {
     return this.http.get<TournamentModel>(`/api/tournament/?_id=${id}`);
   }
+
+  followTournament(id: String) {
+    return this.http.post(`/api/tournament/follow`, {id: id});
+  }
 }

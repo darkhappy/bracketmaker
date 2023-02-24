@@ -54,4 +54,21 @@ function deleteTournament (req, res) {
   // todo : a faire
 }
 
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament }
+function followTournament(req, res) {
+  Tournament.findById(req.body.tournament_id).exec((err, tournament) => {
+
+    if (err || !tournament) {
+      return res.status(401).json({ error: 'Tournament not found' })
+    }
+
+    tournament.players.push(req.payload.id)
+    
+    tournament.save().then(() => {
+      return res.sendStatus(204)
+    }).catch(() => {
+      return res.sendStatus(401)
+    });
+  })
+}
+
+module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament}
