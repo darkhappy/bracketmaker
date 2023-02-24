@@ -49,7 +49,6 @@ export class SettingsProfileComponent {
       next: () => {
         this.userService.getUser().subscribe({
           next: (user) => {
-            console.log(user);
             if (user.showEmail) {
               this.user = {
                 username: user.username,

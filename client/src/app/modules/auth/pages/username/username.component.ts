@@ -24,7 +24,6 @@ export class UsernameComponent {
     if (this.formUsername?.valid) {
       this.userService.getOneUser().subscribe((data: any) => {
         data.message.username = this.formUsername.value.username;
-        console.log(data)
         this.userService.updateUser(data).subscribe( {
           error: (error) => {
             alert(error)

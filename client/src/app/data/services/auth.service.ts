@@ -17,16 +17,13 @@ export class AuthService {
 
   getUserId(): string | null {
     let sessioninfo = this.cookieService.get('sessioninfo');
-    console.log(sessioninfo);
     if (!sessioninfo)
-      console.log("hey");
       return null;
     let sessioninfo_json = JSON.parse(sessioninfo);
     return sessioninfo_json.id;
   }
 
   login(user: User) {
-    console.log(user)
     return this.http.post<any>('/api/user/login', user);
   }
 

@@ -83,7 +83,6 @@ export class ViewUsersComponent {
   }
 
   onSearchChange() {
-    console.log("coucou");
     this.userService.searchUsers(this.search).subscribe({
       next: (users) => {
         
