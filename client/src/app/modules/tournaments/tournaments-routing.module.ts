@@ -17,4 +17,3 @@ const routes: Routes = [
 ];
 
 export const tournamentRoutes = RouterModule.forChild(routes);
-export class TournamentsRoutingModule { }
