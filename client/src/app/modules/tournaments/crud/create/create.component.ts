@@ -15,15 +15,10 @@ export class CreateComponent {
   players: PlayerModel[] = [];
   playerName: String = "";
   selectedRadio: String = "";
-  organiser: String | undefined = "";
 
   constructor(private fb: FormBuilder, private tournamentService: TournamentService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
-    let SESSION_INFO = this.cookieService.get('sessioninfo');
-    let SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
-    this.organiser = SESSION_INFO_JSON.id;
-
     this.formCreate = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -32,12 +27,12 @@ export class CreateComponent {
       visibility: ['', Validators.required],
       location: ['', Validators.required],
       game: ['', Validators.required],
-      organiserID: ['', Validators.required],
       players: [''],
     });
   }
+
   onSubmit(){
-    this.formCreate.patchValue({visibility:this.selectedRadio, organiserID:this.organiser});
+    this.formCreate.patchValue({visibility:this.selectedRadio});
     if (this.formCreate?.valid) {
       this.formCreate.patchValue({players:this.players,});
       this.tournamentService.createTournament(this.formCreate.value).subscribe( {
