@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
+import {AuthService} from "@data/services/auth.service";
+import { UserService } from '@data/services/user.service';
+import {Router} from "@angular/router";
+
 import {faCalendar, faEnvelope, faEye, faShare, faTrophy} from "@fortawesome/free-solid-svg-icons";
 import {faUsers} from "@fortawesome/free-solid-svg-icons";
-import {Router} from "@angular/router";
 import {TournamentService} from "@data/services/tournament.service";
 import {TournamentModel} from "@data/schemas/tournament.model";
-import {UserService} from "@data/services/user.service";
 @Component({
   selector: 'app-tournament-profile',
   templateUrl: './tournament-profile.component.html',
   styleUrls: ['./tournament-profile.component.scss']
 })
 export class TournamentProfileComponent {
+  id = 1
   calender = faCalendar;
   envelope = faEnvelope;
   share = faShare;
@@ -23,7 +26,7 @@ export class TournamentProfileComponent {
 
   public href: string = "";
 
-  constructor(private router: Router, private tournamentService: TournamentService, private userService: UserService) { }
+  constructor(private router: Router, private tournamentService: TournamentService, private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
     this.href = this.router.url;
@@ -58,6 +61,22 @@ export class TournamentProfileComponent {
         }
       }
     });
+  }
+
+  follow() {
+    if (this.authService.getUserId() === null) {
+      this.router.navigate(['/auth/login']);
+    } else {
+      /*this.authService.followTournament(this.id).subscribe( {
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      }); */
+      
+    }
   }
 }
 

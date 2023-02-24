@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CreateComponent } from './crud/create/create.component';
 import { TournamentProfileComponent } from './pages/tournament-profile/tournament-profile.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {ReactiveFormsModule} from "@angular/forms";
 import { tournamentRoutes } from "@modules/tournaments/tournaments-routing.module";
 import {MatButtonModule} from "@angular/material/button";
@@ -12,12 +13,11 @@ import {MatNativeDateModule} from "@angular/material/core";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import {MatTabsModule} from "@angular/material/tabs";
-import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 
 @NgModule({
   declarations: [
     CreateComponent,
-    TournamentProfileComponent
+    TournamentProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -30,8 +30,9 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     MatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
+    FontAwesomeModule,
     MatTabsModule,
-    FontAwesomeModule
+    MatButtonModule,
   ]
 })
 export class TournamentsModule { }

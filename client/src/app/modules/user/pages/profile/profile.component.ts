@@ -24,11 +24,9 @@ export class ProfileComponent {
             showEmail: user.show_email,
             avatar: user.avatar,
           };
-          console.log(this.user.showEmail);
           if (!this.user.showEmail) {
             this.user.email = '';
           }
-          console.log(this.user);
         }
       });
     } else {
@@ -47,13 +45,11 @@ export class ProfileComponent {
           }
         },
         error: (error) => {
-          console.log(error);
         }
       });
     }
   }
   updateProfile(user: any) {
-    console.log(user);
     this.user = user;
   }
 }
