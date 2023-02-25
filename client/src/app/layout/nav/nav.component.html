@@ -10,7 +10,7 @@
     <button class="uppercase from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue rounded-lg px-5 py-2.5 text-center mr-2" (click)="navigate('/auth/register')">Inscription</button>
   </div>
   <div *ngIf="userConnected()" class="text-xl font-bold flex flex-row items-center mr-3">
-    <button class="rounded-full mr-3" (click)="navigate('/user/profile')"><img src="{{user.avatar}}" alt="Avatar de {{user.username}}"></button>
+    <img class="w-16 rounded-full mr-3 hover:cursor-pointer" src="/api/user/avatar/{{userId}}" (click)="navigate('/user/profile')" alt="Avatar">
     <button class="uppercase from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl text-white bg-gradient-to-br focus:ring-4 focus:outline-none focus:accent-theme-light-blue dark:focus:bg-theme-dark-blue rounded-lg px-5 py-2.5 text-center" (click)="logout()">Déconnexion</button>
   </div>
 </div>

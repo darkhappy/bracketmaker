@@ -48,8 +48,8 @@ export class UserService {
     return this.http.put<any>('/api/user/password', data);
   }
 
-  getUserAvatar(): Observable<File> {
-    return this.http.get<any>('/api/user/avatar');
+  getUserAvatar(userId: string) {
+    return this.http.get<any>('/api/user/avatar/' + userId);
   }
 
   getUsers() : Observable<any[]> {

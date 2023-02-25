@@ -44,7 +44,9 @@ router
 router
     .route('/user/avatar')
     .post(middleware.isAuth, uploadController.uploadAvatar);
-
+router
+    .route('/user/avatar/:id')
+    .get(middleware.isAuth, userController.getUserAvatar);
 router
     .route('/user/update')
     .put(userController.updateUser);

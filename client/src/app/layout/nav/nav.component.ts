@@ -11,12 +11,9 @@ import {Observable} from "rxjs";
 })
 export class NavComponent {
 
-  @Input() user: any = {
-    username: '',
-    avatar: '',
-  }
+  userId: string | null = '';
 
-  constructor(private router: Router, private authService: AuthService, private userService: UserService) {
+  constructor(private router: Router, private authService: AuthService) {
   }
 
   userConnected(): Boolean {
@@ -24,17 +21,7 @@ export class NavComponent {
   }
 
   ngOnInit(): void {
-    this.userService.getUser().subscribe({
-      next: user => {
-        this.user = {
-          username: user.username,
-          avatar: user.avatar,
-        };
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    });
+    this.userId = this.authService.getUserId();
   }
 
   navigate(path: string) {
