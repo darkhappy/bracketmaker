@@ -6,15 +6,14 @@ const isAuth = (req, res, next) => {
     if(!token){
         return res.status(401).json({message: "Unauthorized u dumbass"})
     }
-    console.log(token);
-    console.log(process.env.SECRET_KEY)
-    jwt.verify(token, process.env.SECRET_KEY, (err, payload) =>{
+    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
         if(err){
             console.log("yo")
             return res.status(401).json({message: "Unauthorized u they/them"})
         }
         console.log(req.payload)
         req.payload = payload;
+
         return next();
     });
 }

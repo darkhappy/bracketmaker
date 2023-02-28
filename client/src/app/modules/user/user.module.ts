@@ -29,6 +29,7 @@ import { ViewUsersCardListComponent } from './components/user-list/view-users-ca
 import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import {MatSelectModule} from '@angular/material/select';
 import { VisitorProfileContentComponent } from './components/profile/visitor-profile-content/visitor-profile-content.component';
+import {SharedModule} from "@shared/shared.module";
 import { FollowedTournamentsComponent } from './components/profile/view-followed/followed-tournaments/followed-tournaments.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatPaginatorIntl} from '@angular/material/paginator';
@@ -53,26 +54,27 @@ import {MatTableModule} from '@angular/material/table';
     VisitorProfileContentComponent,
     FollowedTournamentsComponent,
   ],
-  imports: [
-    userRoutes,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTabsModule,
-    MatSidenavModule,
-    MatListModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatDialogModule,
-    FontAwesomeModule,
-    MatCardModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    MatTableModule
+    imports: [
+        userRoutes,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTabsModule,
+        MatSidenavModule,
+        MatListModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatDialogModule,
+        FontAwesomeModule,
+        MatCardModule,
+        MatSelectModule,
+        SharedModule,
+        MatPaginatorModule,
+        MatTableModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() }

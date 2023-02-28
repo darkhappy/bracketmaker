@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '@data/services/user.service';
+import {User} from "@data/schemas/user";
 
 @Component({
   selector: 'app-profile',
@@ -8,7 +9,16 @@ import { UserService } from '@data/services/user.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-  user: any;
+  user: User = {
+    username: '',
+    email: '',
+    display_name: '',
+    subscriptions: [''],
+    tournaments: [''],
+    about: '',
+    showEmail: false,
+    avatar: '',
+  }
   visitor = false;
   href: string = '';
   isMyProfile: boolean = true;
@@ -21,7 +31,16 @@ export class ProfileComponent {
       this.visitor = true;
       this.userService.getProfile(urlArray[2]).subscribe({
         next: (user) => {
-          this.user = user;
+          this.user = {
+            ...this.user,
+            username: user.username,
+            email: user.email,
+            display_name: user.display_name,
+            about: user.about,
+            showEmail: user.show_email,
+            avatar: user.avatar,
+          };
+          console.log(this.user.showEmail);
           if (!this.user.showEmail) {
             this.user.email = '';
           }
@@ -41,7 +60,15 @@ export class ProfileComponent {
     } else {
       this.userService.getUser().subscribe({
         next: user => {
-          this.user = user;
+          this.user = {
+            ...this.user,
+            username: user.username,
+            email: user.email,
+            display_name: user.display_name,
+            about: user.about,
+            showEmail: user.showEmail,
+            avatar: user.avatar,
+          };
           if (!this.user.showEmail) {
             this.user.email = '';
           }
