@@ -28,7 +28,28 @@ export class ProfileHeaderComponent {
   userId: string = '';
   avatarPath: string = '';
   timeStamp: number = 0;
-  constructor(private userService : UserService) { }
+  constructor(private userService : UserService, private authService: AuthService, private fileUploadService: FileUploadService, private router : Router) { }
+
+  changeAvatar(event: { file: File }) {
+    const file = event.file;
+    const extension = file.name.split('.')[1];
+    const fileName = `${this.userId}.${extension}`;
+    const formData = new FormData();
+    formData.append('img', file, fileName);
+    this.fileUploadService.uploadAvatar(formData).subscribe({
+      next: (response) => {
+        console.log(response);
+      },
+      error: (error) => {
+        if (error.status === 409) {
+          console.log(error.error.message);
+        } else if (error.status === 500) {
+          console.log("Internal server error");
+        }
+      }
+    });
+    this.setLinkPicture('/api/user/avatar/' + this.userId);
+  }
 
   getLinkPicture() {
     if(this.timeStamp) {
