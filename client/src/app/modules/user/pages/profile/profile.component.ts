@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '@data/services/user.service';
 
 @Component({
@@ -9,21 +10,17 @@ import { UserService } from '@data/services/user.service';
 export class ProfileComponent {
   user: any;
   visitor = false;
-  constructor(private userService: UserService) { }
+  href: string = '';
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    if (history.state.username != undefined) {
+    this.href = this.router.url;
+    let urlArray = this.href.split('/');
+    if (urlArray[2] != 'profile') {
       this.visitor = true;
-      this.userService.getProfile(history.state.username).subscribe({
+      this.userService.getProfile(urlArray[2]).subscribe({
         next: (user) => {
-          this.user = {
-            username: user.username,
-            email: user.email,
-            display_name: user.display_name,
-            about: user.about,
-            showEmail: user.show_email,
-            avatar: user.avatar,
-          };
+          this.user = user;
           if (!this.user.showEmail) {
             this.user.email = '';
           }
@@ -32,14 +29,7 @@ export class ProfileComponent {
     } else {
       this.userService.getUser().subscribe({
         next: user => {
-          this.user = {
-            username: user.username,
-            email: user.email,
-            display_name: user.display_name,
-            about: user.about,
-            showEmail: user.showEmail,
-            avatar: user.avatar,
-          };
+          this.user = user;
           if (!this.user.showEmail) {
             this.user.email = '';
           }

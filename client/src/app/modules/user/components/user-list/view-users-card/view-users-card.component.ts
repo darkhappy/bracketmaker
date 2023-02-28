@@ -21,16 +21,13 @@ export class ViewUsersCardComponent {
     constructor(private route: Router) { }
 
     ngOnInit() {
-      if (!this.user.username) {
-        this.user.username = 'Aucun';
-      }
       if (!this.user.display_name) {
         this.user.display_name = 'Aucun';
       }
 
     } 
     view() {
-      this.route.navigate(['/user/profile'],{state: {username: this.user.username}});
+      this.route.navigate(['/user/' + this.user.username]);
     }
 
 }

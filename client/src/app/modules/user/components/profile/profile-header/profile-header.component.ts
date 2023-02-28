@@ -20,6 +20,8 @@ export class ProfileHeaderComponent {
     showEmail: false,
     avatar: '',
   }
+
+  @Input() isMyProfile: boolean = false;
   constructor(private userService : UserService, private authService: AuthService, private router: Router) { }
 
   changeAvatar() {
