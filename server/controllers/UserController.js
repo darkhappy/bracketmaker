@@ -5,6 +5,7 @@ const crypto = require('crypto')
 const fs = require('fs')
 const dotenv = require("dotenv");
 const { CONNREFUSED } = require('dns')
+const { dirname } = require('path');
 
 function getUsers (req, res) {
   User.find({}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
@@ -120,6 +121,30 @@ function createUsers(req, res) {
       return res.status(400).json(err)
     }
     return res.status(200).json(docs)
+  })
+}
+
+function updateAvatar(id, path) {
+    User.findById(id).exec((err, user) => {
+        if (err) {
+          console.log(err)
+        }
+        user.avatar = path
+        user.save()
+    })
+}
+
+function getUserAvatar(req, res) {
+  User.findById(req.params.id).exec((err, user) => {
+    if (err) {
+      return res.status(401).json({message: "User not found"});
+    }
+    try {
+      const path = dirname(require.main.filename) + '/assets/avatars/' + user.avatar
+      return res.sendFile(path);
+    } catch (err) {
+        return res.status(401).json({message: "Image not found"});
+    }
   })
 }
 
@@ -464,5 +489,7 @@ module.exports = {
   logout,
   createUsers,
   search,
-  getProfile
+  getProfile,
+  updateAvatar,
+  getUserAvatar
 }

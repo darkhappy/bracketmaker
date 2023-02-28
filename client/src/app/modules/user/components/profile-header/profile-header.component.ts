@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
-import { User } from '@data/schemas/user';
+import {Component} from '@angular/core';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
+import {FileUploadService} from "@data/services/file-upload.service";
+import {User} from "@data/schemas/user";
+import {CookieService} from "ngx-cookie-service";
+import {Observable} from "rxjs";
+import {Router} from "@angular/router";
 import { AuthService } from '@data/services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-header',
@@ -12,18 +15,30 @@ import { Router } from '@angular/router';
 })
 export class ProfileHeaderComponent {
 
-  @Input() user: any = {
+  @Input() user: User = {
     username: '',
     email: '',
     display_name: '',
+    subscriptions: [''],
+    tournaments: [''],
     about: '',
     showEmail: false,
     avatar: '',
   }
-  constructor(private userService : UserService, private authService: AuthService, private router: Router) { }
+  userId: string = '';
+  avatarPath: string = '';
+  timeStamp: number = 0;
+  constructor(private userService : UserService) { }
 
-  changeAvatar() {
-    //TODO: method to change avatar
+  getLinkPicture() {
+    if(this.timeStamp) {
+      return this.avatarPath + '?' + this.timeStamp;
+    }
+    return this.avatarPath;
+  }
+  setLinkPicture(url: string) {
+    this.avatarPath = url;
+    this.timeStamp = (new Date()).getTime();
   }
 
   follow() {
