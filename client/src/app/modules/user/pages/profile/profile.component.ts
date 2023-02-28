@@ -30,6 +30,7 @@ export class ProfileComponent {
 
       this.userService.isLoggedProfile(urlArray[2]).subscribe( {
         next: (response) => {
+          console.log(response);
           this.isMyProfile = response;
         },
         error: (error) => {

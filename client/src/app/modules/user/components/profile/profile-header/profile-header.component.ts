@@ -22,25 +22,45 @@ export class ProfileHeaderComponent {
   }
 
   @Input() isMyProfile: boolean = false;
+  isFollowed: boolean = false;
   constructor(private userService : UserService, private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.userService.isFollowed(this.user.username).subscribe( {
+      next: (response) => {
+        this.isFollowed = response;
+      }
+    });
+  }
 
   changeAvatar() {
     //TODO: method to change avatar
   }
 
   follow() {
-    /*if (this.authService.getUserId() === null) {
+    if (this.authService.getUserId() === null) {
       this.router.navigate(['/auth/login']);
     } else {
-      this.userService.followUser(this.username).subscribe( {
+      this.userService.followUser(this.user.username).subscribe( {
         next: (response) => {
-          console.log(response);
+          this.isFollowed = true;
         },
         error: (error) => {
           console.log(error);
         }
       }); 
       
-    } */
+    } 
+  }
+
+  unfollow() {
+    this.userService.unfollowUser(this.user.username).subscribe( {
+      next: (response) => {
+        this.isFollowed = false;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
   }
 }

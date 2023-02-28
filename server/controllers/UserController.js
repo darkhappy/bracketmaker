@@ -190,6 +190,7 @@ function logout (req, res) {
 }
 
 function isLoggedProfile(req, res) {
+  console.log(req.payload.id)
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
       return res.status(401).json({message: "asdahd658stfb"});
@@ -453,6 +454,53 @@ async function googleLogin (req, res) {
   })
 }
 
+function followUser(req, res) {
+  User.findOne({username: req.params.username}).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(400);
+    }
+    if (user.user_followed.includes(req.payload.id)) {
+      return res.status(400).json({message: "You already follow this user"});
+    }
+    user.user_followed.push(req.payload.id);
+    user.save().then(() => {
+      return res.sendStatus(204);
+    }).catch((err) => {
+      return res.status(500).json(err);
+    });
+  });
+}
+
+function isFollowed(req, res) {
+  User.findOne({username: req.params.username}).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(400);
+    }
+    if (user.user_followed.includes(req.payload.id)) {
+      return res.status(200).json(true);
+    }
+    return res.status(200).json(false);
+  });
+}
+
+function unfollowUser(req, res) {
+  User.findOne({username: req.params.username}).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(400);
+    }
+    if (!user.user_followed.includes(req.payload.id)) {
+      return res.status(400).json({message: "You don't follow this user"});
+    }
+    user.user_followed = user.user_followed.filter((id) => id !== req.payload.id);
+    user.save().then(() => {
+      return res.sendStatus(204);
+    }).catch((err) => {
+      return res.status(500).json(err);
+    });
+  });
+}
+
+
 module.exports = {
   changeUsername,
   getUsers,
@@ -474,5 +522,8 @@ module.exports = {
   createUsers,
   search,
   getProfile,
-  isLoggedProfile
+  isLoggedProfile,
+  followUser,
+  isFollowed,
+  unfollowUser
 }

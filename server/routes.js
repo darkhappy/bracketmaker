@@ -73,6 +73,12 @@ router
     .get(middleware.isAuth, userController.isLoggedProfile)
 
 router
+    .route("/user/follow/:username")
+    .get(middleware.isAuth, userController.isFollowed)
+    .post(middleware.isAuth, userController.followUser)
+    .delete(middleware.isAuth, userController.unfollowUser);
+
+router
   .route('/tournament')
   .get(middleware.isAuth, tournamentController.getTournament)
   .post(middleware.isAuth, tournamentController.createTournament)
