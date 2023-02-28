@@ -11,6 +11,7 @@ export class ProfileComponent {
   user: any;
   visitor = false;
   href: string = '';
+  isMyProfile: boolean = false;
   constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
@@ -26,6 +27,17 @@ export class ProfileComponent {
           }
         }
       });
+
+      this.userService.isLoggedProfile(urlArray[2]).subscribe( {
+        next: (response) => {
+          console.log(response);
+          this.isMyProfile = response;
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+      
     } else {
       this.userService.getUser().subscribe({
         next: user => {

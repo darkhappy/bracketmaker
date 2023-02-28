@@ -189,6 +189,15 @@ function logout (req, res) {
   });
 }
 
+function isLoggedProfile(req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.status(401).json({message: "asdahd658stfb"});
+    }
+    return res.status(200).json(user.username == req.params.username);
+  })
+}
+
 async function createUser (req, res) {
   const { username, email, password } = req.body
   const sameUsername = await User.find({ username }).exec()
@@ -464,5 +473,6 @@ module.exports = {
   logout,
   createUsers,
   search,
-  getProfile
+  getProfile,
+  isLoggedProfile
 }

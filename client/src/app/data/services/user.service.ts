@@ -70,8 +70,8 @@ export class UserService {
     return this.http.post<any>('/api/user/follow', {username: username});
   }
 
-  isLoggedProfile() : Observable<boolean> {
-    return this.http.get<boolean>('/api/user/isLoggedProfile');
+  isLoggedProfile(username: string) : Observable<boolean> {
+    return this.http.get<boolean>('/api/user/isLoggedProfile/' + username);
   }
 
 }

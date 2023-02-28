@@ -69,6 +69,10 @@ router
     .post(middleware.isAuth, userController.logout)
 
 router
+    .route("/user/isLoggedProfile/:username")
+    .get(middleware.isAuth, userController.isLoggedProfile)
+
+router
   .route('/tournament')
   .get(middleware.isAuth, tournamentController.getTournament)
   .post(middleware.isAuth, tournamentController.createTournament)
