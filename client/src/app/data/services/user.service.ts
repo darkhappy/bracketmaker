@@ -71,19 +71,19 @@ export class UserService {
     return this.http.get<any>('/api/user/getUserById/?_id=' + id);
   }
 
-  followUser(username: string) : Observable<any> {
+  followUser(username: String) : Observable<any> {
     return this.http.post<any>('/api/user/follow/' + username, {});
   }
 
-  unfollowUser(username: string) : Observable<any> {
+  unfollowUser(username: String) : Observable<any> {
     return this.http.delete<any>('/api/user/unfollow/' + username);
   }
 
-  isFollowed(username: string) : Observable<boolean> {
+  isFollowed(username: String) : Observable<boolean> {
     return this.http.get<boolean>('/api/user/follow/' + username);
   }
 
-  isLoggedProfile(username: string) : Observable<boolean> {
+  isLoggedProfile(username: String) : Observable<boolean> {
     return this.http.get<boolean>('/api/user/isLoggedProfile/' + username);
   }
 
