@@ -1,8 +1,9 @@
 <div class="profile-header-container">
   <div class="profile-picture">
     <div class="flex flex-col justify-center items-center">
-      <img alt="image du profil" src="assets/profile-icon-9.png" alt="Avatar de {{user.username}}">
-      <button (click)="changeAvatar()">Changer</button>
+      <img [src]="getLinkPicture()" alt="Avatar de {{user.username}}">
+      <h1>Changer l'avatar</h1>
+      <app-image-upload (fileUploaded)=changeAvatar($event)></app-image-upload>
     </div>
     <div class="profile-credentials">
       <h1 class="profile-username">{{user.username}}</h1>
