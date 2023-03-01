@@ -106,9 +106,12 @@ router
   .delete(middleware.isAuth, tournamentController.unfollowTournament);
 
 router
-  .route('/tournament/followedTournaments')
+  .route('/tournament/followed')
   .get(middleware.isAuth, tournamentController.getFollowedTournaments);
 
+router
+  .route('/tournament/followed/search/:search')
+  .get(middleware.isAuth, tournamentController.searchFollowedTournaments);
 //router
   //.route('/tournament/search/:search').get(middleware.isAuth, tournamentController.searchTournament);
 router
