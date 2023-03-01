@@ -87,7 +87,7 @@ router
 
 router
   .route('/tournament')
-  .get(middleware.isAuth, tournamentController.getTournament)
+  .get(tournamentController.getTournament)
   .post(middleware.isAuth, tournamentController.createTournament)
   .put(middleware.isAuth, tournamentController.updateTournament)
   .delete(middleware.isAuth, tournamentController.deleteTournament);
