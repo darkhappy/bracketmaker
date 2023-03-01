@@ -36,7 +36,6 @@ export class UserService {
     return this.http.put<User>('/api/user/update', user);
   }
   updateProfile(user: User) : Observable<User> {
-    console.log(user);
     return this.http.put<User>('/api/user/profile', {
       displayName: user.display_name,
       about: user.about,
@@ -76,10 +75,11 @@ export class UserService {
   }
 
   unfollowUser(username: String) : Observable<any> {
-    return this.http.delete<any>('/api/user/unfollow/' + username);
+    return this.http.delete<any>('/api/user/follow/' + username);
   }
 
   isFollowed(username: String) : Observable<boolean> {
+    console.log(username);
     return this.http.get<boolean>('/api/user/follow/' + username);
   }
 

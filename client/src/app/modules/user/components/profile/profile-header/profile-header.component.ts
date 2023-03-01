@@ -32,16 +32,20 @@ export class ProfileHeaderComponent {
   avatarPath: string = '';
   timeStamp: number = 0;
 
-
+  href: string = '';
   constructor(private userService : UserService, private authService: AuthService, private router: Router, private fileUploadService: FileUploadService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
+    this.href = this.router.url;
+    let urlArray = this.href.split('/');
     const SESSION_INFO = this.cookieService.get('sessioninfo');
     const SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
     this.userId = SESSION_INFO_JSON.id;
 
     this.setLinkPicture('/api/user/avatar/' + this.userId);
-    this.userService.isFollowed(this.user.username).subscribe( {
+    
+
+    this.userService.isFollowed(urlArray[2]).subscribe( {
       next: (response) => {
         this.isFollowed = response;
       }

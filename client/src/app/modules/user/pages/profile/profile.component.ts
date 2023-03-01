@@ -40,16 +40,13 @@ export class ProfileComponent {
             showEmail: user.show_email,
             avatar: user.avatar,
           };
-          console.log(this.user.showEmail);
           if (!this.user.showEmail) {
             this.user.email = '';
           }
         }
       });
-
       this.userService.isLoggedProfile(urlArray[2]).subscribe( {
         next: (response) => {
-          console.log(response);
           this.isMyProfile = response;
         },
         error: (error) => {

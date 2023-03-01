@@ -42,6 +42,5 @@ export class FollowedTournamentsComponent {
   }
 
   look(element: any) {
-    console.log(this.search);
   }
 }
