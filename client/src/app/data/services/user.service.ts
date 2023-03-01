@@ -22,10 +22,12 @@ export class UserService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
+  //TODO: change pour getConnectedUser
   getUser() : Observable<User> {
     return this.http.get<User>('/api/user');
   }
 
+  //TODO: remove both her and in api
   getOneUser() : Observable<User> {
     let SESSION_INFO = this.cookieService.get('sessioninfo');
     let SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
@@ -36,7 +38,6 @@ export class UserService {
     return this.http.put<User>('/api/user/update', user);
   }
   updateProfile(user: User) : Observable<User> {
-    console.log(user);
     return this.http.put<User>('/api/user/profile', {
       displayName: user.display_name,
       about: user.about,
@@ -48,8 +49,8 @@ export class UserService {
     return this.http.put<any>('/api/user/password', data);
   }
 
-  getUserAvatar(userId: string) {
-    return this.http.get<any>('/api/user/avatar/' + userId);
+  getUserAvatar(username: string) {
+    return this.http.get<any>('/api/user/avatar/' + username);
   }
 
   getUsers() : Observable<any[]> {
@@ -65,6 +66,30 @@ export class UserService {
 
   getProfile(username: string) : Observable<any> {
     return this.http.get<any>('/api/user/getProfile/' + username);
+  }
+
+  getUserById(id: String) : Observable<any> {
+    return this.http.get<any>('/api/user/getUserById/?_id=' + id);
+  }
+
+  followUser(username: String) : Observable<any> {
+    return this.http.post<any>('/api/user/follow/' + username, {});
+  }
+
+  unfollowUser(username: String) : Observable<any> {
+    return this.http.delete<any>('/api/user/follow/' + username);
+  }
+
+  isFollowed(username: String) : Observable<boolean> {
+    return this.http.get<boolean>('/api/user/follow/' + username);
+  }
+
+  isLoggedProfile(username: String) : Observable<boolean> {
+    return this.http.get<boolean>('/api/user/isLoggedProfile/' + username);
+  }
+
+  getFollowedUsers() : Observable<any[]> {
+    return this.http.get<any[]>('/api/user/followed');
   }
 
 }

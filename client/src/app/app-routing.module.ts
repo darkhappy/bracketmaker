@@ -14,6 +14,12 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: [
       {
+        path: 'tournaments',
+        loadChildren: () => {
+          return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
+        }
+      },
+      {
         path: 'home',
         loadChildren: () => {
           return import('@modules/home/home.module').then(m => m.HomeModule);
@@ -35,12 +41,6 @@ const routes: Routes = [
         path: 'auth/validate',
         loadChildren: () => {
           return import('@modules/auth/auth.module').then(m => m.AuthModule);
-        }
-      },
-      {
-        path: 'tournament',
-        loadChildren: () => {
-          return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
         }
       },
       {
