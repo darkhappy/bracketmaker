@@ -76,12 +76,30 @@ router
     .post(middleware.isAuth, userController.logout)
 
 router
+    .route("/user/isLoggedProfile/:username")
+    .get(middleware.isAuth, userController.isLoggedProfile)
+
+router
+    .route("/user/follow/:username")
+    .get(middleware.isAuth, userController.isFollowed)
+    .post(middleware.isAuth, userController.followUser)
+    .delete(middleware.isAuth, userController.unfollowUser);
+
+router
   .route('/tournament')
-  .get(middleware.isAuth, tournamentController.getTournament)
+  .get(tournamentController.getTournament)
   .post(middleware.isAuth, tournamentController.createTournament)
   .put(middleware.isAuth, tournamentController.updateTournament)
   .delete(middleware.isAuth, tournamentController.deleteTournament);
 
+router
+  .route('/tournament/follow/:id')
+  .get(middleware.isAuth, tournamentController.isFollowed)
+  .post(middleware.isAuth, tournamentController.followTournament)
+  .delete(middleware.isAuth, tournamentController.unfollowTournament);
+
+//router
+  //.route('/tournament/search/:search').get(middleware.isAuth, tournamentController.searchTournament);
 router
   .route('/match')
   .get(matchController.getMatch)
@@ -104,6 +122,5 @@ router
   .route('/password/:token')
   .get(userController.getToken)
   .put(userController.resetPassword)
-
 
 module.exports = router

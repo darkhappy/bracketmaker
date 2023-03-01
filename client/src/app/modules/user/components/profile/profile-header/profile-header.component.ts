@@ -1,12 +1,11 @@
 import {Component} from '@angular/core';
 import { UserService } from '@data/services/user.service';
 import { Input } from '@angular/core';
+import { AuthService } from '@data/services/auth.service';
+import { Router } from '@angular/router';
 import {FileUploadService} from "@data/services/file-upload.service";
 import {User} from "@data/schemas/user";
 import {CookieService} from "ngx-cookie-service";
-import {Observable} from "rxjs";
-import {Router} from "@angular/router";
-import { AuthService } from '@data/services/auth.service';
 
 @Component({
   selector: 'app-profile-header',
@@ -25,11 +24,31 @@ export class ProfileHeaderComponent {
     showEmail: false,
     avatar: '',
   }
-  @Input() isVisitor = false;
+
+  @Input() isMyProfile: boolean = false;
+  isFollowed: boolean = false;
+
   userId: string = '';
   avatarPath: string = '';
   timeStamp: number = 0;
-  constructor(private userService : UserService, private authService: AuthService, private fileUploadService: FileUploadService, private router : Router) { }
+
+  href: string = '';
+  constructor(private userService : UserService, private authService: AuthService, private router: Router, private fileUploadService: FileUploadService, private cookieService: CookieService) { }
+
+  ngOnInit(): void {
+    this.href = this.router.url;
+    let urlArray = this.href.split('/');
+    const SESSION_INFO = this.cookieService.get('sessioninfo');
+    const SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
+    this.userId = SESSION_INFO_JSON.id;
+
+    this.setLinkPicture('/api/user/avatar/' + this.userId);
+    this.userService.isFollowed(urlArray[2] == 'profile' ? this.user.username : urlArray[2] ).subscribe( {
+      next: (response) => {
+        this.isFollowed = response;
+      }
+    });
+  }
 
   changeAvatar(event: { file: File }) {
     const file = event.file;
@@ -74,8 +93,21 @@ export class ProfileHeaderComponent {
         error: (error) => {
           console.log(error);
         }
-      }); */
+      });
 
+    }
+  }
+
+  unfollow() {
+    this.userService.unfollowUser(this.user.username).subscribe( {
+      next: (response) => {
+        this.isFollowed = false;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
+       */
     }
   }
 }

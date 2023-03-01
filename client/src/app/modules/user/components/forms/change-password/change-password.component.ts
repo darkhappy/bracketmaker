@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import {AuthService} from "@data/services/auth.service";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import { SettingsSecurityComponent } from '../../settings-security/settings-security.component';
+import { SettingsSecurityComponent } from '../../profile/settings/settings-security/settings-security.component';
 
 export interface DialogData {
   oldPassword: string;

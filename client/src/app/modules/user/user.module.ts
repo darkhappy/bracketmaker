@@ -8,28 +8,37 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import { ChangePasswordComponent } from './components/forms/change-password/change-password.component';
-import { ProfileHeaderComponent } from './components/profile-header/profile-header.component';
-import { ProfileContentComponent } from './components/profile-content/profile-content.component';
+import { ProfileHeaderComponent } from './components/profile/profile-header/profile-header.component';
+import { ProfileContentComponent } from './components/profile/profile-content/profile-content.component';
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
-import { SettingsProfileComponent } from './components/settings-profile/settings-profile.component';
-import { SettingsAccountComponent } from './components/settings-account/settings-account.component';
-import { SettingsSecurityComponent } from './components/settings-security/settings-security.component';
+import { SettingsProfileComponent } from './components/profile/settings/settings-profile/settings-profile.component';
+import { SettingsAccountComponent } from './components/profile/settings/settings-account/settings-account.component';
+import { SettingsSecurityComponent } from './components/profile/settings/settings-security/settings-security.component';
 import { ChangeUsernameComponent } from './components/forms/change-username/change-username.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { ChangeEmailComponent } from "@modules/user/components/forms/change-email/change-email-component";
 import { ChangePasswordDialogComponent } from './components/forms/change-password-dialog/change-password-dialog.component';
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import { ViewUsersCardComponent } from './components/view-users-card/view-users-card.component';
+import { ViewUsersCardComponent } from './components/user-list/view-users-card/view-users-card.component';
 import { MatCardModule } from '@angular/material/card';
-import { ViewUsersCardListComponent } from './components/view-users-card-list/view-users-card-list.component';
+import { ViewUsersCardListComponent } from './components/user-list/view-users-card-list/view-users-card-list.component';
 import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import {MatSelectModule} from '@angular/material/select';
-import { VisitorProfileContentComponent } from './components/visitor-profile-content/visitor-profile-content.component';
+import { VisitorProfileContentComponent } from './components/profile/visitor-profile-content/visitor-profile-content.component';
 import {SharedModule} from "@shared/shared.module";
+import { FollowedTournamentsComponent } from './components/profile/view-followed/followed-tournaments/followed-tournaments.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatPaginatorIntl} from '@angular/material/paginator';
+import {getFrenchPaginatorIntl} from "@modules/user/french-paginator.intl";
+import {MatTableModule} from '@angular/material/table';
+import { ImageUploadComponent } from '@shared/image-upload/image-upload.component';
+import { FollowedUsersComponent } from './components/profile/view-followed/followed-users/followed-users.component';
+import { FollowedMenuComponent } from './components/profile/view-followed/followed-menu/followed-menu.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -47,6 +56,10 @@ import {SharedModule} from "@shared/shared.module";
     ViewUsersCardListComponent,
     ViewUsersComponent,
     VisitorProfileContentComponent,
+    FollowedTournamentsComponent,
+    ImageUploadComponent,
+    FollowedUsersComponent,
+    FollowedMenuComponent
   ],
     imports: [
         userRoutes,
@@ -67,6 +80,12 @@ import {SharedModule} from "@shared/shared.module";
         MatCardModule,
         MatSelectModule,
         SharedModule,
-    ],
+        MatPaginatorModule,
+        MatTableModule,
+        MatIconModule
+  ],
+  providers: [
+    {provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() }
+  ],
 })
 export class UserModule { }

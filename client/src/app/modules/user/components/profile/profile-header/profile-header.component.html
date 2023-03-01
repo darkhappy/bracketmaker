@@ -17,9 +17,14 @@
     </p>
   </div>
   <div class="profile-follow">
-    <button mat-raised-button color="primary" (click)="follow()">
-      S'abonner
-    </button>
+    <ng-container *ngIf="!isMyProfile">
+      <button *ngIf="isFollowed" mat-raised-button color="warn" (click)="unfollow()">
+        Se désabonner
+      </button>
+      <button *ngIf="!isFollowed" mat-raised-button color="primary" (click)="follow()">
+        S'abonner
+      </button>
+    </ng-container>
   </div>
 </div>
 <hr>
