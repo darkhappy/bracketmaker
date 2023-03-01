@@ -43,8 +43,7 @@ export class ProfileHeaderComponent {
     this.userId = SESSION_INFO_JSON.id;
 
     this.setLinkPicture('/api/user/avatar/' + this.userId);
-    
-    this.userService.isFollowed(urlArray[2]).subscribe( {
+    this.userService.isFollowed(urlArray[2] == 'profile' ? this.user.username : urlArray[2] ).subscribe( {
       next: (response) => {
         this.isFollowed = response;
       }

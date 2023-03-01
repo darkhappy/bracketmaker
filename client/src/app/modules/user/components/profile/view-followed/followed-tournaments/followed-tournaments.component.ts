@@ -24,12 +24,7 @@ export class FollowedTournamentsComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
-    this.tournamentService.getFollowedTournaments().subscribe((data) => {
-      this.tournaments = data;
-      this.dataSource = new MatTableDataSource(this.tournaments);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    
   }
 
   onSearchChange() {

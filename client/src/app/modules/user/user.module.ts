@@ -36,6 +36,9 @@ import {MatPaginatorIntl} from '@angular/material/paginator';
 import {getFrenchPaginatorIntl} from "@modules/user/french-paginator.intl";
 import {MatTableModule} from '@angular/material/table';
 import { ImageUploadComponent } from '@shared/image-upload/image-upload.component';
+import { FollowedUsersComponent } from './components/profile/view-followed/followed-users/followed-users.component';
+import { FollowedMenuComponent } from './components/profile/view-followed/followed-menu/followed-menu.component';
+import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -54,7 +57,9 @@ import { ImageUploadComponent } from '@shared/image-upload/image-upload.componen
     ViewUsersComponent,
     VisitorProfileContentComponent,
     FollowedTournamentsComponent,
-    ImageUploadComponent
+    ImageUploadComponent,
+    FollowedUsersComponent,
+    FollowedMenuComponent
   ],
     imports: [
         userRoutes,
@@ -76,7 +81,8 @@ import { ImageUploadComponent } from '@shared/image-upload/image-upload.componen
         MatSelectModule,
         SharedModule,
         MatPaginatorModule,
-        MatTableModule
+        MatTableModule,
+        MatIconModule
   ],
   providers: [
     {provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() }

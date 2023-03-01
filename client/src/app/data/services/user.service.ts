@@ -87,4 +87,8 @@ export class UserService {
     return this.http.get<boolean>('/api/user/isLoggedProfile/' + username);
   }
 
+  getFollowedUsers() : Observable<any[]> {
+    return this.http.get<any[]>('/api/user/followed');
+  }
+
 }
