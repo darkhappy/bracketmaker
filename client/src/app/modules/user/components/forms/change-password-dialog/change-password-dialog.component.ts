@@ -41,10 +41,8 @@ export class ChangePasswordDialogComponent {
   }
   
   onSubmit() {
-    console.log(this.form.value);
     if (this.form.value.newPassword === this.form.value.confirm) {
       if (this.form.valid) {
-        console.log(this.form.value);
         this.userService.changePassword(this.form.value).subscribe(
           (res) => {
             this.dialogRef.close();

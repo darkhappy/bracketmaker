@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ContentLayoutComponent} from "./layout/content-layout/content-layout.component";
+import {NotFoundComponent} from "./layout/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -36,10 +37,26 @@ const routes: Routes = [
           return import('@modules/auth/auth.module').then(m => m.AuthModule);
         }
       },
+      {
+        path: 'auth/validate',
+        loadChildren: () => {
+          return import('@modules/auth/auth.module').then(m => m.AuthModule);
+        }
+      },
+      {
+        path: 'tournament',
+        loadChildren: () => {
+          return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
+        }
+      },
+      {
+        path: '404',
+        component: NotFoundComponent,
+      },
     ],
   },
   // Fallback
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '**', redirectTo: '404', pathMatch: 'full' }
 ];
 
 @NgModule({

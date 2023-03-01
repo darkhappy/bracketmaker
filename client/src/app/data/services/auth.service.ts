@@ -24,7 +24,6 @@ export class AuthService {
   }
 
   login(user: User) {
-    console.log(user)
     return this.http.post<any>('/api/user/login', user);
   }
 

@@ -5,11 +5,11 @@ const crypto = require('crypto')
 const fs = require('fs')
 const dotenv = require("dotenv");
 const { CONNREFUSED } = require('dns')
+const { dirname } = require('path');
 
 function getUsers (req, res) {
   User.find({}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
     if (err) {
-      console.log("Yo")
       return res.status(400);
     }
     return res.json(users)
@@ -26,9 +26,7 @@ function getUserById (req, res) {
 }
 
 function getUser (req, res) {
-  console.log("payload is " + req.payload)
   User.findById(req.payload.id).exec((err, user) => {
-    console.log("This user" + user)
     if (err) {
       return res.status(401).json({message: "ab"});
     }
@@ -126,6 +124,30 @@ function createUsers(req, res) {
   })
 }
 
+function updateAvatar(id, path) {
+    User.findById(id).exec((err, user) => {
+        if (err) {
+          console.log(err)
+        }
+        user.avatar = path
+        user.save()
+    })
+}
+
+function getUserAvatar(req, res) {
+  User.findById(req.params.id).exec((err, user) => {
+    if (err) {
+      return res.status(401).json({message: "User not found"});
+    }
+    try {
+      const path = dirname(require.main.filename) + '/assets/avatars/' + user.avatar
+      return res.sendFile(path);
+    } catch (err) {
+        return res.status(401).json({message: "Image not found"});
+    }
+  })
+}
+
 function search(req, res) {
   let search = new RegExp('.*' + req.params.search + '.*', 'i')
   User.find({'username': search}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
@@ -177,7 +199,6 @@ function login (req, res) {
 }
 
 function logout (req, res) {
-  console.log(req.payload)
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
   User.findOne({ _id: req.payload.id }, (err, user) => {
@@ -329,7 +350,6 @@ function generateToken (length) {
 }
 
 function getProfile(req, res) {
-  console.log(req.params.username)
   
   User.findOne({username: req.params.username}, {username:1, email:1, display_name:1, about:1, show_email:1, avatar:1}).exec((err, user) => {
     if (err) {
@@ -412,7 +432,6 @@ const changeEmail = async (req, res) => {
 }
 
 async function googleLogin (req, res) {
-  console.log(req.body)
   let { email, idToken, name } = req.body
 
   const sameUsername = await User.find({ username: name }).exec()
@@ -438,7 +457,6 @@ async function googleLogin (req, res) {
     googleAuth: idToken
   })
   user.save().then(() => {
-    console.log('User created via google')
 
     const payload = { id: user._id }
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
@@ -471,5 +489,7 @@ module.exports = {
   logout,
   createUsers,
   search,
-  getProfile
+  getProfile,
+  updateAvatar,
+  getUserAvatar
 }

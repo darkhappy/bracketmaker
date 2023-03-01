@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TournamentListComponent } from './pages/tournament-list/tournament-list.component';
 import { SharedModule } from "@shared/shared.module";
+import { TournamentProfileComponent } from './pages/tournament-profile/tournament-profile.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MatTabsModule} from "@angular/material/tabs";
 import { CreateComponent } from './crud/create/create.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { tournamentRoutes } from "@modules/tournaments/tournaments-routing.module";
@@ -18,6 +21,7 @@ import { MatMenuModule } from "@angular/material/menu";
 @NgModule({
   declarations: [
     CreateComponent,
+    TournamentProfileComponent,
     TournamentListComponent
   ],
   imports: [
@@ -34,6 +38,10 @@ import { MatMenuModule } from "@angular/material/menu";
     SharedModule,
     MatIconModule,
     MatMenuModule,
-  ],
+    MatSelectModule,
+    FontAwesomeModule,
+    MatTabsModule,
+    MatButtonModule,
+  ]
 })
 export class TournamentsModule { }

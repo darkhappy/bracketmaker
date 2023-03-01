@@ -29,6 +29,7 @@ import { ViewUsersCardListComponent } from './components/view-users-card-list/vi
 import { ViewUsersComponent } from './pages/view-users/view-users.component';
 import {MatSelectModule} from '@angular/material/select';
 import { VisitorProfileContentComponent } from './components/visitor-profile-content/visitor-profile-content.component';
+import {SharedModule} from "@shared/shared.module";
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -47,24 +48,25 @@ import { VisitorProfileContentComponent } from './components/visitor-profile-con
     ViewUsersComponent,
     VisitorProfileContentComponent,
   ],
-  imports: [
-    userRoutes,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTabsModule,
-    MatSidenavModule,
-    MatListModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatDialogModule,
-    FontAwesomeModule,
-    MatCardModule,
-    MatSelectModule,
-  ],
+    imports: [
+        userRoutes,
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDialogModule,
+        MatButtonModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatTabsModule,
+        MatSidenavModule,
+        MatListModule,
+        MatSliderModule,
+        MatSlideToggleModule,
+        MatDialogModule,
+        FontAwesomeModule,
+        MatCardModule,
+        MatSelectModule,
+        SharedModule,
+    ],
 })
 export class UserModule { }

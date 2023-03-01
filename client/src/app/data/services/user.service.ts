@@ -29,7 +29,6 @@ export class UserService {
   getOneUser() : Observable<User> {
     let SESSION_INFO = this.cookieService.get('sessioninfo');
     let SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
-    console.log(SESSION_INFO_JSON.id)
     return this.http.get<User>('/api/getUser/' + SESSION_INFO_JSON.id);
   }
 
@@ -37,6 +36,7 @@ export class UserService {
     return this.http.put<User>('/api/user/update', user);
   }
   updateProfile(user: User) : Observable<User> {
+    console.log(user);
     return this.http.put<User>('/api/user/profile', {
       displayName: user.display_name,
       about: user.about,
@@ -46,6 +46,10 @@ export class UserService {
 
   changePassword(data: any) : Observable<any> {
     return this.http.put<any>('/api/user/password', data);
+  }
+
+  getUserAvatar(userId: string) {
+    return this.http.get<any>('/api/user/avatar/' + userId);
   }
 
   getUsers() : Observable<any[]> {
