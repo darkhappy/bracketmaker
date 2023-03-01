@@ -35,6 +35,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatPaginatorIntl} from '@angular/material/paginator';
 import {getFrenchPaginatorIntl} from "@modules/user/french-paginator.intl";
 import {MatTableModule} from '@angular/material/table';
+import { ImageUploadComponent } from '@shared/image-upload/image-upload.component';
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -53,6 +54,7 @@ import {MatTableModule} from '@angular/material/table';
     ViewUsersComponent,
     VisitorProfileContentComponent,
     FollowedTournamentsComponent,
+    ImageUploadComponent
   ],
     imports: [
         userRoutes,

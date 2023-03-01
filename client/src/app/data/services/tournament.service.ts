@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { of } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs';
+import { TournamentModel } from "@data/schemas/tournament.model";
 
 @Injectable({
   providedIn: "root",
@@ -52,11 +53,11 @@ export class TournamentService {
   }
 
   followTournament(id: String) : Observable<any> {
-    return this.http.post(`/api/tournament/follow`, {id: id});
+    return this.http.post(`/api/tournament/follow/` + id, {});
   }
 
   unfollowTournament(id: String) {
-    return this.http.post(`/api/tournament/unfollow`, {id: id});
+    return this.http.delete(`/api/tournament/follow/` + id, {});
   }
 
   getFollowedTournaments() {
@@ -67,23 +68,8 @@ export class TournamentService {
     return this.http.get<any>('/api/tournament/search/' + search);
   }
 
-  getTournament(id: string) {
-    return this.http.get<TournamentModel>(`/api/tournament/?_id=${id}`);
+  isFollowed(id: string) : Observable<boolean> {
+    return this.http.get<boolean>(`/api/tournament/follow/` + id);
   }
 
-  followTournament(id: String) : Observable<any> {
-    return this.http.post(`/api/tournament/follow`, {id: id});
-  }
-
-  unfollowTournament(id: String) {
-    return this.http.post(`/api/tournament/unfollow`, {id: id});
-  }
-
-  getFollowedTournaments() {
-    return this.http.get<any>('/api/tournament/followed');
-  }
-
-  searchTournaments(search: string) {
-    return this.http.get<any>('/api/tournament/search/' + search);
-  }
 }

@@ -7,6 +7,7 @@ const Match = require("../models/match");
 
 function getTournament (req, res) {
   const _id = req.query._id
+  console.log(_id)
   Tournament.findOne({ _id }).exec((err, tournament) => {
     if (err || !tournament) {
       return res.status(401).json({ error: 'Tournament not found' })
@@ -56,7 +57,7 @@ function deleteTournament (req, res) {
 }
 
 function followTournament(req, res) {
-  Tournament.findById(req.body.id).exec((err, tournament) => {
+  Tournament.findById(req.params.id).exec((err, tournament) => {
     User.findById(req.payload.id).exec((err, user) => {
       if (err || !user) {
         return res.status(401).json({ error: 'User not found' })
@@ -64,7 +65,7 @@ function followTournament(req, res) {
       if (err || !tournament) {
         return res.status(401).json({ error: 'Tournament not found' })
       }
-      console.log(tournament)
+
       tournament.followers.push(req.payload.id)
       tournament.save().then(() => {
         user.subscriptions.push(tournament._id)
@@ -83,7 +84,7 @@ function followTournament(req, res) {
 }
 
 function unfollowTournament(req, res) {
-  Tournament.findById(req.body.id).exec((err, tournament) => {
+  Tournament.findById(req.params.id).exec((err, tournament) => {
     User.findById(req.payload.id).exec((err, user) => {
       if (err || !user) {
         return res.status(401).json({ error: 'User not found' })
@@ -91,9 +92,15 @@ function unfollowTournament(req, res) {
       if (err || !tournament) {
         return res.status(401).json({ error: 'Tournament not found' })
       }
-      tournament.followers = tournament.followers.filter(follower => follower !== req.payload.id)
+      const index = tournament.followers.indexOf(user._id);
+      if (index > -1) { 
+        tournament.followers.splice(index, 1); 
+      }
       tournament.save().then(() => {
-        user.subscriptions = user.subscriptions.filter(subscription => subscription !== req.body.tournament_id)
+        const index = user.subscriptions.indexOf(tournament._id);
+        if (index > -1) {
+          user.subscriptions.splice(index, 1);
+        }
         user.save().then(() => {
           return res.sendStatus(204)
         }).catch(() => {
@@ -111,11 +118,10 @@ function isFollowed(req, res) {
     if (err || !user) {
       return res.status(401).json({ error: 'User not found' })
     } 
-    user.subscriptions = user.subscriptions.filter(subscription => subscription === req.body.tournament_id);
-    if (user.subscriptions.length > 0) {
-      return res.status(201).json({ isFollowed: true })
+    if (user.subscriptions.includes(req.params.id)) {
+      return res.status(201).json(true)
     } else {
-      return res.status(201).json({ isFollowed: false })
+      return res.status(201).json(false)
     }
   })
 }

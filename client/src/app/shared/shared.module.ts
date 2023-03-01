@@ -7,8 +7,6 @@ import { MatButtonModule } from "@angular/material/button";
 @NgModule({
   declarations: [
     TournamentCardComponent,
-
-    ImageUploadComponent
   ],
   imports: [
     CommonModule,
@@ -17,7 +15,6 @@ import { MatButtonModule } from "@angular/material/button";
   ],
   exports: [
     TournamentCardComponent,
-    ImageUploadComponent
   ],
 })
 export class SharedModule { }

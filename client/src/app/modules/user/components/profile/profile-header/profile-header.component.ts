@@ -44,7 +44,6 @@ export class ProfileHeaderComponent {
 
     this.setLinkPicture('/api/user/avatar/' + this.userId);
     
-
     this.userService.isFollowed(urlArray[2]).subscribe( {
       next: (response) => {
         this.isFollowed = response;

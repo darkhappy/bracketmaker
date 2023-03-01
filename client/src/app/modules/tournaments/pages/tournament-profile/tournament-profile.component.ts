@@ -26,6 +26,8 @@ export class TournamentProfileComponent {
 
   public href: string = "";
 
+  isFollowed: boolean = false;
+
   constructor(private router: Router, private tournamentService: TournamentService, private authService: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -45,6 +47,13 @@ export class TournamentProfileComponent {
         }
       }
     });
+
+    this.tournamentService.isFollowed(urlArray[2]).subscribe( {
+      next: (response) => {
+        this.isFollowed = response;
+      }
+    });
+
   }
 
   getOrganiserName() {
@@ -69,14 +78,24 @@ export class TournamentProfileComponent {
     } else {
       this.tournamentService.followTournament(this.tournament._id).subscribe( {
         next: (response) => {
-          console.log(response);
+          this.isFollowed = true;
         },
         error: (error) => {
           console.log(error);
         }
       }); 
-      
     }
+  }
+
+  unfollow() {
+    this.tournamentService.unfollowTournament(this.tournament._id).subscribe( {
+      next: (response) => {
+        this.isFollowed = false;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    }); 
   }
 }
 

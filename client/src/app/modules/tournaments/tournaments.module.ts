@@ -22,7 +22,7 @@ import {MatTabsModule} from "@angular/material/tabs";
   declarations: [
     CreateComponent,
     TournamentListComponent,
-    TournamentProfileComponent,
+    TournamentProfileComponent
   ],
   imports: [
     CommonModule,
@@ -37,10 +37,11 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatSelectModule,
     SharedModule,
     MatIconModule,
-    MatMenuModule,,
+    MatMenuModule,
     FontAwesomeModule,
     MatTabsModule,
     MatButtonModule,
   ],
 })
+
 export class TournamentsModule { }

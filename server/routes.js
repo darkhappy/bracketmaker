@@ -93,12 +93,11 @@ router
   .delete(middleware.isAuth, tournamentController.deleteTournament);
 
 router
-  .route('/tournament/follow')
+  .route('/tournament/follow/:id')
   .get(middleware.isAuth, tournamentController.isFollowed)
-  .post(middleware.isAuth, tournamentController.followTournament);
+  .post(middleware.isAuth, tournamentController.followTournament)
+  .delete(middleware.isAuth, tournamentController.unfollowTournament);
 
-router
-  .route('/tournament/unfollow').post(middleware.isAuth, tournamentController.unfollowTournament);
 //router
   //.route('/tournament/search/:search').get(middleware.isAuth, tournamentController.searchTournament);
 router
