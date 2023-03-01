@@ -2,8 +2,7 @@
   <div class="profile-picture">
     <div class="flex flex-col justify-center items-center">
       <img [src]="getLinkPicture()" alt="Avatar de {{user.username}}">
-      <h1>Changer l'avatar</h1>
-      <app-image-upload (fileUploaded)=changeAvatar($event)></app-image-upload>
+      <app-image-upload *ngIf="!isVisitor" (fileUploaded)=changeAvatar($event)></app-image-upload>
     </div>
   </div>
     <div class="profile-credentials">

@@ -1,6 +1,6 @@
 <div class="profile-container">
   <header>
-    <app-profile-header [user]="user"></app-profile-header>
+    <app-profile-header [user]="user" [isVisitor]="visitor"></app-profile-header>
   </header>
   <div class="profile-content">
     <app-profile-content *ngIf="!visitor" (event)="updateProfile($event)"></app-profile-content>

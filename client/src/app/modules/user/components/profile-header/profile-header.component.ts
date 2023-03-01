@@ -25,6 +25,7 @@ export class ProfileHeaderComponent {
     showEmail: false,
     avatar: '',
   }
+  @Input() isVisitor = false;
   userId: string = '';
   avatarPath: string = '';
   timeStamp: number = 0;
@@ -74,7 +75,7 @@ export class ProfileHeaderComponent {
           console.log(error);
         }
       }); */
-      
+
     }
   }
 }
