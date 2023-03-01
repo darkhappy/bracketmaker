@@ -68,6 +68,19 @@ export class UpdateTournamentComponent {
     }
   }
 
+  onDelete(){
+    if(confirm("voulez vous vraiment supprimer le tournoi ?")) {
+      this.tournamentService.deleteTournament(this.details).subscribe({
+        next : () =>{
+          this.router.navigate(['/tournament/']);
+        },
+        error: (error: any) => {
+          console.log(error);
+        },
+      })
+    }
+  }
+
   ajouter(): void {
     let player = new PlayerModel();
     player.name= this.playerName;

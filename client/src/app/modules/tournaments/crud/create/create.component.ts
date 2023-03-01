@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {PlayerModel} from "@data/schemas/Player.model";
 import {TournamentService} from "@data/services/tournament.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create',
@@ -15,7 +16,7 @@ export class CreateComponent {
   playerName: String = "";
   selectedRadio: String = "";
 
-  constructor(private fb: FormBuilder, private tournamentService: TournamentService,) { }
+  constructor(private router: Router,private fb: FormBuilder, private tournamentService: TournamentService,) { }
 
   ngOnInit(): void {
     this.formCreate = this.fb.group({
@@ -36,7 +37,7 @@ export class CreateComponent {
       this.formCreate.patchValue({players:this.players,});
       this.tournamentService.createTournament(this.formCreate.value).subscribe( {
         next: () => {
-          alert('le tournoi a été créé');
+          this.router.navigate(['/tournament/']);
         },
         error: (error: any) => {
           console.log(error);
