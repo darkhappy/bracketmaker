@@ -10,7 +10,7 @@ async function getTournament (req, res) {
     return res.json(tournaments)
 }
 
-export async function getTournamentsByOrganizerId (req, res) {
+async function getTournamentsByOrganizerId (req, res) {
     const tournaments = await Tournament.find({organizer_id: req.params.id}).exec()
     return res.json(tournaments)
 }
@@ -54,4 +54,4 @@ function deleteTournament (req, res) {
   // todo : a faire
 }
 
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament }
+module.exports = { getTournament, createTournament, deleteTournament, updateTournament, getTournamentsByOrganizerId }

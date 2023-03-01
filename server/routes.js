@@ -85,7 +85,7 @@ router
 
 router
   .route('/tournament/from/:id')
-  .get(getTournamentsByOrganizerId)
+  .get(tournamentController.getTournamentsByOrganizerId)
 
 router
   .route('/match')
