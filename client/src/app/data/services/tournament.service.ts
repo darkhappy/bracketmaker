@@ -46,4 +46,8 @@ export class TournamentService {
   getTournaments() {
     return this.http.get<TournamentModel[]>("/api/tournament/");
   }
+
+  getTournamentsFrom(id: string) {
+    return this.http.get<TournamentModel[]>("/api/tournament/from/" + id);
+  }
 }

@@ -17,12 +17,18 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
+import { ListOfTournamentsComponent } from './components/list-of-tournaments/list-of-tournaments.component';
 
 @NgModule({
   declarations: [
     CreateComponent,
     TournamentProfileComponent,
-    TournamentListComponent
+    TournamentListComponent,
+    ListOfTournamentsComponent,
+  ],
+  exports: [
+    TournamentListComponent,
+    ListOfTournamentsComponent,
   ],
   imports: [
     CommonModule,
@@ -42,6 +48,6 @@ import { MatMenuModule } from "@angular/material/menu";
     FontAwesomeModule,
     MatTabsModule,
     MatButtonModule,
-  ]
+  ],
 })
 export class TournamentsModule { }

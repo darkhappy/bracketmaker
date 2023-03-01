@@ -1,4 +1,5 @@
 export interface User {
+  _id: String,
   username: String,
   email: String,
   display_name: String,

@@ -6,6 +6,7 @@ import {
   faGear,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { User } from "@data/schemas/user";
 
 @Component({
   selector: 'app-visitor-profile-content',
@@ -16,5 +17,15 @@ export class VisitorProfileContentComponent {
   boxArchive = faBoxArchive;
   users = faUsers;
 
-  @Input() user: any = {};
+  @Input() user: User = {
+    _id: "",
+    about: "",
+    avatar: "",
+    display_name: "",
+    email: "",
+    showEmail: false,
+    subscriptions: [""],
+    tournaments: [""],
+    username: ""
+  };
 }

@@ -10,6 +10,11 @@ async function getTournament (req, res) {
     return res.json(tournaments)
 }
 
+export async function getTournamentsByOrganizerId (req, res) {
+    const tournaments = await Tournament.find({organizer_id: req.params.id}).exec()
+    return res.json(tournaments)
+}
+
 async function createTournament(req, res) {
     const user = await User.findById(req.payload.id).exec()
     if (!user)
