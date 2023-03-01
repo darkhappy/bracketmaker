@@ -10,7 +10,7 @@ export class ViewUsersCardComponent {
     @Input() user : any = {
       username: 'username',
       display_name: 'display_name',
-      avatar: 'avatar',
+      avatar: '',
       tournaments: [],
       subscriptions: [],
     }
@@ -25,7 +25,7 @@ export class ViewUsersCardComponent {
         this.user.display_name = 'Aucun';
       }
 
-    } 
+    }
     view() {
       this.route.navigate(['/user/' + this.user.username]);
     }

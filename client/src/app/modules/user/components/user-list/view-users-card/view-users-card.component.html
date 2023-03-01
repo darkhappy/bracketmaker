@@ -1,7 +1,8 @@
 <mat-card class="example-card">
     <mat-card-content>
         <div class="profile-picture">
-            <img alt="image du profil" src="assets/profile-icon-9.png">
+          <img *ngIf="!user.avatar" alt="image du profil" src="assets/profile-icon-9.png">
+          <img *ngIf="user.avatar" alt="image du profil" src="/api/user/avatar/{{ user.username }}">
         </div>
         <p>
             Nom: {{user.username}}

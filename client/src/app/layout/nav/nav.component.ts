@@ -11,9 +11,9 @@ import {Observable} from "rxjs";
 })
 export class NavComponent {
 
-  userId: string | null = '';
+  userName: string = '';
+  constructor(private router: Router, private authService: AuthService, private userService: UserService) {
 
-  constructor(private router: Router, private authService: AuthService) {
   }
 
   userConnected(): Boolean {
@@ -21,7 +21,11 @@ export class NavComponent {
   }
 
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    this.userService.getUser().subscribe( {
+      next: (response) => {
+        this.userName = response.username as string;
+      }
+    });
   }
 
   navigate(path: string) {

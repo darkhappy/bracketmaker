@@ -3,14 +3,14 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
 const fs = require('fs')
-const dotenv = require("dotenv");
+const dotenv = require('dotenv')
 const { CONNREFUSED } = require('dns')
-const { dirname } = require('path');
+const { dirname } = require('path')
 
 function getUsers (req, res) {
-  User.find({}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
+  User.find({}, { username: 1, display_name: 1, avatar: 1, tournaments: 1, subscriptions: 1 }).exec((err, users) => {
     if (err) {
-      return res.status(400);
+      return res.status(400)
     }
     return res.json(users)
   })
@@ -19,7 +19,7 @@ function getUsers (req, res) {
 function getUserById (req, res) {
   User.findById(req.params._id).exec((err, user) => {
     if (err) {
-      return res.status(401).json({message: "a"});
+      return res.status(401).json({ message: 'a' })
     }
     return res.status(200).json({ message: user })
   })
@@ -28,7 +28,7 @@ function getUserById (req, res) {
 function getUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.status(401).json({message: "ab"});
+      return res.status(401).json({ message: 'ab' })
     }
     return res.json({
       username: user.username,
@@ -43,78 +43,78 @@ function getUser (req, res) {
   })
 }
 
-function createUsers(req, res) {
+function createUsers (req, res) {
   const users = [
-  new User({
-    username: "test",
-    email: "test@test",
-    token: "",
-    isVerified: true,
-    password: bcrypt.hashSync("test", 10),
-    display_name: "Jean-Philippe Miguel",
-    show_email: true,
-    about: "I am a test user",
-    avatar: "",
-    googleAuth: "",
-    subscriptions: [],
-    tournaments: []
-  }),
-  new User({
-    username: "test2",
-    email: "test2@test",
-    token: "",
-    isVerified: true,
-    password: bcrypt.hashSync("test", 10),
-    display_name: "Jean-Philippe Miguel",
-    show_email: true,
-    about: "I am a test user",
-    avatar: "",
-    googleAuth: "",
-    subscriptions: [],
-    tournaments: []
-  }),
-  new User({
-    username: "test3",
-    email: "test3@test",
-    token: "",
-    isVerified: true,
-    password: bcrypt.hashSync("test", 10),
-    display_name: "Jean-Philippe Miguel",
-    show_email: true,
-    about: "I am a test user",
-    avatar: "",
-    googleAuth: "",
-    subscriptions: [],
-    tournaments: []
-  }),
-  new User({
-    username: "Coucou",
-    email: "coucou@coucou",
-    token: "",
-    isVerified: true,
-    password: bcrypt.hashSync("test", 10),
-    display_name: "Je suis coucou",
-    show_email: true,
-    about: "hey",
-    avatar: "",
-    googleAuth: "",
-    subscriptions: [],
-    tournaments: []
-  }),
-  new User({
-    username: "Raph",
-    email: "Raph@raph",
-    token: "",
-    isVerified: true,
-    password: bcrypt.hashSync("test", 10),
-    display_name: "Raphael Rail",
-    show_email: true,
-    about: "Je suis Raph",
-    avatar: "",
-    googleAuth: "",
-    subscriptions: [],
-    tournaments: []
-  })
+    new User({
+      username: 'test',
+      email: 'test@test',
+      token: '',
+      isVerified: true,
+      password: bcrypt.hashSync('test', 10),
+      display_name: 'Jean-Philippe Miguel',
+      show_email: true,
+      about: 'I am a test user',
+      avatar: '',
+      googleAuth: '',
+      subscriptions: [],
+      tournaments: []
+    }),
+    new User({
+      username: 'test2',
+      email: 'test2@test',
+      token: '',
+      isVerified: true,
+      password: bcrypt.hashSync('test', 10),
+      display_name: 'Jean-Philippe Miguel',
+      show_email: true,
+      about: 'I am a test user',
+      avatar: '',
+      googleAuth: '',
+      subscriptions: [],
+      tournaments: []
+    }),
+    new User({
+      username: 'test3',
+      email: 'test3@test',
+      token: '',
+      isVerified: true,
+      password: bcrypt.hashSync('test', 10),
+      display_name: 'Jean-Philippe Miguel',
+      show_email: true,
+      about: 'I am a test user',
+      avatar: '',
+      googleAuth: '',
+      subscriptions: [],
+      tournaments: []
+    }),
+    new User({
+      username: 'Coucou',
+      email: 'coucou@coucou',
+      token: '',
+      isVerified: true,
+      password: bcrypt.hashSync('test', 10),
+      display_name: 'Je suis coucou',
+      show_email: true,
+      about: 'hey',
+      avatar: '',
+      googleAuth: '',
+      subscriptions: [],
+      tournaments: []
+    }),
+    new User({
+      username: 'Raph',
+      email: 'Raph@raph',
+      token: '',
+      isVerified: true,
+      password: bcrypt.hashSync('test', 10),
+      display_name: 'Raphael Rail',
+      show_email: true,
+      about: 'Je suis Raph',
+      avatar: '',
+      googleAuth: '',
+      subscriptions: [],
+      tournaments: []
+    })
   ]
   User.insertMany(users, (err, docs) => {
     if (err) {
@@ -124,35 +124,35 @@ function createUsers(req, res) {
   })
 }
 
-function updateAvatar(id, path) {
-    User.findById(id).exec((err, user) => {
-        if (err) {
-          console.log(err)
-        }
-        user.avatar = path
-        user.save()
-    })
+function updateAvatar (username, path) {
+  User.findOne({ username }).exec((err, user) => {
+    if (err) {
+      console.log(err)
+    }
+    user.avatar = path
+    user.save()
+  })
 }
 
-function getUserAvatar(req, res) {
-  User.findById(req.params.id).exec((err, user) => {
+function getUserAvatar (req, res) {
+  User.findOne({ username: req.params.username }).exec((err, user) => {
     if (err) {
-      return res.status(401).json({message: "User not found"});
+      return res.status(401).json({ message: 'User not found' })
     }
     try {
       const path = dirname(require.main.filename) + '/assets/avatars/' + user.avatar
-      return res.sendFile(path);
+      return res.sendFile(path)
     } catch (err) {
-        return res.status(401).json({message: "Image not found"});
+      return res.status(401).json({ message: 'Image not found' })
     }
   })
 }
 
-function search(req, res) {
-  let search = new RegExp('.*' + req.params.search + '.*', 'i')
-  User.find({'username': search}, {username:1, display_name:1, avatar:1, tournaments:1, subscriptions:1}).exec((err, users) => {
+function search (req, res) {
+  const search = new RegExp('.*' + req.params.search + '.*', 'i')
+  User.find({ username: search }, { username: 1, display_name: 1, avatar: 1, tournaments: 1, subscriptions: 1 }).exec((err, users) => {
     if (err) {
-      return res.status(400);
+      return res.status(400)
     }
     return res.json(users)
   })
@@ -161,7 +161,7 @@ function search(req, res) {
 function changePassword (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.status(401).json({message: "asdafb"});
+      return res.status(401).json({ message: 'asdafb' })
     }
     if (bcrypt.compareSync(req.body.oldPassword, user.password)) {
       user.password = bcrypt.hashSync(req.body.newPassword, 10)
@@ -171,7 +171,7 @@ function changePassword (req, res) {
         return res.status(500).json(err)
       })
     } else {
-      return res.status(401).json({message: "asdahdstfb"});
+      return res.status(401).json({ message: 'asdahdstfb' })
     }
   })
 }
@@ -180,11 +180,11 @@ function login (req, res) {
   User.findOne({ username: req.body.username },
     (err, user) => {
       if (err) {
-        return res.status(401).json({message: "asdahd658stfb"});
+        return res.status(401).json({ message: 'asdahd658stfb' })
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const payload = { id: user.id }
-        const key = process.env.SECRET_KEY;
+        const key = process.env.SECRET_KEY
         const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
 
         const result = dotenv.config()
@@ -194,7 +194,7 @@ function login (req, res) {
         res.cookie('sessioninfo', JSON.stringify(payload))
         return res.sendStatus(204)
       }
-      return res.status(401).json({message: "asdahd3476658stfb"});
+      return res.status(401).json({ message: 'asdahd3476658stfb' })
     })
 }
 
@@ -203,7 +203,7 @@ function logout (req, res) {
   res.clearCookie('sessioninfo')
   User.findOne({ _id: req.payload.id }, (err, user) => {
     if (err) {
-      return res.status(401).json({message: "asdaerhd658stfb"});
+      return res.status(401).json({ message: 'asdaerhd658stfb' })
     }
     user.token = ''
     user.save().then(() => {
@@ -211,17 +211,17 @@ function logout (req, res) {
     }).catch((err) => {
       return res.status(500).json(err)
     })
-  });
+  })
 }
 
-function isLoggedProfile(req, res) {
+function isLoggedProfile (req, res) {
   console.log(req.payload.id)
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.status(401).json({message: "asdahd658stfb"});
+      return res.status(401).json({ message: 'asdahd658stfb' })
     }
     console.log(user)
-    return res.status(200).json(user.username == req.params.username);
+    return res.status(200).json(user.username == req.params.username)
   })
 }
 
@@ -265,7 +265,6 @@ function updateUser (req, res) {
       return res.status(500).json(err)
     })
   })
-
 }
 
 function deleteUser (req, res) {
@@ -360,14 +359,13 @@ function generateToken (length) {
   return b.join('')
 }
 
-function getProfile(req, res) {
-  
-  User.findOne({username: req.params.username}, {username:1, email:1, display_name:1, about:1, show_email:1, avatar:1}).exec((err, user) => {
+function getProfile (req, res) {
+  User.findOne({ username: req.params.username }, { username: 1, email: 1, display_name: 1, about: 1, show_email: 1, avatar: 1 }).exec((err, user) => {
     if (err) {
-      return res.sendStatus(400);
+      return res.sendStatus(400)
     }
-    return res.status(200).json(user);
-  });
+    return res.status(200).json(user)
+  })
 }
 
 function updateProfile (req, res) {
@@ -381,7 +379,7 @@ function updateProfile (req, res) {
   const update = {
     $set: {
       display_name: displayName,
-      about: about,
+      about,
       show_email: showEmail
     }
   }
@@ -468,7 +466,6 @@ async function googleLogin (req, res) {
     googleAuth: idToken
   })
   user.save().then(() => {
-
     const payload = { id: user._id }
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
 
@@ -480,19 +477,19 @@ async function googleLogin (req, res) {
   })
 }
 
-function followUser(req, res) {
+function followUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.sendStatus(400);
+      return res.sendStatus(400)
     }
-    User.findOne({username: req.params.username}).exec((err, followed) => {
+    User.findOne({ username: req.params.username }).exec((err, followed) => {
       if (err) {
-        return res.sendStatus(400);
+        return res.sendStatus(400)
       }
       if (user.user_followed.includes(followed._id)) {
-        return res.status(400).json({message: "You already follow this user"});
+        return res.status(400).json({ message: 'You already follow this user' })
       }
-      user.user_followed.push(followed._id);
+      user.user_followed.push(followed._id)
       user.save().then(() => {
 
         followed.followers.push(user._id);
@@ -508,38 +505,38 @@ function followUser(req, res) {
   });
 }
 
-function isFollowed(req, res) {
+function isFollowed (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.sendStatus(400);
+      return res.sendStatus(400)
     }
-    User.findOne({username: req.params.username}).exec((err, followed) => {
+    User.findOne({ username: req.params.username }).exec((err, followed) => {
       if (err) {
-        return res.sendStatus(400);
+        return res.sendStatus(400)
       }
       if (user.user_followed.includes(followed._id)) {
-        return res.status(200).json(true);
+        return res.status(200).json(true)
       }
-      return res.status(200).json(false);
-    });
-  });
+      return res.status(200).json(false)
+    })
+  })
 }
 
-function unfollowUser(req, res) {
+function unfollowUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
-      return res.sendStatus(400);
+      return res.sendStatus(400)
     }
-    User.findOne({username: req.params.username}).exec((err, followed) => {
+    User.findOne({ username: req.params.username }).exec((err, followed) => {
       if (err) {
-        return res.sendStatus(400);
+        return res.sendStatus(400)
       }
       if (!user.user_followed.includes(followed._id)) {
-        return res.status(400).json({message: "You don't follow this user"});
+        return res.status(400).json({ message: "You don't follow this user" })
       }
-      const index = user.user_followed.indexOf(followed._id);
-      if (index > -1) { 
-        user.user_followed.splice(index, 1); 
+      const index = user.user_followed.indexOf(followed._id)
+      if (index > -1) {
+        user.user_followed.splice(index, 1)
       }
 
       const indexFollowers = followed.followers.indexOf(user._id);
