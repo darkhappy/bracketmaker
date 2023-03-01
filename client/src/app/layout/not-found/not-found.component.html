@@ -1,0 +1,12 @@
+<div class="home-container flex flex-col justify-center items-center bg-cover h-full" [ngClass]="background">
+    <div class="flex flex-col justify-center items-center p-16 backdrop-blur-md rounded-3xl bg-theme-dark-blue bg-opacity-50">
+      <img alt="logo" src="assets/logo.svg">
+      <h1 class="text-6xl">Erreur 404</h1>
+      <h1 class="text-5xl">Une page sans compétition est une page triste</h1>
+      <div class="home-buttons mt-6">
+        <div class="m-4 flex flex-row justify-center items-center gap-8 text-3xl">
+          <button class="from-theme-red to-theme-dark-brown hover:bg-gradient-to-bl" (click)="navigate('/home')">Retourner à l'accueil</button>
+        </div>
+      </div>
+    </div>
+</div>

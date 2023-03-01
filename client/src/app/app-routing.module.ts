@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {ContentLayoutComponent} from "./layout/content-layout/content-layout.component";
+import {NotFoundComponent} from "./layout/not-found/not-found.component";
 
 const routes: Routes = [
   {
@@ -41,11 +42,21 @@ const routes: Routes = [
         loadChildren: () => {
           return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
         }
+      },
+      {
+        path: '404',
+        component: NotFoundComponent,
+      },
+      {
+        path: 'tournament',
+        loadChildren: () => {
+          return import('@modules/tournaments/tournaments.module').then(m => m.TournamentsModule);
+        }
       }
     ],
   },
   // Fallback
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '**', redirectTo: '404', pathMatch: 'full' }
 ];
 
 @NgModule({

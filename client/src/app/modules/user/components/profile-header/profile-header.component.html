@@ -1,21 +1,26 @@
-<div class="profile-header-container">
+<div class="profile-header-container flex flex-row items-stretch">
   <div class="profile-picture">
     <div class="flex flex-col justify-center items-center">
       <img [src]="getLinkPicture()" alt="Avatar de {{user.username}}">
       <h1>Changer l'avatar</h1>
       <app-image-upload (fileUploaded)=changeAvatar($event)></app-image-upload>
     </div>
+  </div>
     <div class="profile-credentials">
       <h1 class="profile-username">{{user.username}}</h1>
       <h2 class="profile-full-name">{{user.display_name}}</h2>
       <h3 class="profile-email">{{user.email}}</h3>
     </div>
-  </div>
   <div class="profile-description">
     <h1>À propos </h1>
     <p>
       {{user.about}}
     </p>
+  </div>
+  <div class="profile-follow">
+    <button mat-raised-button color="primary" (click)="follow()">
+      S'abonner
+    </button>
   </div>
 </div>
 <hr>

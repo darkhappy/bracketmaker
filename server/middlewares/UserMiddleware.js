@@ -11,6 +11,7 @@ const isAuth = (req, res, next) => {
             console.error(err);
             return res.status(401).json({message: "Unauthorized u they/them"})
         }
+        console.log(req.payload)
         req.payload = payload;
 
         return next();

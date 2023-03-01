@@ -6,6 +6,7 @@ import {User} from "@data/schemas/user";
 import {CookieService} from "ngx-cookie-service";
 import {Observable} from "rxjs";
 import {Router} from "@angular/router";
+import { AuthService } from '@data/services/auth.service';
 
 @Component({
   selector: 'app-profile-header',
@@ -24,19 +25,11 @@ export class ProfileHeaderComponent {
     showEmail: false,
     avatar: '',
   }
-
   userId: string = '';
   avatarPath: string = '';
   timeStamp: number = 0;
-  constructor(private userService : UserService, private fileUploadService: FileUploadService, private cookieService: CookieService, private router: Router) { }
+  constructor(private userService : UserService, private authService: AuthService, private fileUploadService: FileUploadService, private router : Router) { }
 
-  ngOnInit(): void {
-    const SESSION_INFO = this.cookieService.get('sessioninfo');
-    const SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
-    this.userId = SESSION_INFO_JSON.id;
-
-    this.setLinkPicture('/api/user/avatar/' + this.userId);
-  }
   changeAvatar(event: { file: File }) {
     const file = event.file;
     const extension = file.name.split('.')[1];
@@ -67,5 +60,21 @@ export class ProfileHeaderComponent {
   setLinkPicture(url: string) {
     this.avatarPath = url;
     this.timeStamp = (new Date()).getTime();
+  }
+
+  follow() {
+    if (this.authService.getUserId() === null) {
+      this.router.navigate(['/auth/login']);
+    } else {
+      /*this.authService.followTournament(this.id).subscribe( {
+        next: (response) => {
+          console.log(response);
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      }); */
+      
+    }
   }
 }

@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TournamentProfileComponent } from './pages/tournament-profile/tournament-profile.component';
+import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {MatTabsModule} from "@angular/material/tabs";
 import { CreateComponent } from './crud/create/create.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { tournamentRoutes } from "@modules/tournaments/tournaments-routing.module";
@@ -13,7 +16,8 @@ import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
-    CreateComponent
+    CreateComponent,
+    TournamentProfileComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +29,10 @@ import {MatSelectModule} from "@angular/material/select";
     MatDatepickerModule,
     MatNativeDateModule,
     MatRadioModule,
-    MatSelectModule
+    MatSelectModule,
+    FontAwesomeModule,
+    MatTabsModule,
+    MatButtonModule,
   ]
 })
 export class TournamentsModule { }

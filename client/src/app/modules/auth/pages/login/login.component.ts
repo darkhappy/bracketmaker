@@ -26,7 +26,6 @@ export class LoginComponent {
     this.socialAuthService.authState.subscribe(async (user) => {
       this.userService.googleLogin(user).subscribe({
         next: res => {
-          console.log(res.message.username)
           if (res.message.username === ' ' || res.message.username === "") {
 
             this.router.navigate(['/auth/username']);

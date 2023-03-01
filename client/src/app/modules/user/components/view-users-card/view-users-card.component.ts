@@ -21,7 +21,6 @@ export class ViewUsersCardComponent {
     constructor(private route: Router) { }
 
     ngOnInit() {
-      console.log(this.user);
       if (!this.user.username) {
         this.user.username = 'Aucun';
       }

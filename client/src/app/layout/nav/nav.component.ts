@@ -30,7 +30,6 @@ export class NavComponent {
 
   logout() {
     this.router.navigate(['/']).then(r => {
-      console.log('logout');
       this.authService.logout().subscribe();
     });
   }

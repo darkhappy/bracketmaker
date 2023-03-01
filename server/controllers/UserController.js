@@ -457,7 +457,6 @@ async function googleLogin (req, res) {
     googleAuth: idToken
   })
   user.save().then(() => {
-    console.log('User created via google')
 
     const payload = { id: user._id }
     const jwtToken = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: '2h' })
