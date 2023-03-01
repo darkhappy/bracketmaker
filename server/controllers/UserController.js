@@ -494,9 +494,15 @@ function followUser(req, res) {
       }
       user.user_followed.push(followed._id);
       user.save().then(() => {
-        return res.sendStatus(204);
+
+        followed.followers.push(user._id);
+        followed.save().then(() => {
+          return res.sendStatus(204);
+        }).catch((err) => {
+          return res.status(400).json(err);
+        });
       }).catch((err) => {
-        return res.status(500).json(err);
+        return res.status(400).json(err);
       });
     });
   });
@@ -517,8 +523,6 @@ function isFollowed(req, res) {
       return res.status(200).json(false);
     });
   });
-
-  
 }
 
 function unfollowUser(req, res) {
@@ -537,8 +541,18 @@ function unfollowUser(req, res) {
       if (index > -1) { 
         user.user_followed.splice(index, 1); 
       }
-      user.save().then(() => {
-        return res.sendStatus(204);
+
+      const indexFollowers = followed.followers.indexOf(user._id);
+      if (indexFollowers > -1) {
+        followed.followers.splice(indexFollowers, 1);
+      }
+
+      followed.save().then(() => {
+        user.save().then(() => {
+          return res.sendStatus(204);
+        }).catch((err) => {
+          return res.status(500).json(err);
+        });
       }).catch((err) => {
         return res.status(500).json(err);
       });
@@ -546,6 +560,35 @@ function unfollowUser(req, res) {
   });
 }
 
+function getFollowedUsers(req, res) {
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(400);
+    }
+    User.find({_id: {$in: user.user_followed}}, {username:1, followers:1, tournaments:1}).exec((err, users) => {
+      if (err) {
+        return res.sendStatus(400);
+      }
+      return res.status(200).json(users);
+    });
+  });
+}
+
+function searchFollowedUsers(req, res) {
+  let search = new RegExp('.*' + req.params.search + '.*', 'i')
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err) {
+      return res.sendStatus(400);
+    }
+    User.find({_id: {$in: user.user_followed}, username: {$regex: search}}, {username:1, followers:1, tournaments:1}).exec((err, users) => {
+      if (err) {
+        console.log(err);
+        return res.sendStatus(400);
+      }
+      return res.status(200).json(users);
+    });
+  });
+}
 
 module.exports = {
   changeUsername,
@@ -573,5 +616,7 @@ module.exports = {
   isFollowed,
   unfollowUser,
   updateAvatar,
-  getUserAvatar
+  getUserAvatar,
+  getFollowedUsers,
+  searchFollowedUsers
 }

@@ -86,6 +86,13 @@ router
     .delete(middleware.isAuth, userController.unfollowUser);
 
 router
+    .route("/user/followed")
+    .get(middleware.isAuth, userController.getFollowedUsers);
+
+router
+    .route("/user/followed/search/:search")
+    .get(middleware.isAuth, userController.searchFollowedUsers);
+router
   .route('/tournament')
   .get(tournamentController.getTournament)
   .post(middleware.isAuth, tournamentController.createTournament)
@@ -97,6 +104,10 @@ router
   .get(middleware.isAuth, tournamentController.isFollowed)
   .post(middleware.isAuth, tournamentController.followTournament)
   .delete(middleware.isAuth, tournamentController.unfollowTournament);
+
+router
+  .route('/tournament/followedTournaments')
+  .get(middleware.isAuth, tournamentController.getFollowedTournaments);
 
 //router
   //.route('/tournament/search/:search').get(middleware.isAuth, tournamentController.searchTournament);

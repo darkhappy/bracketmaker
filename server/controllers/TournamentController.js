@@ -76,10 +76,8 @@ function followTournament(req, res) {
         });
       }).catch(() => {
         return res.sendStatus(401)
-      });
-      
-    
-    } )
+      });  
+    })
   })
 }
 
@@ -126,6 +124,10 @@ function isFollowed(req, res) {
   })
 }
 
+function getFollowedTournaments(req, res) {
+
+}
+
 /*function searchTournament(req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err || !user) {
@@ -136,4 +138,4 @@ function isFollowed(req, res) {
     return res.status(201).json({ user.subscriptions })
   }
 } */
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, isFollowed/*searchTournament */}
+module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, isFollowed, getFollowedTournaments/*searchTournament */}
