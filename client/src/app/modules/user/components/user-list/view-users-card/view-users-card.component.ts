@@ -10,7 +10,7 @@ export class ViewUsersCardComponent {
     @Input() user : any = {
       username: 'username',
       display_name: 'display_name',
-      avatar: 'avatar',
+      avatar: '',
       tournaments: [],
       subscriptions: [],
     }
@@ -21,17 +21,13 @@ export class ViewUsersCardComponent {
     constructor(private route: Router) { }
 
     ngOnInit() {
-      console.log(this.user);
-      if (!this.user.username) {
-        this.user.username = 'Aucun';
-      }
       if (!this.user.display_name) {
         this.user.display_name = 'Aucun';
       }
 
-    } 
+    }
     view() {
-      this.route.navigate(['/user/profile'],{state: {username: this.user.username}});
+      this.route.navigate(['/user/' + this.user.username]);
     }
 
 }

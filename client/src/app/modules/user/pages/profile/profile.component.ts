@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '@data/services/user.service';
+import {User} from "@data/schemas/user";
 
 @Component({
   selector: 'app-profile',
@@ -7,16 +9,30 @@ import { UserService } from '@data/services/user.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent {
-  user: any;
+  user: User = {
+    username: '',
+    email: '',
+    display_name: '',
+    subscriptions: [''],
+    tournaments: [''],
+    about: '',
+    showEmail: false,
+    avatar: '',
+  }
   visitor = false;
-  constructor(private userService: UserService) { }
+  href: string = '';
+  isMyProfile: boolean = true;
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    if (history.state.username != undefined) {
+    this.href = this.router.url;
+    let urlArray = this.href.split('/');
+    if (urlArray[2] != 'profile') {
       this.visitor = true;
-      this.userService.getProfile(history.state.username).subscribe({
+      this.userService.getProfile(urlArray[2]).subscribe({
         next: (user) => {
           this.user = {
+            ...this.user,
             username: user.username,
             email: user.email,
             display_name: user.display_name,
@@ -24,17 +40,25 @@ export class ProfileComponent {
             showEmail: user.show_email,
             avatar: user.avatar,
           };
-          console.log(this.user.showEmail);
           if (!this.user.showEmail) {
             this.user.email = '';
           }
-          console.log(this.user);
         }
       });
+      this.userService.isLoggedProfile(urlArray[2]).subscribe( {
+        next: (response) => {
+          this.isMyProfile = response;
+        },
+        error: (error) => {
+          console.log(error);
+        }
+      });
+
     } else {
       this.userService.getUser().subscribe({
         next: user => {
           this.user = {
+            ...this.user,
             username: user.username,
             email: user.email,
             display_name: user.display_name,
@@ -47,13 +71,11 @@ export class ProfileComponent {
           }
         },
         error: (error) => {
-          console.log(error);
         }
       });
     }
   }
   updateProfile(user: any) {
-    console.log(user);
     this.user = user;
   }
 }

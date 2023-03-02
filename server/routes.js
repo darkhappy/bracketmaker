@@ -1,13 +1,14 @@
 const express = require('express')
 const userController = require('./controllers/usercontroller')
 const middleware = require('./middlewares/UserMiddleware')
-const tournamentController = require('./controllers/tournamentController')
-const matchController = require('./controllers/matchController')
-const playerController = require('./controllers/playerController')
+const tournamentController = require('./controllers/TournamentController')
+const matchController = require('./controllers/MatchController')
+const playerController = require('./controllers/PlayerController')
+const uploadController = require('./controllers/UploadController')
 
 const router = express.Router()
 
-router.route("/createUsers").get(userController.createUsers)
+router.route('/createUsers').get(userController.createUsers)
 
 router
   .route('/user')
@@ -34,47 +35,71 @@ router
 
 router
   .route('/user/profile')
-  .put(middleware.isAuth, userController.updateProfile);
+  .put(middleware.isAuth, userController.updateProfile)
 
 router
   .route('/user/getProfile/:username')
-  .get(userController.getProfile);
+  .get(userController.getProfile)
 
 router
-    .route('/user/update')
-    .put(userController.updateUser);
+  .route('/user/avatar')
+  .post(middleware.isAuth, uploadController.uploadAvatar)
+router
+  .route('/user/avatar/:username')
+  .get(middleware.isAuth, userController.getUserAvatar)
+router
+  .route('/user/update')
+  .put(userController.updateUser)
 
 router
   .route('/user/password')
-  .put(middleware.isAuth, userController.changePassword);
+  .put(middleware.isAuth, userController.changePassword)
 
 router
   .route('/user/username')
-  .put(middleware.isAuth, userController.changeUsername);
+  .put(middleware.isAuth, userController.changeUsername)
 
 router
   .route('/user/email')
-  .put(middleware.isAuth, userController.changeEmail);
+  .put(middleware.isAuth, userController.changeEmail)
 
 router
-  .route("/users")
-  .get(userController.getUsers);
+  .route('/users')
+  .get(userController.getUsers)
 
 router
-  .route("/users/search/:search")
+  .route('/users/search/:search')
   .get(userController.search)
 
 router
-    .route("/user/logout")
-    .post(middleware.isAuth, userController.logout)
+  .route('/user/logout')
+  .post(middleware.isAuth, userController.logout)
+
+router
+  .route('/user/isLoggedProfile/:username')
+  .get(middleware.isAuth, userController.isLoggedProfile)
+
+router
+  .route('/user/follow/:username')
+  .get(middleware.isAuth, userController.isFollowed)
+  .post(middleware.isAuth, userController.followUser)
+  .delete(middleware.isAuth, userController.unfollowUser)
 
 router
   .route('/tournament')
-  .get(middleware.isAuth, tournamentController.getTournament)
+  .get(tournamentController.getTournament)
   .post(middleware.isAuth, tournamentController.createTournament)
   .put(middleware.isAuth, tournamentController.updateTournament)
-  .delete(middleware.isAuth, tournamentController.deleteTournament);
+  .delete(middleware.isAuth, tournamentController.deleteTournament)
 
+router
+  .route('/tournament/follow/:id')
+  .get(middleware.isAuth, tournamentController.isFollowed)
+  .post(middleware.isAuth, tournamentController.followTournament)
+  .delete(middleware.isAuth, tournamentController.unfollowTournament)
+
+// router
+// .route('/tournament/search/:search').get(middleware.isAuth, tournamentController.searchTournament);
 router
   .route('/match')
   .get(matchController.getMatch)

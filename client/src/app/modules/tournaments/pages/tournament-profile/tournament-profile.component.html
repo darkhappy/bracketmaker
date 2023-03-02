@@ -8,9 +8,13 @@
     <p>Organisé par : {{tournament.organizer_id}}</p>
 
     <div class="flex flex-row">
-      <button mat-raised-button color="primary">
+      <button *ngIf="!isFollowed" mat-raised-button (click)="follow()" color="primary">
         <fa-icon [icon]="envelope"></fa-icon>
         Suivre
+      </button>
+      <button *ngIf="isFollowed" mat-raised-button (click)="unfollow()" color="warm">
+        <fa-icon [icon]="envelope"></fa-icon>
+        Se désabonner
       </button>
       <button mat-raised-button color="primary">
         <fa-icon [icon]="share"></fa-icon>
@@ -18,7 +22,6 @@
     </div>
 
   </div>
-
 
   <div class="flex flex-row place-content-between mt-6">
     <p>

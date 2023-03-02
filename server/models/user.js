@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   about: String,
   avatar: String,
   googleAuth: String,
+  user_followed: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
   subscriptions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }],
   tournaments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Tournament' }]
 }, {

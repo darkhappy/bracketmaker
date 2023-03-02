@@ -1,0 +1,120 @@
+#page {
+    background-color: rgba(65, 65, 65, 1);
+    margin: auto;
+    top: 3em;
+    height: 90vh;
+    width: 100%;
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow-y: auto;
+  }
+  
+  #user-page {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  
+  table {
+    position: relative;
+    word-wrap: break-word;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: white;
+  }
+  
+  .actions {
+    text-align: center;
+  }
+  
+  #addButton {
+    background-color: mediumseagreen;
+    color: white;
+  }
+  
+  #editButton {
+    background-color: cadetblue;
+    color: white;
+  }
+  
+  #deleteButton {
+    margin-left: 1em;
+    background-color: orangered;
+    color: white;
+  }
+  
+  #header {
+    background-color: rgba(60, 60, 60);
+  }
+  
+  mat-paginator {
+    background-color: rgba(60, 60, 60);
+  }
+  
+  #footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(60, 60, 60);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10000;
+  }
+  
+  #search-form {
+    height: 100%;
+    margin-top: 1em;
+  }
+  
+  mat-form-field {
+    width: 20em;
+  }
+  
+  #clear {
+    clear: both;
+    height: 7em;
+  }
+  
+  @media only screen and (max-height: 1000px) {
+  
+    #page {
+      height: 80vh;
+    }
+  
+  }
+  
+  @media only screen and (max-height: 750px) {
+  
+    #page {
+      height: 75vh;
+    }
+  
+  }
+  
+  @media only screen and (max-height: 600px) {
+  
+    #page {
+      height: 70vh;
+    }
+  
+  }
+  
+  @media only screen and (max-height: 500px) {
+  
+    #page {
+      height: 60vh;
+    }
+  
+  }
+  

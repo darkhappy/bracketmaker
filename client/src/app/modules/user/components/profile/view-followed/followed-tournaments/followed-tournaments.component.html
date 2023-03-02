@@ -1,0 +1,74 @@
+<div id="page">
+    <div id="user-page">
+  
+      <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 user-table">
+  
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+            Nom
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          <td mat-footer-cell *matFooterCellDef>
+            <mat-paginator [pageSizeOptions]="[15, 30, 50]" showFirstLastButtons aria-label="Select page" id="paginator">
+            </mat-paginator>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="game">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by game">
+                Jeu
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.game}} </td>
+        </ng-container>
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by date">
+                Date
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type">
+                Type
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+        </ng-container>
+        <ng-container matColumnDef="organizer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by organizer">
+                Organisateur
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.organizer}} </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef class="actions">
+              Actions
+            </th>
+            <td mat-cell *matCellDef="let element" class="actions">
+              <button mat-mini-fab (click)="look(element)" id="editButton">
+                Voir
+              </button>
+            </td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" id="header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+        </table>
+  
+      <div id="clear"></div>
+  
+    </div>
+  
+  </div>
+  
+  <div id="footer">
+    <div id="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Rechercher par nom</mat-label>
+        <input matInput type="text" class="field" (change)="onSearchChange()" placeholder="Rechercher un organisateur" [(ngModel)]="search">
+      </mat-form-field>
+    </div>
+  
+    <mat-paginator [pageSizeOptions]="[10, 15, 20]"
+                   showFirstLastButtons aria-label="Select page">
+    </mat-paginator>
+  
+  </div>

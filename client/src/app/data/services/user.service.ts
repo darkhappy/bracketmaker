@@ -22,14 +22,15 @@ export class UserService {
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
+  //TODO: change pour getConnectedUser
   getUser() : Observable<User> {
     return this.http.get<User>('/api/user');
   }
 
+  //TODO: remove both her and in api
   getOneUser() : Observable<User> {
     let SESSION_INFO = this.cookieService.get('sessioninfo');
     let SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
-    console.log(SESSION_INFO_JSON.id)
     return this.http.get<User>('/api/getUser/' + SESSION_INFO_JSON.id);
   }
 
@@ -46,6 +47,10 @@ export class UserService {
 
   changePassword(data: any) : Observable<any> {
     return this.http.put<any>('/api/user/password', data);
+  }
+
+  getUserAvatar(username: string) {
+    return this.http.get<any>('/api/user/avatar/' + username);
   }
 
   getUsers() : Observable<any[]> {
@@ -65,6 +70,26 @@ export class UserService {
 
   getUserById(id: String) : Observable<any> {
     return this.http.get<any>('/api/user/getUserById/?_id=' + id);
+  }
+
+  followUser(username: String) : Observable<any> {
+    return this.http.post<any>('/api/user/follow/' + username, {});
+  }
+
+  unfollowUser(username: String) : Observable<any> {
+    return this.http.delete<any>('/api/user/follow/' + username);
+  }
+
+  isFollowed(username: String) : Observable<boolean> {
+    return this.http.get<boolean>('/api/user/follow/' + username);
+  }
+
+  isLoggedProfile(username: String) : Observable<boolean> {
+    return this.http.get<boolean>('/api/user/isLoggedProfile/' + username);
+  }
+
+  getFollowedUsers() : Observable<any[]> {
+    return this.http.get<any[]>('/api/user/followed');
   }
 
 }

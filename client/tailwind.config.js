@@ -21,7 +21,8 @@ module.exports = {
         'hockey': "url('./assets/img/grid_0.png')",
         'chess' : "url('./assets/img/grid_4.png')",
         'soccer' : "url('./assets/img/grid_3.png')",
-        'gaming' : "url('./assets/img/grid_1.png')"
+        'gaming' : "url('./assets/img/grid_1.png')",
+        'strategy' : "url('./assets/img/banner_strategy.png')"
       },
     },
   },

@@ -1,0 +1,62 @@
+<div id="page">
+    <div id="user-page">
+  
+      <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 user-table">
+  
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by username">
+            Nom d'utilisateur
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+          <td mat-footer-cell *matFooterCellDef>
+            <mat-paginator [pageSizeOptions]="[15, 30, 50]" showFirstLastButtons aria-label="Select page" id="paginator">
+            </mat-paginator>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="subscribers">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by subscribers">
+                Abonnés
+            </th>
+            <td mat-cell *matCellDef="let element"> {{element.subscribers.length}} </td>
+        </ng-container>
+        <ng-container matColumnDef="tournaments">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by tournaments">
+              Tournois
+          </th>
+          <td mat-cell *matCellDef="let element"> {{element.tournaments.length}} </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef class="actions">
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let element" class="actions">
+            <button (click)="look(element)" id="editButton">
+              <mat-icon>input</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" id="header"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+        </table>
+  
+      <div id="clear"></div>
+  
+    </div>
+  
+  </div>
+  
+  <div id="footer">
+    <div id="search-form">
+      <mat-form-field appearance="fill">
+        <mat-label>Rechercher par nom</mat-label>
+        <input matInput type="text" class="field" (change)="onSearchChange()" placeholder="Rechercher un organisateur" [(ngModel)]="search">
+      </mat-form-field>
+    </div>
+  
+    <mat-paginator [pageSizeOptions]="[10, 15, 20]"
+                   showFirstLastButtons aria-label="Select page">
+    </mat-paginator>
+  
+</div>
