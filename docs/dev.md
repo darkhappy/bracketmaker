@@ -3,17 +3,17 @@
 ## Table des matières
 [Introduction](#introduction)
 1. Client
-    1. [Composants](#composants)
-    2. [Routes](#routes)
-    3. [Services](#services)
-    4. [Guard](#guard)
-    5. [Modeles de donnees](#modeles-de-donnees)
+   1. [Composants](#composants)
+   2. [Routes](#routes)
+   3. [Services](#services)
+   4. [Guard](#guard)
+   5. [Modeles de donnees](#modeles-de-donnees)
 2. Serveur
-    1. [Controleurs](#controleurs)
-    2. [Routes serveurs](#routes-serveurs)
-    3. [Modeles de donnees serveur](#modeles-de-donnees-serveur)
-    4. [Middlewares](#middlewares)
-    5. [Configuration](#configuration)
+   1. [Controleurs](#controleurs)
+   2. [Routes serveurs](#routes-serveurs)
+   3. [Modeles de donnees serveur](#modeles-de-donnees-serveur)
+   4. [Middlewares](#middlewares)
+   5. [Configuration](#configuration)
 
 ## Introduction
 Cette documentation est destinée aux développeurs qui souhaitent comprendre et travailler sur cette application web basée sur la MEAN stack. La MEAN stack est un ensemble de technologies open-source, incluant MongoDB, Express.js, Angular et Node.js, qui permettent de construire des applications web modernes et performantes.
@@ -48,15 +48,30 @@ Cette documentation couvre l'ensemble des fonctionnalités de l'application, y c
 Une application basée sur Angular est composée de composants. Un composant est une classe qui contient des données et des méthodes. Les données sont des propriétés du composant, et les méthodes sont des fonctions qui peuvent être appelées par le composant. Les composants sont liés à des templates, qui sont des fichiers HTML qui contiennent des directives Angular. Les directives Angular sont des balises spéciales qui permettent d'interagir avec les composants. Les composants sont liés à des fichiers CSS qui contiennent des styles CSS qui sont appliqués au template du composant.
 Chaque composant contient donc trois fichiers : un fichier TypeScript, un fichier HTML et un fichier CSS.
 
-![img_1.png](img_1.png)
-
 Pour créer un nouveau composant, vous pouvez utiliser la commande `ng generate component <nom-du-composant>`.
+
+```
+client
+|_ src
+    |_ app
+        |_ <nom-du-composant>
+            |_ <nom-du-composant>.component.ts
+            |_ <nom-du-composant>.component.html
+            |_ <nom-du-composant>.component.css
+```
 
 Si vous voulez plus d'informations sur les composants Angular, vous pouvez consulter la documentation officielle : https://angular.io/guide/architecture-components
 
 Nous avons fait le chois de diviser tous les composants en trois catégories : les composants de l'affichage de base, les composants par module et les composants partagés:
 
-![img.png](img.png)
+```
+client
+|_ src
+    |_ app
+        |_ layout
+        |_ modules
+        |_ shared
+```
 
 Ces trois dossiers sont sous le dossier `src/app`.
 ### Composants de l'affichage de base (layout)
@@ -87,7 +102,7 @@ class MyComponent {
 Puis vous pouvez appeler une fonction du service :
 ```ts
 this.userService.getUsers().subscribe((users: User[]) => {
-  this.users = users;
+   this.users = users;
 });
 ```
 
@@ -100,21 +115,21 @@ Pour appeler un guard, vous devez d'abord l'importer dans le fichier de route :
 ```ts
 import { AuthGuard } from 'src/app/core/guards/auth.guard';
 const routes: Routes = [
-  {
-    path: 'tournaments',
-    component: TournamentsComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'tournaments/:id',
-    component: TournamentComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'tournaments/:id/:tab',
-    component: TournamentComponent,
-    canActivate: [AuthGuard]
-  }
+   {
+      path: 'tournaments',
+      component: TournamentsComponent,
+      canActivate: [AuthGuard]
+   },
+   {
+      path: 'tournaments/:id',
+      component: TournamentComponent,
+      canActivate: [AuthGuard]
+   },
+   {
+      path: 'tournaments/:id/:tab',
+      component: TournamentComponent,
+      canActivate: [AuthGuard]
+   }
 ];
 ```
 
@@ -126,12 +141,12 @@ Les modèles de données sont des interfaces qui définissent les propriétés d
 Exemple de modèle de données :
 ```typescript
 export interface User {
-  _id: string;
-  username: string;
-  email: string;
-  password: string;
-  role: string;
-  tournaments: string[];
+   _id: string;
+   username: string;
+   email: string;
+   password: string;
+   role: string;
+   tournaments: string[];
 }
 ```
 
@@ -140,6 +155,17 @@ export interface User {
 ## Controleurs
 Les contrôleurs sont des classes qui contiennent des fonctions qui peuvent être appelées par les services. Ces fonctions sont appelées pour effectuer des opérations sur les données. Par exemple, la fonction `createTournament` du contrôleur `TournamentController` est appelée pour créer un tournoi. Les contrôleurs sont définis dans le dossier `/controllers`. Si vous voulez plus d'informations sur les contrôleurs, vous pouvez consulter la documentation officielle : https://angular.io/guide/architecture-services#controllers
 Un service envoie une requête HTTP à un contrôleur. Le contrôleur effectue une opération sur les données, et renvoie une réponse HTTP au service. Le service traite la réponse HTTP et renvoie une réponse HTTP au client.
+
+Exemple de contrôleur :
+```ts
+export class TournamentController {
+   public static async createTournament(req: Request, res: Response) {
+      const tournament = new Tournament(req.body);
+      await tournament.save();
+      res.status(200).json(tournament);
+   }
+}
+```
 
 ## Routes serveurs
 Les routes sont définies dans le fichier `routes.js`. Chaque route est liée à un contrôleur. Par exemple, la route `/api/tournaments` est liée au contrôleur `TournamentController`.
@@ -152,27 +178,55 @@ router.post('/api/tournaments/:d', TournamentController.getTournament);
 Tout comme pour le client, les modèles de données sont des interfaces qui définissent les propriétés d'un objet. Par exemple, l'interface `Tournament` définit les propriétés d'un tournoi. Les modèles de données sont définis dans le dossier `models`. Si vous voulez plus d'informations sur les modèles de données, vous pouvez consulter la documentation officielle : https://angular.io/guide/architecture-components#data-modeling--classes
 Nous en avons besoin aussi du côté serveur, car nous utilisons les modèles de données pour définir les propriétés des objets que nous renvoyons au client.
 
+Dans l'exemple suivant, nous créons le schéma tournament:
+```js
+const mongoose = require('mongoose');
+const tournamentSchema = mongoose.Schema({
+   _id: mongoose.Schema.Types.ObjectId,
+   name: String,
+   description: String,
+   startDate: Date,
+   endDate: Date,
+   teams: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Team' }],
+   matches: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Match' }],
+   createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+   createdAt: Date,
+   updatedAt: Date
+});
+
+tournamentSchema.method('toJSON', function() {
+   const { __v, id, ...object } = this.toObject();
+   object.id = id;
+   return object;
+});
+
+const Tournament = mongoose.model('Tournament', tournamentSchema);
+module.exports = Tournament;
+```
+
+Dans cette exemple, les modèle utilise les schemas de mongoose. Pour plus d'informations sur les schemas de mongoose, vous pouvez consulter la documentation officielle : https://mongoosejs.com/docs/guide.html
+
 ## Middlewares
 Les middlewares sont des fonctions qui sont appelées avant que la route ne soit chargée. Si la fonction retourne `next()`, la route est chargée. Si la fonction retourne `res.status(401).json({ message: 'Unauthorized' })`, la route n'est pas chargée. Les middlewares sont définis dans le dossier `middlewares`. Si vous voulez plus d'informations sur les middlewares, vous pouvez consulter la documentation officielle : https://angular.io/guide/router#milestone-5-route-guards
 Il y a un middleware pour chaque type de données. Par exemple, il y a un middleware pour les utilisateurs, un middleware pour les tournois, etc. Ces middlewares sont utilisés pour vérifier que l'utilisateur est connecté, et qu'il a les droits d'accès à la ressource.
 
-Exemple de code: 
+Exemple de code:
 ```ts
 const isAuth = (req, res, next) => {
-    let token = req.cookies['SESSIONID'] ?? null;
-    if(!token){
-        return res.status(401).json({message: "Unauthorized u dumbass"})
-    }
-    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
-        if(err){
-            console.error(err);
-            return res.status(401).json({message: "Unauthorized u they/them"})
-        }
-        console.log(req.payload)
-        req.payload = payload;
+   let token = req.cookies['SESSIONID'] ?? null;
+   if(!token){
+      return res.status(401).json({message: "Unauthorized u dumbass"})
+   }
+   jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+      if(err){
+         console.error(err);
+         return res.status(401).json({message: "Unauthorized u they/them"})
+      }
+      console.log(req.payload)
+      req.payload = payload;
 
-        return next();
-    });
+      return next();
+   });
 }
 ```
 
