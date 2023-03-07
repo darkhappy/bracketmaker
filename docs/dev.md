@@ -16,7 +16,7 @@
    5. [Configuration](#configuration)
 
 ## Introduction
-Cette documentation est destinée aux développeurs qui souhaitent comprendre et travailler sur cette application web basée sur la MEAN stack. La MEAN stack est un ensemble de technologies open-source, incluant MongoDB, Express.js, Angular et Node.js, qui permettent de construire des applications web modernes et performantes.
+Cette documentation est destinée aux développeurs qui souhaitent comprendre et travailler sur cette application web basée sur la MEAN stack. La MEAN stack est un ensemble de technologies open-source, incluant MongoDB, Express.js, Angular et Node.js, qui permettent de construire des applications web modernes et performantes. Nous avons choisi entre-autres ces technologies pour la simplicité du backend, notamment MongoDB qui permet d'éviter de faire de vraies requêtes SQL. Toutefois, il est possible de changer pour PostgreSQL au besoin.
 
 Cette documentation couvre l'ensemble des fonctionnalités de l'application, y compris les composants, les routes, les modèles de données, ainsi que les procédures d'installation et de déploiement.
 
@@ -149,7 +149,7 @@ export interface User {
    tournaments: string[];
 }
 ```
-
+Après cela,  vous pourrez utiliser ces objets dans les fichiers .ts pour recevoir les données de l'API et les mettre dans cette objet pour ensuite pouvoir l'utiliser.
 #  Serveur
 
 ## Controleurs
@@ -202,6 +202,23 @@ tournamentSchema.method('toJSON', function() {
 
 const Tournament = mongoose.model('Tournament', tournamentSchema);
 module.exports = Tournament;
+```
+Ce schéma sera non seulement un objet que l'on pourra créer en faisant:
+
+```js
+Tournament tournament = new Tournament({
+   name: 'Tournoi 1',
+   description: 'Je suis un tournoi',
+   /* Le reste de l'objet */
+})
+```
+
+Le schéma est aussi statique pour avoir accès aux méthodes de MongoDB:
+
+```js
+Tournament.findOne({name: 'Tournoi 1'}).exec((err, tournoi) => {
+   console.log(tournoi);
+});
 ```
 
 Dans cette exemple, les modèle utilise les schemas de mongoose. Pour plus d'informations sur les schemas de mongoose, vous pouvez consulter la documentation officielle : https://mongoosejs.com/docs/guide.html
