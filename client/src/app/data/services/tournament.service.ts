@@ -64,6 +64,14 @@ export class TournamentService {
     return this.http.get<any>('/api/tournament/followed');
   }
 
+  searchFollowedTournaments(search: string) {
+    console.log(search);
+    if (search == '') {
+      return this.http.get<any>('/api/tournament/followed');
+    }
+    return this.http.get<any>('/api/tournament/followed/search/' + search);
+  }
+
   searchTournaments(search: string) {
     return this.http.get<any>('/api/tournament/search/' + search);
   }

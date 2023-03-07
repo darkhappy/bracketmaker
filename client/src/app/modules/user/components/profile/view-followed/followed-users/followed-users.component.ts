@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-followed-users',
@@ -18,16 +19,16 @@ export class FollowedUsersComponent {
   search : string = '';
 
   constructor(private _announcer: LiveAnnouncer,
-    private userService: UserService) {}
+    private userService: UserService,
+    private router: Router) {}
 
   // @ts-ignore
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit(): void {
     this.userService.getFollowedUsers().subscribe((data: any) => {
-      console.log(data);
       this.users = data;
       this.dataSource = new MatTableDataSource(this.users);
       this.dataSource.sort = this.sort;
@@ -36,9 +37,15 @@ export class FollowedUsersComponent {
   }
 
   onSearchChange() {
-    
+    this.userService.searchFollowedUsers(this.search).subscribe((data: any) => {
+      this.users = data;
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   look(element: any) {
+    this.router.navigate(['/user/' + element.username]);
   }
 }

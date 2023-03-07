@@ -92,4 +92,11 @@ export class UserService {
     return this.http.get<any[]>('/api/user/followed');
   }
 
+  searchFollowedUsers(search: string) : Observable<any[]> {
+    if (search == '') {
+      return this.getFollowedUsers();
+    }
+    return this.http.get<any[]>('/api/user/followed/search/' + search);
+  }
+
 }

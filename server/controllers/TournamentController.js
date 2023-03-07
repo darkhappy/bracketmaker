@@ -76,10 +76,8 @@ function followTournament(req, res) {
         });
       }).catch(() => {
         return res.sendStatus(401)
-      });
-      
-    
-    } )
+      });  
+    })
   })
 }
 
@@ -126,14 +124,33 @@ function isFollowed(req, res) {
   })
 }
 
-/*function searchTournament(req, res) {
+function getFollowedTournaments(req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err || !user) {
       return res.status(401).json({ error: 'User not found' })
     } 
-    let search = new RegExp('.*' + req.params.search + '.*', 'i')
-    user.subscriptions = user.subscriptions.filter(subscription => subscription === search);
-    return res.status(201).json({ user.subscriptions })
-  }
-} */
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, isFollowed/*searchTournament */}
+    Tournament.find({ _id: { $in: user.subscriptions } }).exec((err, tournaments) => {
+      if (err || !tournaments) {
+        return res.status(401).json({ error: 'Tournaments not found' })
+      }
+      return res.status(201).json(tournaments);
+    })
+  })
+}
+
+function searchFollowedTournaments(req, res) {
+  let search = new RegExp('.*' + req.params.search + '.*', 'i')
+  User.findById(req.payload.id).exec((err, user) => {
+    if (err || !user) {
+      return res.status(401).json({ error: 'User not found' })
+    } 
+    Tournament.find({ _id: { $in: user.subscriptions }, name: {$regex: search} }).exec((err, tournaments) => {
+      if (err || !tournaments) {
+        return res.status(401).json({ error: 'Tournaments not found' })
+      }
+      return res.status(201).json(tournaments);
+    });
+
+  });
+} 
+module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, isFollowed, getFollowedTournaments, searchFollowedTournaments/*searchTournament */}
