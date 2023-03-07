@@ -1,168 +1,201 @@
-const Tournament = require('../models/tournament')
-const User = require('../models/User')
+const Tournament = require("../models/tournament");
+const User = require("../models/User");
 const moment = require("moment");
 const middleware = require("../middlewares/UserMiddleware");
 const bcrypt = require("bcrypt");
 const Match = require("../models/match");
 
-function getTournament (req, res) {
-  const _id = req.query._id
-  console.log(_id)
-  Tournament.findOne({ _id }).exec((err, tournament) => {
-    if (err || !tournament) {
-      return res.status(401).json({ error: 'Tournament not found' })
-    }
-    return res.status(201).json({ tournament })
-  })
+function getTournament(req, res) {
+	const _id = req.query._id;
+	console.log(_id);
+	Tournament.findOne({ _id }).exec((err, tournament) => {
+		if (err || !tournament) {
+			return res.status(401).json({ error: "Tournament not found" });
+		}
+		return res.status(201).json({ tournament });
+	});
+}
+
+async function getTournamentsByOrganizerId(req, res) {
+	const tournaments = await Tournament.find({
+		organizer_id: req.params.id,
+	}).exec();
+	return res.json(tournaments);
 }
 
 async function createTournament(req, res) {
-    const user = await User.findById(req.payload.id).exec()
-    if (!user)
-        return res.status(401).json({message: 'id organisateur non valide'})
-    if (moment(req.body.date, "MM/DD/YYYY", false).isValid())
-        return res.sendStatus(401).json({message: 'date non valide'})
-    if (req.body.visibility !== 'public' && req.body.visibility !== 'private' && req.body.visibility !== 'unlisted')
-        return res.sendStatus(401).json({message: 'visibilité non valide'})
-    if (req.body.bracket_type !== 'Simple' && req.body.bracket_type !== 'Double' && req.body.bracket_type !== 'Round Robin')
-        return res.sendStatus(401).json({message: 'type de tournoi non valide'})
+	const user = await User.findById(req.payload.id).exec();
+	if (!user)
+		return res.status(401).json({ message: "id organisateur non valide" });
+	if (moment(req.body.date, "MM/DD/YYYY", false).isValid())
+		return res.sendStatus(401).json({ message: "date non valide" });
+	if (
+		req.body.visibility !== "public" &&
+		req.body.visibility !== "private" &&
+		req.body.visibility !== "unlisted"
+	)
+		return res.sendStatus(401).json({ message: "visibilité non valide" });
+	if (
+		req.body.bracket_type !== "Simple" &&
+		req.body.bracket_type !== "Double" &&
+		req.body.bracket_type !== "Round Robin"
+	)
+		return res.sendStatus(401).json({ message: "type de tournoi non valide" });
 
-    const tournament = new Tournament({
-        name: req.body.name,
-        description: req.body.description,
-        bracket_type: req.body.bracket_type,
-        category : req.body.category,
-        date : req.body.date,
-        visibility: req.body.visibility,
-        location: req.body.location,
-        game: req.body.game,
-        players: req.body.players,
-        followers: [],
-        organizer_id : req.payload.id
-    })
+	const tournament = new Tournament({
+		name: req.body.name,
+		description: req.body.description,
+		bracket_type: req.body.bracket_type,
+		category: req.body.category,
+		date: req.body.date,
+		visibility: req.body.visibility,
+		location: req.body.location,
+		game: req.body.game,
+		players: req.body.players,
+		followers: [],
+		organizer_id: req.payload.id,
+	});
 
-    tournament.save().then(() => {
-        return res.sendStatus(204)
-    }).catch(() => {
-        return res.sendStatus(401)
-    });
+	tournament
+		.save()
+		.then(() => {
+			return res.sendStatus(204);
+		})
+		.catch(() => {
+			return res.sendStatus(401);
+		});
 }
 
-function updateTournament (req, res) {
-    const { _id, name, description, date, bracket_type, visibility, location, game, players} = req.body
-    if (moment(date, "MM/DD/YYYY", false).isValid())
-        return res.sendStatus(401).json({message: 'date non valide'})
-    if (visibility !== 'public' && visibility !== 'private' && visibility !== 'unlisted')
-        return res.sendStatus(401).json({message: 'visibilité non valide'})
-    if (bracket_type !== 'Simple' && bracket_type !== 'Double' && bracket_type !== 'Round Robin')
-        return res.sendStatus(401).json({message: 'type de tournoi non valide'})
-
-    Tournament.findById(_id).exec((err, tournament) => {
-        tournament.name = name
-        tournament.description = description
-        tournament.bracket_type = bracket_type
-        tournament.date = date
-        tournament.visibility = visibility
-        tournament.location = location
-        tournament.game = game
-        tournament.players = players
-
-        tournament.save().then(() => {
-            return res.sendStatus(204)
-        }).catch(() => {
-            return res.sendStatus(401)
-        });
-    })
+function updateTournament(req, res) {
+	// todo : a faire
 }
 
-async function deleteTournament(req, res) {
-    const id = req.query._id
-    Tournament.findOneAndDelete({_id : id, organizer_id : req.payload.id}).exec((error, result) => {
-        if (error) {
-            return res.status(401);
-        }
-        return res.sendStatus(204);
-    });
+function deleteTournament(req, res) {
+	// todo : a faire
 }
 
 function followTournament(req, res) {
-  Tournament.findById(req.params.id).exec((err, tournament) => {
-    User.findById(req.payload.id).exec((err, user) => {
-      if (err || !user) {
-        return res.status(401).json({ error: 'User not found' })
-      } 
-      if (err || !tournament) {
-        return res.status(401).json({ error: 'Tournament not found' })
-      }
+	Tournament.findById(req.params.id).exec((err, tournament) => {
+		User.findById(req.payload.id).exec((err, user) => {
+			if (err || !user) {
+				return res.status(401).json({ error: "User not found" });
+			}
+			if (err || !tournament) {
+				return res.status(401).json({ error: "Tournament not found" });
+			}
 
-      tournament.followers.push(req.payload.id)
-      tournament.save().then(() => {
-        user.subscriptions.push(tournament._id)
-        user.save().then(() => {
-          return res.sendStatus(204)
-        }).catch(() => {
-          return res.sendStatus(401)
-        });
-      }).catch(() => {
-        return res.sendStatus(401)
-      });
-      
-    
-    } )
-  })
+			tournament.followers.push(req.payload.id);
+			tournament
+				.save()
+				.then(() => {
+					user.subscriptions.push(tournament._id);
+					user
+						.save()
+						.then(() => {
+							return res.sendStatus(204);
+						})
+						.catch(() => {
+							return res.sendStatus(401);
+						});
+				})
+				.catch(() => {
+					return res.sendStatus(401);
+				});
+		});
+	});
 }
 
 function unfollowTournament(req, res) {
-  Tournament.findById(req.params.id).exec((err, tournament) => {
-    User.findById(req.payload.id).exec((err, user) => {
-      if (err || !user) {
-        return res.status(401).json({ error: 'User not found' })
-      }
-      if (err || !tournament) {
-        return res.status(401).json({ error: 'Tournament not found' })
-      }
-      const index = tournament.followers.indexOf(user._id);
-      if (index > -1) { 
-        tournament.followers.splice(index, 1); 
-      }
-      tournament.save().then(() => {
-        const index = user.subscriptions.indexOf(tournament._id);
-        if (index > -1) {
-          user.subscriptions.splice(index, 1);
-        }
-        user.save().then(() => {
-          return res.sendStatus(204)
-        }).catch(() => {
-          return res.sendStatus(401)
-        });
-      }).catch(() => {
-        return res.sendStatus(401)
-      });
-    })
-  })
+	Tournament.findById(req.params.id).exec((err, tournament) => {
+		User.findById(req.payload.id).exec((err, user) => {
+			if (err || !user) {
+				return res.status(401).json({ error: "User not found" });
+			}
+			if (err || !tournament) {
+				return res.status(401).json({ error: "Tournament not found" });
+			}
+			const index = tournament.followers.indexOf(user._id);
+			if (index > -1) {
+				tournament.followers.splice(index, 1);
+			}
+			tournament
+				.save()
+				.then(() => {
+					const index = user.subscriptions.indexOf(tournament._id);
+					if (index > -1) {
+						user.subscriptions.splice(index, 1);
+					}
+					user
+						.save()
+						.then(() => {
+							return res.sendStatus(204);
+						})
+						.catch(() => {
+							return res.sendStatus(401);
+						});
+				})
+				.catch(() => {
+					return res.sendStatus(401);
+				});
+		});
+	});
 }
 
 function isFollowed(req, res) {
-  User.findById(req.payload.id).exec((err, user) => {
-    if (err || !user) {
-      return res.status(401).json({ error: 'User not found' })
-    } 
-    if (user.subscriptions.includes(req.params.id)) {
-      return res.status(201).json(true)
-    } else {
-      return res.status(201).json(false)
-    }
-  })
+	User.findById(req.payload.id).exec((err, user) => {
+		if (err || !user) {
+			return res.status(401).json({ error: "User not found" });
+		}
+		if (user.subscriptions.includes(req.params.id)) {
+			return res.status(201).json(true);
+		} else {
+			return res.status(201).json(false);
+		}
+	});
 }
 
-/*function searchTournament(req, res) {
-  User.findById(req.payload.id).exec((err, user) => {
-    if (err || !user) {
-      return res.status(401).json({ error: 'User not found' })
-    } 
-    let search = new RegExp('.*' + req.params.search + '.*', 'i')
-    user.subscriptions = user.subscriptions.filter(subscription => subscription === search);
-    return res.status(201).json({ user.subscriptions })
-  }
-} */
-module.exports = { getTournament, createTournament, deleteTournament, updateTournament, followTournament, unfollowTournament, isFollowed/*searchTournament */}
+function getFollowedTournaments(req, res) {
+	User.findById(req.payload.id).exec((err, user) => {
+		if (err || !user) {
+			return res.status(401).json({ error: "User not found" });
+		}
+		Tournament.find({ _id: { $in: user.subscriptions } }).exec(
+			(err, tournaments) => {
+				if (err || !tournaments) {
+					return res.status(401).json({ error: "Tournaments not found" });
+				}
+				return res.status(201).json(tournaments);
+			}
+		);
+	});
+}
+
+function searchFollowedTournaments(req, res) {
+	let search = new RegExp(".*" + req.params.search + ".*", "i");
+	User.findById(req.payload.id).exec((err, user) => {
+		if (err || !user) {
+			return res.status(401).json({ error: "User not found" });
+		}
+		Tournament.find({
+			_id: { $in: user.subscriptions },
+			name: { $regex: search },
+		}).exec((err, tournaments) => {
+			if (err || !tournaments) {
+				return res.status(401).json({ error: "Tournaments not found" });
+			}
+			return res.status(201).json(tournaments);
+		});
+	});
+}
+module.exports = {
+	getTournament,
+	getTournamentsByOrganizerId,
+	createTournament,
+	deleteTournament,
+	updateTournament,
+	followTournament,
+	unfollowTournament,
+	isFollowed,
+	getFollowedTournaments,
+	searchFollowedTournaments /*searchTournament */,
+};
