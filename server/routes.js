@@ -5,6 +5,7 @@ const tournamentController = require('./controllers/TournamentController')
 const matchController = require('./controllers/MatchController')
 const playerController = require('./controllers/PlayerController')
 const uploadController = require('./controllers/UploadController')
+const { getTournamentsByOrganizerId } = require("./controllers/TournamentController");
 
 const router = express.Router()
 
@@ -104,6 +105,10 @@ router
   .get(middleware.isAuth, tournamentController.isFollowed)
   .post(middleware.isAuth, tournamentController.followTournament)
   .delete(middleware.isAuth, tournamentController.unfollowTournament)
+
+router
+  .route('/tournament/from/:id')
+  .get(tournamentController.getTournamentsByOrganizerId)
 
 router
   .route('/tournament/followed')

@@ -177,10 +177,13 @@ function changePassword (req, res) {
 }
 
 function login (req, res) {
-  User.findOne({ username: req.body.username },
+  User.findOne({ $or: [{ username: req.body.username }, { email: req.body.username }] }).exec(
     (err, user) => {
       if (err) {
         return res.status(401).json({ message: 'asdahd658stfb' })
+      }
+      if (!user) {
+        return res.status(401).json({message: "asdahd347stfb"});
       }
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const payload = { id: user.id }

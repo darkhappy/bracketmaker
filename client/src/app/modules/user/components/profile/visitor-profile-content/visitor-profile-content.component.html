@@ -5,7 +5,7 @@
                 <span><fa-icon [icon]="boxArchive"></fa-icon>Ses tournois</span>
             </ng-template>
             <ng-template matTabContent>
-                <p>Tournois component</p>
+              <app-list-of-tournaments [filter]="user._id!"></app-list-of-tournaments>
             </ng-template>
         </mat-tab>
         <mat-tab>
