@@ -7,7 +7,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-  declarations: [TournamentCardComponent, ImageUploadComponent],
+  declarations: [AlertComponent, TournamentCardComponent, ImageUploadComponent],
   exports: [AlertComponent, ImageUploadComponent, TournamentCardComponent],
   imports: [CommonModule, FontAwesomeModule, MatButtonModule],
 })

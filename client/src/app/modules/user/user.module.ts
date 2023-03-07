@@ -36,10 +36,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { getFrenchPaginatorIntl } from '@modules/user/french-paginator.intl';
 import { MatTableModule } from '@angular/material/table';
-import { ImageUploadComponent } from '@shared/image-upload/image-upload.component';
 import { FollowedUsersComponent } from './components/profile/view-followed/followed-users/followed-users.component';
 import { FollowedMenuComponent } from './components/profile/view-followed/followed-menu/followed-menu.component';
 import { MatIconModule } from '@angular/material/icon';
+
 @NgModule({
   declarations: [
     ProfileComponent,
@@ -58,35 +58,15 @@ import { MatIconModule } from '@angular/material/icon';
     ViewUsersComponent,
     VisitorProfileContentComponent,
     FollowedTournamentsComponent,
-    ImageUploadComponent,
     FollowedUsersComponent,
     FollowedMenuComponent,
   ],
   imports: [
-    userRoutes,
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDialogModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatTabsModule,
-    MatSidenavModule,
-    MatListModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatDialogModule,
-    FontAwesomeModule,
-    MatCardModule,
-    MatSelectModule,
-    SharedModule,
     TournamentsModule,
     userRoutes,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
