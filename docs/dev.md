@@ -16,7 +16,7 @@
    5. [Configuration](#configuration)
 
 ## Introduction
-Cette documentation est destinée aux développeurs qui souhaitent comprendre et travailler sur cette application web basée sur la MEAN stack. La MEAN stack est un ensemble de technologies open-source, incluant MongoDB, Express.js, Angular et Node.js, qui permettent de construire des applications web modernes et performantes. Nous avons choisi entre-autres ces technologies pour la simplicité du backend, notamment MongoDB qui permet d'éviter de faire de vraies requêtes SQL. Toutefois, il est possible de changer pour PostgreSQL au besoin.
+Cette documentation est destinée aux développeurs qui souhaitent comprendre et travailler sur cette application web basée sur la MEAN stack. La MEAN stack est un ensemble de technologies qui sont de code libre, incluant MongoDB, Express.js, Angular et Node.js, qui permettent de construire des applications web modernes et performantes. Nous avons choisi entre autres ces technologies pour la simplicité du code en arrière plan, notamment MongoDB qui permet d'éviter de faire de vraies requêtes SQL. Toutefois, il est possible de changer pour PostgreSQL au besoin.
 
 Cette documentation couvre l'ensemble des fonctionnalités de l'application, y compris les composants, les routes, les modèles de données, ainsi que les procédures d'installation et de déploiement.
 
@@ -45,8 +45,7 @@ Cette documentation couvre l'ensemble des fonctionnalités de l'application, y c
 
 # Client
 ## Composants
-Une application basée sur Angular est composée de composants. Un composant est une classe qui contient des données et des méthodes. Les données sont des propriétés du composant, et les méthodes sont des fonctions qui peuvent être appelées par le composant. Les composants sont liés à des templates, qui sont des fichiers HTML qui contiennent des directives Angular. Les directives Angular sont des balises spéciales qui permettent d'interagir avec les composants. Les composants sont liés à des fichiers CSS qui contiennent des styles CSS qui sont appliqués au template du composant.
-Chaque composant contient donc trois fichiers : un fichier TypeScript, un fichier HTML et un fichier CSS.
+Une application basée sur Angular est composée de composants. Un composant est une classe qui contient des données et des méthodes. Les données sont des propriétés du composant, et les méthodes sont des fonctions qui peuvent être appelées par le composant. Les composants sont liés à des gabarits, qui sont des fichiers HTML qui contiennent des directives Angular. Les directives Angular sont des balises spécifiques qui permettent d'interagir avec les composants. Les composants sont liés à des fichiers CSS qui contiennent des styles CSS qui sont appliqués au gabarit du composant. Chaque composant contient donc trois fichiers : un fichier TypeScript, un fichier HTML et un fichier CSS.
 
 Pour créer un nouveau composant, vous pouvez utiliser la commande `ng generate component <nom-du-composant>`.
 
@@ -75,16 +74,16 @@ client
 
 Ces trois dossiers sont sous le dossier `src/app`.
 ### Composants de l'affichage de base (layout)
-Le dossier layout contient les composants de l'affichage de base, qui sont les composants qui sont affichés sur toutes les pages de l'application. Ces composants sont le header, le footer et le menu de navigation. Le dossier modules contient les composants par module, qui sont les composants qui sont affichés sur certaines pages de l'application.
+Le dossier « layout » contient les composants de l'affichage de base, qui sont les composants qui sont affichés sur toutes les pages de l'application. Ces composants sont l'en-tête, le pied de page et le menu de navigation. Le dossier « modules » contient les composants par module, qui sont les composants qui sont affichés sur certaines pages de l'application.
 
 ### Composants par module
-Le dossier modules contient les composants par module, qui sont les composants qui sont affichés sur certaines pages de l'application. Ces composants sont les composants de chaque module de l'application. Chaque module est une fonctionnalité de l'application. Par exemple, le module d'authentification (auth) contient les composants de connexion, d'inscription, de modification de profil, etc. Le module de gestion des tournois (tournaments) contient les composants de création de tournois, de modification de tournois, de gestion des participants, etc.
+Le dossier « modules » contient les composants par module, qui sont les composants qui sont affichés sur certaines pages de l'application. Ces composants sont les composants de chaque module de l'application. Chaque module est une fonctionnalité de l'application. Par exemple, le module d'authentification (auth) contient les composants d'authentification, d'inscription, de modification de profil, etc. Le module de gestion des tournois « tournaments » contient les composants de création de tournois, de modification de tournois, de gestion des participants, etc.
 
 ### Composants partagés
-Le dossier shared contient les composants partagés, qui sont les composants qui sont utilisés par plusieurs modules de l'application. Par exemple, le composant de formulaire de connexion est utilisé par le module d'authentification et le module de gestion des tournois. Le composant de formulaire de création de tournoi est utilisé par le module de gestion des tournois et le module de gestion des matchs.
+Le dossier « shared » contient les composants partagés, qui sont les composants qui sont utilisés par plusieurs modules de l'application. Par exemple, le composant de formulaire de connexion est utilisé par le module d'authentification et le module de gestion des tournois. Le composant de formulaire de création de tournois est utilisé par le module de gestion des tournois et le module de gestion des matchs.
 
 ## Routes
-Les routes de bases sont définies dans le fichier `src/app/app-routing.module.ts`. Chaque route est liée à un composant. Par exemple, la route `/login` est liée au composant `LoginComponent`. Si vous voulez plus d'informations sur les routes, vous pouvez consulter la documentation officielle : https://angular.io/guide/router
+Les routes de bases sont définies dans le fichier `src/app/app-routing.module.ts`. Chaque route est liée à un composant. Par exemple, la route `/login` est liée au composant `LoginComponent`. Si vous voulez plus d'informations sur les routes, vous pouvez consulter la documentation officielle : https://angular.io/guide/router.
 Chaque composant peut avoir plusieurs routes. Par exemple, le composant `TournamentComponent` a les routes `/tournaments`, `/tournaments/:id` et `/tournaments/:id/:tab`. La route `/tournaments` est liée à la page d'accueil de l'application, qui affiche tous les tournois. La route `/tournaments/:id` est liée à la page de gestion d'un tournoi, qui affiche les informations du tournoi et permet de gérer les participants. La route `/tournaments/:id/:tab` est liée à la page de gestion d'un tournoi, qui affiche les informations du tournoi et permet de gérer les matchs.
 
 ## Services
@@ -109,7 +108,7 @@ this.userService.getUsers().subscribe((users: User[]) => {
 Pour créer un nouveau service, vous pouvez utiliser la commande `ng generate service <nom-du-service>`.
 
 ## Guard
-Les guards sont des classes qui contiennent des fonctions qui peuvent être appelées par les routes. Ces fonctions sont appelées avant que la route ne soit chargée. Si la fonction retourne `true`, la route est chargée. Si la fonction retourne `false`, la route n'est pas chargée. Les guards sont définis dans le dossier `src/app/core/guards`. Si vous voulez plus d'informations sur les guards, vous pouvez consulter la documentation officielle : https://angular.io/guide/router#milestone-5-route-guards
+Les « guards » sont des classes qui contiennent des fonctions qui peuvent être appelées par les routes. Ces fonctions sont appelées avant que la route ne soit chargée. Si la fonction retourne `true`, la route est chargée. Si la fonction retourne `false`, la route n'est pas chargée. Les « guards » sont définis dans le dossier `src/app/core/guards`. Si vous voulez plus d'informations sur les « guards », vous pouvez consulter la documentation officielle : https://angular.io/guide/router#milestone-5-route-guards
 
 Pour appeler un guard, vous devez d'abord l'importer dans le fichier de route :
 ```ts
@@ -153,7 +152,7 @@ Après cela,  vous pourrez utiliser ces objets dans les fichiers .ts pour recevo
 #  Serveur
 
 ## Controleurs
-Les contrôleurs sont des classes qui contiennent des fonctions qui peuvent être appelées par les services. Ces fonctions sont appelées pour effectuer des opérations sur les données. Par exemple, la fonction `createTournament` du contrôleur `TournamentController` est appelée pour créer un tournoi. Les contrôleurs sont définis dans le dossier `/controllers`. Si vous voulez plus d'informations sur les contrôleurs, vous pouvez consulter la documentation officielle : https://angular.io/guide/architecture-services#controllers
+Les contrôleurs sont des classes qui contiennent des fonctions qui peuvent être appelées par les services. Ces fonctions sont appelées pour effectuer des opérations sur les données. Par exemple, la fonction `createTournament` du contrôleur `TournamentController` est appelé pour créer un tournoi. Les contrôleurs sont définis dans le dossier `/controllers`. Si vous voulez plus d'informations sur les contrôleurs, vous pouvez consulter la documentation officielle : https://angular.io/guide/architecture-services#controllers
 Un service envoie une requête HTTP à un contrôleur. Le contrôleur effectue une opération sur les données, et renvoie une réponse HTTP au service. Le service traite la réponse HTTP et renvoie une réponse HTTP au client.
 
 Exemple de contrôleur :
@@ -221,11 +220,11 @@ Tournament.findOne({name: 'Tournoi 1'}).exec((err, tournoi) => {
 });
 ```
 
-Dans cette exemple, les modèle utilise les schemas de mongoose. Pour plus d'informations sur les schemas de mongoose, vous pouvez consulter la documentation officielle : https://mongoosejs.com/docs/guide.html
+Dans cet exemple, les modèles utilisent les schémas de mongo. Pour plus d'informations sur les schémas de mongo, vous pouvez consulter la documentation officielle : https://mongoosejs.com/docs/guide.html.
 
 ## Middlewares
-Les middlewares sont des fonctions qui sont appelées avant que la route ne soit chargée. Si la fonction retourne `next()`, la route est chargée. Si la fonction retourne `res.status(401).json({ message: 'Unauthorized' })`, la route n'est pas chargée. Les middlewares sont définis dans le dossier `middlewares`. Si vous voulez plus d'informations sur les middlewares, vous pouvez consulter la documentation officielle : https://angular.io/guide/router#milestone-5-route-guards
-Il y a un middleware pour chaque type de données. Par exemple, il y a un middleware pour les utilisateurs, un middleware pour les tournois, etc. Ces middlewares sont utilisés pour vérifier que l'utilisateur est connecté, et qu'il a les droits d'accès à la ressource.
+Les logiciels médiateurs, autrement appelés intergiciels ou « middlewares » sont des fonctions qui sont appelées avant que la route ne soit chargée. Si la fonction retourne `next()`, la route est chargée. Si la fonction retourne `res.status(401).json({ message: 'Unauthorized' })`, la route n'est pas chargée. Les intergiciels sont définis dans le dossier `intergiciels`. Si vous voulez plus d'informations sur les intergiciels, vous pouvez consulter la documentation officielle : https://angular.io/guide/router#milestone-5-route-guards
+Il y a un intergiciel pour chaque type de données. Par exemple, il y a un intergiciel pour les utilisateurs, un intergiciel pour les tournois, etc. Ces intergiciels sont utilisés pour vérifier que l'utilisateur est connecté, et qu'il a les droits d'accès à la ressource.
 
 Exemple de code:
 ```ts
@@ -248,8 +247,7 @@ const isAuth = (req, res, next) => {
 ```
 
 ## Configuration
-Pour configurer votre serveur de façon à ce qu'il puisse communiquer avec la base de donnée, créez-vous un fichier .env à la racine du dossier serveur
-et inscrivez vos informations comme suit:
+Pour configurer votre serveur de façon à ce qu'il puisse communiquer avec la base de données, créez-vous un fichier .env à la racine du dossier serveur et inscrivez vos informations comme suit:
 ```
 SECRET_KEY="votre_clef_secrete"
 CONNECTION_STRING="mongodb://127.0.0.1:27017/test" //cela doit etre VOTRE url pour la bd mongo
