@@ -48,6 +48,14 @@ export class TournamentService {
     return this.http.get<TournamentModel[]>("/api/tournament/");
   }
 
+  updateTournament(tournament: TournamentModel) {
+    return this.http.put<TournamentModel>('/api/tournament/', tournament);
+  }
+
+  deleteTournament(id: String) {
+    return this.http.delete<TournamentModel>(`/api/tournament/?_id=${id}`);
+  }
+
   getTournament(id: string) {
     return this.http.get<TournamentModel>(`/api/tournament/?_id=${id}`);
   }

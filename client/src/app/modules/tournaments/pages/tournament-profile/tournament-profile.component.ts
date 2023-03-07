@@ -13,26 +13,29 @@ import {TournamentModel} from "@data/schemas/tournament.model";
   styleUrls: ['./tournament-profile.component.scss']
 })
 export class TournamentProfileComponent {
+  //@ts-ignore
+  tournament: TournamentModel;
   id = "1"
   calender = faCalendar;
   envelope = faEnvelope;
   share = faShare;
   users = faUsers
-  trophy =  faTrophy;
+  trophy = faTrophy;
   eye = faEye;
-  //@ts-ignore
-  tournament: TournamentModel;
   organiserName: string = "";
+  idTournoi: String = "";
 
   public href: string = "";
 
   isFollowed: boolean = false;
 
-  constructor(private router: Router, private tournamentService: TournamentService, private authService: AuthService, private userService: UserService) { }
+  constructor(private router: Router, private tournamentService: TournamentService, private authService: AuthService, private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.href = this.router.url;
     let urlArray = this.href.split('/')
+    this.idTournoi = urlArray[2]
     this.tournamentService.getTournament(urlArray[2]).subscribe({
       next: res => {
         //@ts-ignore
@@ -40,15 +43,15 @@ export class TournamentProfileComponent {
         //todo: get tournament organiser name, fix date format
       },
       error: (error) => {
-        if(error.status === 404){
+        if (error.status === 404) {
           alert(error.error.message);
-        } else if(error.status === 500){
+        } else if (error.status === 500) {
           alert("Internal server error");
         }
       }
     });
 
-    this.tournamentService.isFollowed(urlArray[2]).subscribe( {
+    this.tournamentService.isFollowed(urlArray[2]).subscribe({
       next: (response) => {
         this.isFollowed = response;
       }
@@ -63,40 +66,45 @@ export class TournamentProfileComponent {
         this.organiserName = res.user.username
       },
       error: (error) => {
-        if(error.status === 404){
+        if (error.status === 404) {
           alert(error.error.message);
-        } else if(error.status === 500){
+        } else if (error.status === 500) {
           alert("Internal server error");
         }
       }
     });
   }
 
-  follow() {
-    if (this.authService.getUserId() === null) {
-      this.router.navigate(['/auth/login']);
-    } else {
-      this.tournamentService.followTournament(this.tournament._id).subscribe( {
+
+  navigate(path: string) {
+    this.router.navigate([path, this.idTournoi]);
+  }
+    follow()
+    {
+      if (this.authService.getUserId() === null) {
+        this.router.navigate(['/auth/login']);
+      } else {
+        this.tournamentService.followTournament(this.tournament._id).subscribe({
+          next: (response) => {
+            this.isFollowed = true;
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
+      }
+    }
+
+    unfollow()
+    {
+      this.tournamentService.unfollowTournament(this.tournament._id).subscribe({
         next: (response) => {
-          this.isFollowed = true;
+          this.isFollowed = false;
         },
         error: (error) => {
           console.log(error);
         }
-      }); 
+      });
     }
-  }
-
-  unfollow() {
-    this.tournamentService.unfollowTournament(this.tournament._id).subscribe( {
-      next: (response) => {
-        this.isFollowed = false;
-      },
-      error: (error) => {
-        console.log(error);
-      }
-    }); 
-  }
 }
-
 

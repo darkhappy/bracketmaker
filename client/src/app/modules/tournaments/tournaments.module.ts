@@ -14,13 +14,16 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import { UpdateTournamentComponent } from './crud/update-tournament/update-tournament.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import {MatTabsModule} from "@angular/material/tabs";
 
+
 @NgModule({
   declarations: [
     CreateComponent,
+    UpdateTournamentComponent,
     TournamentListComponent,
     TournamentProfileComponent
   ],
