@@ -15,9 +15,11 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSelectModule} from "@angular/material/select";
+import { UpdateTournamentComponent } from './crud/update-tournament/update-tournament.component';
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import { ListOfTournamentsComponent } from './components/list-of-tournaments/list-of-tournaments.component';
+
 
 @NgModule({
   declarations: [
@@ -29,6 +31,9 @@ import { ListOfTournamentsComponent } from './components/list-of-tournaments/lis
   exports: [
     TournamentListComponent,
     ListOfTournamentsComponent,
+    UpdateTournamentComponent,
+    TournamentListComponent,
+    TournamentProfileComponent
   ],
   imports: [
     CommonModule,
@@ -50,4 +55,5 @@ import { ListOfTournamentsComponent } from './components/list-of-tournaments/lis
     MatButtonModule,
   ],
 })
+
 export class TournamentsModule { }

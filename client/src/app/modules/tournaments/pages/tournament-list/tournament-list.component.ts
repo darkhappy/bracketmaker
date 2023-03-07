@@ -18,12 +18,7 @@ export class TournamentListComponent {
   }
 
   ngOnInit() {
-    this.tournamentService.getTournaments().subscribe({
-      next: (tournaments) => {
-        this.tournaments = tournaments;
-      }
-    });
-
+  
     this.searchForm = this.formBuilder.group({
       search: [""],
     });
