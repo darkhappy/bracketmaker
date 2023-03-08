@@ -5,7 +5,6 @@ const tournamentController = require('./controllers/TournamentController')
 const matchController = require('./controllers/MatchController')
 const playerController = require('./controllers/PlayerController')
 const uploadController = require('./controllers/UploadController')
-const { getTournamentsByOrganizerId } = require("./controllers/TournamentController");
 
 const router = express.Router()
 
