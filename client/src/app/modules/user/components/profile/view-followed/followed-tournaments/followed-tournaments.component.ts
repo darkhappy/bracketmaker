@@ -45,6 +45,6 @@ export class FollowedTournamentsComponent {
   }
 
   look(element: any) {
-    this.router.navigate(['/tournament/' + element._id]);
+    this.router.navigate(['/tournament/profile/' + element._id]);
   }
 }

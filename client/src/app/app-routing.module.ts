@@ -14,14 +14,6 @@ const routes: Routes = [
     component: ContentLayoutComponent,
     children: [
       {
-        path: 'tournaments',
-        loadChildren: () => {
-          return import('@modules/tournaments/tournaments.module').then(
-            (m) => m.TournamentsModule
-          );
-        },
-      },
-      {
         path: 'home',
         loadChildren: () => {
           return import('@modules/home/home.module').then((m) => m.HomeModule);

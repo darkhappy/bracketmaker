@@ -59,7 +59,7 @@ export class UpdateTournamentComponent {
       this.formUpdate.patchValue({players:this.players,});
       this.tournamentService.updateTournament(this.formUpdate.value).subscribe( {
         next: () => {
-          this.router.navigate(['/tournament/', this.details]);
+          this.router.navigate(['/tournament/profile/', this.details]);
         },
         error: (error: any) => {
           console.log(error);
@@ -72,7 +72,7 @@ export class UpdateTournamentComponent {
     if(confirm("voulez vous vraiment supprimer le tournoi ?")) {
       this.tournamentService.deleteTournament(this.details).subscribe({
         next : () =>{
-          this.router.navigate(['/tournament/']);
+          this.router.navigate(['/tournament/profile/']);
         },
         error: (error: any) => {
           console.log(error);

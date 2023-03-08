@@ -15,11 +15,11 @@ const routes: Routes = [
     path: 'list',
     component: TournamentListComponent,
   },
+  { path: 'update/:details', component: UpdateTournamentComponent },
   {
-    path: ':id',
+    path: 'profile/:id',
     component: TournamentProfileComponent,
   },
-  { path: 'update/:details', component: UpdateTournamentComponent },
 ];
 
 export const tournamentRoutes = RouterModule.forChild(routes);
