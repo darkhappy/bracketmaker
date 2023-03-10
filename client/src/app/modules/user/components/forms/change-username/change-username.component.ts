@@ -17,7 +17,7 @@ export class ChangeUsernameComponent {
               private router: Router,
               private dialogRef: MatDialogRef<ChangeUsernameComponent>) { }
 
-
+ // Initialization du composant
   ngOnInit(): void {
     this.formChangeUsername = this.formBuilder.group({
       username: ['', Validators.required],
@@ -25,15 +25,17 @@ export class ChangeUsernameComponent {
     });
   }
 
+  // Fermeture de la fenêtre
   onClose() {
     this.dialogRef.close(false);
   }
 
+  // Soumission du formulaire
   onSubmit() {
     if (this.formChangeUsername.invalid) {
       return;
     }
-
+    // Appel du service d'authentification
     this.authService.changeUsername(this.formChangeUsername.value).subscribe({
       next: () => {
         alert("Username changed successfully!");

@@ -18,6 +18,7 @@ export class ChangeEmailComponent {
               private dialogRef: MatDialogRef<ChangeEmailComponent>) { }
 
 
+  // Initialisation du composant ChangeEmailComponent
   ngOnInit(): void {
     this.formChangeEmail = this.formBuilder.group({
       username: ['', Validators.required],
@@ -25,15 +26,18 @@ export class ChangeEmailComponent {
     });
   }
 
+  // Fermeture de la fenêtre de dialogue
   onClose() {
     this.dialogRef.close(false);
   }
 
+  // Soumission du formulaire
   onSubmit() {
+    // Vérification de la validité du formulaire
     if (this.formChangeEmail.invalid) {
       return;
     }
-
+    // Appel de la méthode changeEmail() du service AuthService
     this.authService.changeEmail(this.formChangeEmail.value).subscribe({
       next: () => {
         alert("Email changed successfully!");

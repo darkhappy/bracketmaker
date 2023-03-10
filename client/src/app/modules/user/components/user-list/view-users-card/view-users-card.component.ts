@@ -20,12 +20,15 @@ export class ViewUsersCardComponent {
 
     constructor(private route: Router) { }
 
+   // Initialisation de la carte
     ngOnInit() {
       if (!this.user.display_name) {
         this.user.display_name = 'Aucun';
       }
 
     }
+
+    // Redirection vers la page de l'utilisateur
     view() {
       this.route.navigate(['/user/' + this.user.username]);
     }

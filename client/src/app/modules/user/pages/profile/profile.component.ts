@@ -24,11 +24,13 @@ export class ProfileComponent {
   isMyProfile: boolean = true;
   constructor(private userService: UserService, private router: Router) { }
 
+  // initialisation de la page de profile
   ngOnInit() {
     this.href = this.router.url;
     let urlArray = this.href.split('/');
     if (urlArray[2] != 'profile') {
       this.visitor = true;
+      // Chercher le profile de l'utilisateur via le service userService
       this.userService.getProfile(urlArray[2]).subscribe({
         next: (user) => {
           this.user = {
@@ -45,6 +47,8 @@ export class ProfileComponent {
           }
         }
       });
+
+      // Vérifier si l'utilisateur est connecté
       this.userService.isLoggedProfile(urlArray[2]).subscribe( {
         next: (response) => {
           this.isMyProfile = response;
@@ -55,6 +59,7 @@ export class ProfileComponent {
       });
 
     } else {
+      // Chercher le profile de l'utilisateur via le service userService
       this.userService.getUser().subscribe({
         next: user => {
           this.user = {
@@ -75,6 +80,8 @@ export class ProfileComponent {
       });
     }
   }
+
+  // Mettre à jour le profile de l'utilisateur
   updateProfile(user: any) {
     this.user = user;
   }

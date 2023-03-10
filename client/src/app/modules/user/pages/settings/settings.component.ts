@@ -13,6 +13,8 @@ export class SettingsComponent {
   formSettings : FormGroup
   constructor(private fb: FormBuilder, private router: Router) { }
   @Output() event = new EventEmitter<any>();
+
+  // initialisation du composant
   ngOnInit(): void {
     this.formSettings = this.fb.group({
       username: [''],
@@ -24,6 +26,7 @@ export class SettingsComponent {
   onSubmit() {
   }
 
+  // mise à jour du profil
   updateProfile(user: any) {
     this.event.emit(user);
   }
