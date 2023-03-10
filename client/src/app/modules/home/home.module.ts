@@ -4,8 +4,6 @@ import { IndexComponent } from './pages/index/index.component';
 import {homeRoutes} from "@modules/home/home-routing.module";
 import {MatButtonModule} from "@angular/material/button";
 
-
-
 @NgModule({
   declarations: [
     IndexComponent
