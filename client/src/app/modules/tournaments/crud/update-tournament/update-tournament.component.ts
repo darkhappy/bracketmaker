@@ -19,7 +19,7 @@ export class UpdateTournamentComponent {
   playerName: String = "";
   selectedRadio: String = "";
   //@ts-ignore
-  tournament : TournamentModel;
+  tournament: TournamentModel = new TournamentModel();
 
   constructor(private router: Router,private fb: FormBuilder, private tournamentService: TournamentService, private route: ActivatedRoute) {}
 
