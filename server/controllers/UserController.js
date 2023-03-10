@@ -150,12 +150,13 @@ function createUsers (req, res) {
 
 /**
  *
- * @param req : requête http
- * @param res : réponse http
+ * @param name : id de l'utilisateur
+ * @param path : nom du fichier de l'image
  * @description : Met à jour l'avatar de l'utilisateur
  */
-function updateAvatar (username, path) {
-  User.findOne({ username }).exec((err, user) => {
+function updateAvatar (name, path) {
+  console.log(path)
+  User.findOne({ username: name }).exec((err, user) => {
     if (err) {
       console.log(err)
     }

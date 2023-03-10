@@ -28,21 +28,12 @@ export class ProfileHeaderComponent {
   @Input() isMyProfile: boolean = false;
   isFollowed: boolean = false;
 
-  userId: string = '';
-  avatarPath: string = '';
-  timeStamp: number = 0;
-
   href: string = '';
   constructor(private userService : UserService, private authService: AuthService, private router: Router, private fileUploadService: FileUploadService, private cookieService: CookieService) { }
 
   ngOnInit(): void {
     this.href = this.router.url;
     let urlArray = this.href.split('/');
-    const SESSION_INFO = this.cookieService.get('sessioninfo');
-    const SESSION_INFO_JSON = JSON.parse(SESSION_INFO);
-    this.userId = SESSION_INFO_JSON.id;
-
-    this.setLinkPicture('/api/user/avatar/' + this.userId);
     this.userService.isFollowed(urlArray[2] == 'profile' ? this.user.username : urlArray[2] ).subscribe( {
       next: (response) => {
         this.isFollowed = response;
@@ -53,7 +44,7 @@ export class ProfileHeaderComponent {
   changeAvatar(event: { file: File }) {
     const file = event.file;
     const extension = file.name.split('.')[1];
-    const fileName = `${this.userId}.${extension}`;
+    const fileName = `${this.user.username}.${extension}`;
     const formData = new FormData();
     formData.append('img', file, fileName);
     this.fileUploadService.uploadAvatar(formData).subscribe({
@@ -68,18 +59,6 @@ export class ProfileHeaderComponent {
         }
       }
     });
-    this.setLinkPicture('/api/user/avatar/' + this.userId);
-  }
-
-  getLinkPicture() {
-    if(this.timeStamp) {
-      return this.avatarPath + '?' + this.timeStamp;
-    }
-    return this.avatarPath;
-  }
-  setLinkPicture(url: string) {
-    this.avatarPath = url;
-    this.timeStamp = (new Date()).getTime();
   }
 
   follow() {
@@ -93,9 +72,9 @@ export class ProfileHeaderComponent {
         error: (error) => {
           console.log(error);
         }
-      }); 
-      
-    } 
+      });
+
+    }
   }
 
   unfollow() {
