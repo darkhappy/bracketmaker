@@ -2,6 +2,13 @@ const fs = require('fs')
 const userController = require('./UserController')
 const { dirname } = require('path');
 
+/**
+ * 
+ * @param req: requête http 
+ * @param res: réponse http
+ * @description: Upload l'avatar de l'utilisateur
+ * @return: La réponse si la requête a réussi (200 ou 204) ou non (400 ou 401)
+ */
 function uploadAvatar (req, res) {
   const file = req.files.img
 

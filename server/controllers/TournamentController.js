@@ -5,6 +5,12 @@ const middleware = require("../middlewares/UserMiddleware");
 const bcrypt = require("bcrypt");
 const Match = require("../models/match");
 
+/**
+ * @params req : requête http
+ * @params res : réponse http
+ * @description : récupère un tournoi précis par l'id
+ * @return : le tournoi en json
+ */
 function getTournament(req, res) {
     const _id = req.query._id;
     console.log(_id);
@@ -16,6 +22,12 @@ function getTournament(req, res) {
     });
 }
 
+/**
+ * @params req : requête http
+ * @params res : réponse http
+ * @description : Récupère tous les tournois d'un organisateur
+ * @return : le tournois en json
+ */
 async function getTournamentsByOrganizerId(req, res) {
     const tournaments = await Tournament.find({
         organizer_id: req.params.id,
@@ -23,6 +35,12 @@ async function getTournamentsByOrganizerId(req, res) {
     return res.json(tournaments);
 }
 
+/**
+ * @params req : requête http
+ * @params res : réponse http
+ * @description : Créer un tournoi
+ * @return : La réponse si la requête a réussi ou non
+ */
 async function createTournament(req, res) {
     const user = await User.findById(req.payload.id).exec();
     if (!user)
@@ -74,6 +92,13 @@ function deleteTournament(req, res) {
     // todo : a faire
 }
 
+/**
+ * 
+ * @param {} req : requête http
+ * @param {} res : réponse http
+ * @description : Abonne l'utilisateur à un tournoi
+ * @return : La réponse si la requête a réussi (200 ou 204) ou non (400 ou 401)
+ */
 function followTournament(req, res) {
     Tournament.findById(req.params.id).exec((err, tournament) => {
         User.findById(req.payload.id).exec((err, user) => {
@@ -104,6 +129,14 @@ function followTournament(req, res) {
         });
     });
 }
+
+/**
+ * 
+ * @param {} req : requête http
+ * @param {} res : réponse http
+ * @description : Désabonne l'utilisateur à un tournoi
+ * @return : La réponse si la requête a réussi (200 ou 204) ou non (400 ou 401)
+*/
 
 function unfollowTournament(req, res) {
     Tournament.findById(req.params.id).exec((err, tournament) => {
@@ -141,6 +174,13 @@ function unfollowTournament(req, res) {
     });
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Vérifie si le tournoi est suivi par l'utilisateur
+ * @return : La réponse si la requête a réussi (200 ou 201) ou non (400 ou 401)
+ */
 function isFollowed(req, res) {
     User.findById(req.payload.id).exec((err, user) => {
         if (err || !user) {
@@ -154,6 +194,13 @@ function isFollowed(req, res) {
     });
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère les tournois suivis par l'utilisateur
+ * @return : Les tournois suivis par l'utilisateur
+ */
 function getFollowedTournaments(req, res) {
     User.findById(req.payload.id).exec((err, user) => {
         if (err || !user) {
@@ -170,6 +217,13 @@ function getFollowedTournaments(req, res) {
     });
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Cherche un tournoi en particulier par son nom
+ * @return : Le ou les tournois trouvés après la recherche
+ */
 function searchFollowedTournaments(req, res) {
     let search = new RegExp(".*" + req.params.search + ".*", "i");
     User.findById(req.payload.id).exec((err, user) => {

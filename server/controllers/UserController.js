@@ -7,6 +7,13 @@ const dotenv = require('dotenv')
 const { CONNREFUSED } = require('dns')
 const { dirname } = require('path')
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère tous les utilisateurs
+ * @return : Les utilisateurs
+ */
 function getUsers (req, res) {
   User.find({}, { username: 1, display_name: 1, avatar: 1, tournaments: 1, subscriptions: 1 }).exec((err, users) => {
     if (err) {
@@ -16,6 +23,13 @@ function getUsers (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère un utilisateur par son id
+ * @return : L'utilisateur
+ */
 function getUserById (req, res) {
   User.findById(req.params._id).exec((err, user) => {
     if (err) {
@@ -25,6 +39,12 @@ function getUserById (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère l'utilisateur connecté
+ */
 function getUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -43,6 +63,13 @@ function getUser (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Crée des utilisateurs pour tester
+ * @return : La réponse si la requête a réussi (200 ou 201) ou non (400 ou 401)
+ */
 function createUsers (req, res) {
   const users = [
     new User({
@@ -124,6 +151,12 @@ function createUsers (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Met à jour l'avatar de l'utilisateur
+ */
 function updateAvatar (username, path) {
   User.findOne({ username }).exec((err, user) => {
     if (err) {
@@ -134,6 +167,12 @@ function updateAvatar (username, path) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère l'avatar d'un utilisateur
+ * @return : L'image de l'utilisateur
+ */
 function getUserAvatar (req, res) {
   User.findOne({ username: req.params.username }).exec((err, user) => {
     if (err) {
@@ -148,6 +187,12 @@ function getUserAvatar (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Cherche des utilisateurs par son nom d'utilisateur
+ * @return : Les utilisateurs correspondants
+ */
 function search (req, res) {
   const search = new RegExp('.*' + req.params.search + '.*', 'i')
   User.find({ username: search }, { username: 1, display_name: 1, avatar: 1, tournaments: 1, subscriptions: 1 }).exec((err, users) => {
@@ -158,6 +203,13 @@ function search (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Change le mot de passe de l'utilisateur
+ * @return : La réponse si la requête a réussi (204) ou non (401 ou 500)
+ */
 function changePassword (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -176,6 +228,12 @@ function changePassword (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Authentifie l'utilisateur et le connecte
+ * @return : La réponse si la requête a réussi (204) ou non (401)
+ */
 function login (req, res) {
   User.findOne({ $or: [{ username: req.body.username }, { email: req.body.username }] }).exec(
     (err, user) => {
@@ -201,6 +259,12 @@ function login (req, res) {
     })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Déconnecte l'utilisateur
+ * @return : La réponse si la requête a réussi (204) ou non (401 ou 500)
+ */
 function logout (req, res) {
   res.clearCookie('SESSIONID')
   res.clearCookie('sessioninfo')
@@ -217,6 +281,12 @@ function logout (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Authentifie l'utilisateur et le connecte
+ * @return : La réponse si la requête a réussi (204) ou non (401)
+ */
 function isLoggedProfile (req, res) {
   console.log(req.payload.id)
   User.findById(req.payload.id).exec((err, user) => {
@@ -227,7 +297,12 @@ function isLoggedProfile (req, res) {
     return res.status(200).json(user.username == req.params.username)
   })
 }
-
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Créer un utilisateur
+ */
 async function createUser (req, res) {
   const { username, email, password } = req.body
   const sameUsername = await User.find({ username }).exec()
@@ -258,6 +333,12 @@ async function createUser (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http 
+ * @param res : réponse http
+ * @description : Met à jour les informations de l'utilisateur 
+ */
 function updateUser (req, res) {
   const { _id, username } = req.body.message
   User.findById(_id).exec((err, user) => {
@@ -270,10 +351,11 @@ function updateUser (req, res) {
   })
 }
 
-function deleteUser (req, res) {
-  // todo: a faire
-}
-
+/**
+ * @param req : requête http 
+ * @param res : réponse http
+ * @description : Créer un identifiant de réinitialisation de mot de passe et d'activation de compte 
+ */
 const createToken = async (req, res) => {
   User.find({ email: req.body.email }).exec((err, user) => {
     if (err || user.length === 0) {
@@ -295,6 +377,13 @@ const createToken = async (req, res) => {
     }
   })
 }
+
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Réinitialise le mot de passe de l'utilisateur
+ * @return : La réponse si la requête a réussi (204) ou non (400)
+*/
 
 function resetPassword (req, res) {
   const filter = { token: req.params.token }
@@ -321,6 +410,12 @@ function resetPassword (req, res) {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Vérifie si le token est valide
+ */
 function getToken (req, res) {
   User.findOne({ token: req.params.token }).exec((err, user) => {
     if (!user) {
@@ -329,6 +424,11 @@ function getToken (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Active le compte de l'utilisateur
+ */
 function activateUser (req, res) {
   User.find({ token: req.body.token }).exec((err, users) => {
     const token = req.query.token
@@ -351,6 +451,11 @@ function activateUser (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Génère un token aléatoire
+ */
 // eslint-disable-next-line camelcase
 function generateToken (length) {
   const a = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'.split('')
@@ -362,6 +467,11 @@ function generateToken (length) {
   return b.join('')
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère les informations d'un utilisateur
+ */
 function getProfile (req, res) {
   User.findOne({ username: req.params.username }, { username: 1, email: 1, display_name: 1, about: 1, show_email: 1, avatar: 1 }).exec((err, user) => {
     if (err) {
@@ -371,6 +481,11 @@ function getProfile (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Met à jour les informations d'un utilisateur
+ */
 function updateProfile (req, res) {
   let showEmail = req.body.showEmail
   const displayName = req.body.displayName !== '' ? req.body.displayName : ''
@@ -394,6 +509,11 @@ function updateProfile (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Change le nom d'utilisateur de l'utilisateur
+ */
 const changeUsername = async (req, res) => {
   User.findById(req.payload.id).exec(async (err, user) => {
     if (!user) {
@@ -418,6 +538,11 @@ const changeUsername = async (req, res) => {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Change le courriel d'un utilisateur
+ */
 const changeEmail = async (req, res) => {
   // same exact thing as changeUsername
   User.findById(req.payload.id).exec(async (err, user) => {
@@ -443,6 +568,12 @@ const changeEmail = async (req, res) => {
   })
 }
 
+/**
+ * 
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Permet à un utilisateur de se connecter avec son compte Google
+ */
 async function googleLogin (req, res) {
   let { email, idToken, name } = req.body
 
@@ -480,6 +611,11 @@ async function googleLogin (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Abonne l'utilisateur à un autre utilisateur
+ */
 function followUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -508,6 +644,11 @@ function followUser (req, res) {
   });
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Vérifie si l'utilisateur suit un autre utilisateur
+ */
 function isFollowed (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -525,6 +666,11 @@ function isFollowed (req, res) {
   })
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Désabonne l'utilisateur à un autre utilisateur
+ */
 function unfollowUser (req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -560,6 +706,11 @@ function unfollowUser (req, res) {
   });
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère les utilisateurs suivis par l'utilisateur connecté
+ */
 function getFollowedUsers(req, res) {
   User.findById(req.payload.id).exec((err, user) => {
     if (err) {
@@ -574,6 +725,11 @@ function getFollowedUsers(req, res) {
   });
 }
 
+/**
+ * @param req : requête http
+ * @param res : réponse http
+ * @description : Récupère les utilisateurs suivis par l'utilisateur connecté en recherchant par nom
+ */
 function searchFollowedUsers(req, res) {
   let search = new RegExp('.*' + req.params.search + '.*', 'i')
   User.findById(req.payload.id).exec((err, user) => {
@@ -598,7 +754,6 @@ module.exports = {
   createUser,
   updateUser,
   login,
-  deleteUser,
   createToken,
   resetPassword,
   getToken,
