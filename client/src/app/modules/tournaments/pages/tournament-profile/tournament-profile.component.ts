@@ -14,7 +14,7 @@ import {TournamentModel} from "@data/schemas/tournament.model";
 })
 export class TournamentProfileComponent {
   //@ts-ignore
-  tournament: TournamentModel;
+  tournament: TournamentModel = new TournamentModel();
   id = "1"
   calender = faCalendar;
   envelope = faEnvelope;
@@ -35,8 +35,8 @@ export class TournamentProfileComponent {
   ngOnInit(): void {
     this.href = this.router.url;
     let urlArray = this.href.split('/')
-    this.idTournoi = urlArray[2]
-    this.tournamentService.getTournament(urlArray[2]).subscribe({
+    this.idTournoi = urlArray[3]
+    this.tournamentService.getTournament(urlArray[3]).subscribe({
       next: res => {
         //@ts-ignore
         this.tournament = res.tournament

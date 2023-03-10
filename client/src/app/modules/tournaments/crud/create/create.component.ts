@@ -37,7 +37,7 @@ export class CreateComponent {
       this.formCreate.patchValue({players:this.players,});
       this.tournamentService.createTournament(this.formCreate.value).subscribe( {
         next: () => {
-          this.router.navigate(['/tournament/']);
+          this.router.navigate(['/tournament/list']);
         },
         error: (error: any) => {
           console.log(error);

@@ -84,12 +84,41 @@ async function createTournament(req, res) {
         });
 }
 
-function updateTournament(req, res) {
-    // todo : a faire
+function updateTournament (req, res) {
+    const { _id, name, description, date, bracket_type, visibility, location, game, players} = req.body
+    if (moment(date, "MM/DD/YYYY", false).isValid())
+        return res.sendStatus(401).json({message: 'date non valide'})
+    if (visibility !== 'public' && visibility !== 'private' && visibility !== 'unlisted')
+        return res.sendStatus(401).json({message: 'visibilité non valide'})
+    if (bracket_type !== 'Simple' && bracket_type !== 'Double' && bracket_type !== 'Round Robin')
+        return res.sendStatus(401).json({message: 'type de tournoi non valide'})
+
+    Tournament.findById(_id).exec((err, tournament) => {
+        tournament.name = name
+        tournament.description = description
+        tournament.bracket_type = bracket_type
+        tournament.date = date
+        tournament.visibility = visibility
+        tournament.location = location
+        tournament.game = game
+        tournament.players = players
+
+        tournament.save().then(() => {
+            return res.sendStatus(204)
+        }).catch(() => {
+            return res.sendStatus(401)
+        });
+    })
 }
 
-function deleteTournament(req, res) {
-    // todo : a faire
+async function deleteTournament(req, res) {
+    const id = req.query._id
+    Tournament.findOneAndDelete({_id : id, organizer_id : req.payload.id}).exec((error, result) => {
+        if (error) {
+            return res.status(401);
+        }
+        return res.sendStatus(204);
+    });
 }
 
 /**

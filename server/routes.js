@@ -15,7 +15,6 @@ router
   .get(middleware.isAuth, userController.getUser)
   .post(userController.createUser)
   .put(userController.updateUser)
-  .delete(userController.deleteUser)
 
 router
   .route('/getUser/:_id')
