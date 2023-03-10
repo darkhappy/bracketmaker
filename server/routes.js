@@ -85,12 +85,12 @@ router
   .delete(middleware.isAuth, userController.unfollowUser)
 
 router
-    .route("/user/followed")
-    .get(middleware.isAuth, userController.getFollowedUsers);
+  .route('/user/followed')
+  .get(middleware.isAuth, userController.getFollowedUsers)
 
 router
-    .route("/user/followed/search/:search")
-    .get(middleware.isAuth, userController.searchFollowedUsers);
+  .route('/user/followed/search/:search')
+  .get(middleware.isAuth, userController.searchFollowedUsers)
 router
   .route('/tournament')
   .get(tournamentController.getTournament)
@@ -110,11 +110,11 @@ router
 
 router
   .route('/tournament/followed')
-  .get(middleware.isAuth, tournamentController.getFollowedTournaments);
+  .get(middleware.isAuth, tournamentController.getFollowedTournaments)
 
 router
   .route('/tournament/followed/search/:search')
-  .get(middleware.isAuth, tournamentController.searchFollowedTournaments);
+  .get(middleware.isAuth, tournamentController.searchFollowedTournaments)
 router
   .route('/match')
   .get(matchController.getMatch)

@@ -1,10 +1,10 @@
 const fs = require('fs')
 const userController = require('./UserController')
-const { dirname } = require('path');
+const { dirname } = require('path')
 
 /**
- * 
- * @param req: requête http 
+ *
+ * @param req: requête http
  * @param res: réponse http
  * @description: Upload l'avatar de l'utilisateur
  * @return: La réponse si la requête a réussi (200 ou 204) ou non (400 ou 401)
@@ -24,7 +24,7 @@ function uploadAvatar (req, res) {
     return res.status(413).send('File size is too big')
   }
 
-  const userName = file.name.split('.')[0]
+  const name = file.name.split('.')[0]
   const path = dirname(require.main.filename) + '/assets/avatars/' + file.name
   if (fs.existsSync(path)) {
     fs.writeFileSync(path, file.data, (err) => {
@@ -39,8 +39,7 @@ function uploadAvatar (req, res) {
       }
     })
   }
-
-  userController.updateAvatar(userName, file.name)
+  userController.updateAvatar(name, file.name)
   return res.status(200).send('File uploaded')
 }
 
