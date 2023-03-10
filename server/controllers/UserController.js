@@ -244,10 +244,9 @@ function login (req, res) {
       if (bcrypt.compareSync(req.body.password, user.password)) {
         const payload = { id: user.id }
         const key = process.env.SECRET_KEY
-        const jwtToken = jwt.sign(payload, key, { expiresIn: '2h' })
+        const jwtToken = jwt.sign(payload, key, { expiresIn: '24h' })
 
         const result = dotenv.config()
-        const conn = result.parsed.CONNECTION_STRING
 
         res.cookie('SESSIONID', jwtToken, { httpOnly: true })
         res.cookie('sessioninfo', JSON.stringify(payload))
