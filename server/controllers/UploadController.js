@@ -24,7 +24,7 @@ function uploadAvatar (req, res) {
     return res.status(413).send('File size is too big')
   }
 
-  const userName = file.name.split('.')[0]
+  const id = file.name.split('.')[0]
   const path = dirname(require.main.filename) + '/assets/avatars/' + file.name
   if (fs.existsSync(path)) {
     fs.writeFileSync(path, file.data, (err) => {
@@ -40,7 +40,7 @@ function uploadAvatar (req, res) {
     })
   }
 
-  userController.updateAvatar(userName, file.name)
+  userController.updateAvatar(id, file.name)
   return res.status(200).send('File uploaded')
 }
 
