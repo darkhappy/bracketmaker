@@ -21,6 +21,8 @@ export class ProfileContentComponent {
   @Input() visitor: Boolean = false;
 
   @Output() event = new EventEmitter<any>();
+
+  // Mise a jour de l'utilisateur
   updateProfile(user: any) {
     this.event.emit(user);
   }

@@ -15,6 +15,7 @@ export class SettingsAccountComponent {
   constructor(private matDialog: MatDialog, private userService: UserService) {
   }
 
+  // Changement du nom d'utilisateur
   onEditUsername() {
     this.matDialog.open(ChangeUsernameComponent, {
       width: "40rem",

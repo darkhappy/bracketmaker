@@ -7,6 +7,7 @@ import { UserService } from '@data/services/user.service';
   styleUrls: ['./view-users-card-list.component.scss']
 })
 export class ViewUsersCardListComponent {
+  // liste des utilisateurs
   @Input() users : any[] = [];
 
 }

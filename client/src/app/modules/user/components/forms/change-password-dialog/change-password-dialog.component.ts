@@ -22,12 +22,13 @@ export class ChangePasswordDialogComponent {
   match = true;
   constructor(
     public dialogRef: MatDialogRef<ChangePasswordDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) 
-    public data: DialogData, 
-    private fb: FormBuilder, 
+    @Inject(MAT_DIALOG_DATA)
+    public data: DialogData,
+    private fb: FormBuilder,
     private userService: UserService
   ) {}
 
+  // Initialisation du formulaire
   ngOnInit(): void {
     this.form = this.fb.group({
       oldPassword: ['', Validators.required],
@@ -36,10 +37,12 @@ export class ChangePasswordDialogComponent {
     });
   }
 
+  // Fermeture de la fenêtre
   onNoClick(): void {
     this.dialogRef.close();
   }
-  
+
+  // Validation du formulaire
   onSubmit() {
     if (this.form.value.newPassword === this.form.value.confirm) {
       if (this.form.valid) {

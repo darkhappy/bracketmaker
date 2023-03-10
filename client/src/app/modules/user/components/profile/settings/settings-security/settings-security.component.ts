@@ -12,6 +12,8 @@ export class SettingsSecurityComponent {
   constructor(private dialog: MatDialog) {}
   oldPassword: string = '';
   newPassword: string = '';
+
+  // ouverture de la boite de dialogue
   openDialog() {
     const dialogRef = this.dialog.open(ChangePasswordDialogComponent, {
       data: {

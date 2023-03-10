@@ -19,7 +19,7 @@ export class SettingsProfileComponent {
   @Output() event = new EventEmitter<any>();
 
   constructor(private userService : UserService, private fb: FormBuilder) { }
-
+  // initialisation du composant
   ngOnInit(): void {
     this.formProfile = this.fb.group({
       display_name: [''],
@@ -74,13 +74,13 @@ export class SettingsProfileComponent {
             alert("There was an error loading the profile. Please try again later.");
           }
         });
-        
+
       },
       error: (error) => {
         alert("There was an error updating the profile. Please try again later.");
       }
     });
-    
+
   }
   cancel() {
     this.formProfile = this.fb.group({

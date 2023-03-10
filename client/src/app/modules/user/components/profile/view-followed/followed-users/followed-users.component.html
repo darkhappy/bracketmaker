@@ -1,8 +1,9 @@
+<!-- html pour afficher la liste des organisateurs suivis -->
 <div id="page">
     <div id="user-page">
-  
+
       <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8 user-table">
-  
+
         <ng-container matColumnDef="username">
           <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by username">
             Nom d'utilisateur
@@ -38,15 +39,15 @@
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true" id="header"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
+
         </table>
-  
+
       <div id="clear"></div>
-  
+
     </div>
-  
+
   </div>
-  
+
   <div id="footer">
     <div id="search-form">
       <mat-form-field appearance="fill">
@@ -54,9 +55,9 @@
         <input matInput type="text" class="field" (change)="onSearchChange()" placeholder="Rechercher un organisateur" [(ngModel)]="search">
       </mat-form-field>
     </div>
-  
+
     <mat-paginator [pageSizeOptions]="[10, 15, 20]"
                    showFirstLastButtons aria-label="Select page">
     </mat-paginator>
-  
+
 </div>

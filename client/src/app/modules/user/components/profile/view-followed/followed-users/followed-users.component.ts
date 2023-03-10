@@ -27,6 +27,7 @@ export class FollowedUsersComponent {
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  // initialisation du composant
   ngOnInit(): void {
     this.userService.getFollowedUsers().subscribe((data: any) => {
       this.users = data;
@@ -36,6 +37,7 @@ export class FollowedUsersComponent {
     });
   }
 
+  // recherche d'un utilisateur
   onSearchChange() {
     this.userService.searchFollowedUsers(this.search).subscribe((data: any) => {
       this.users = data;
@@ -45,6 +47,7 @@ export class FollowedUsersComponent {
     });
   }
 
+  // voir le profil d'un utilisateur
   look(element: any) {
     this.router.navigate(['/user/' + element.username]);
   }

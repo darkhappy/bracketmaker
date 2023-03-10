@@ -14,6 +14,8 @@ export class ViewUsersComponent {
 
   constructor(private userService: UserService) {
   }
+
+  // initialisation de la liste des organisateurs
   ngOnInit() {
     this.userService.getUsers().subscribe({
       next: (users) => {
@@ -25,6 +27,7 @@ export class ViewUsersComponent {
     });
   }
 
+  // tri des organisateurs
   onOptionsSelected() {
     switch (this.sort) {
       case 'Aucun':
@@ -80,10 +83,11 @@ export class ViewUsersComponent {
     }
   }
 
+  // recherche d'un organisateur
   onSearchChange() {
     this.userService.searchUsers(this.search).subscribe({
       next: (users) => {
-        
+
         this.organizers = users;
       }
     });

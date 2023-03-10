@@ -20,16 +20,21 @@ export class ChangePasswordComponent {
   token: string = '';
   hide = false;
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+
+  // Initialisation du composant
   ngOnInit(): void {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     this.token = urlParams.get('token') || '';
+
+    // Si le token n'existe pas, on redirige vers la page de login
     this.authService.tokenExist(this.token).subscribe({
       error: () => {
         this.router.navigate(['/auth/login']);
       }
     });
 
+    // Création du formulaire
     this.formChangePassword = this.fb.group({
       newPassword: ['', Validators.required],
       confirm : ['', Validators.required]
@@ -38,14 +43,17 @@ export class ChangePasswordComponent {
     });
   }
 
+  // Validation du formulaire
   validPassword(group: FormGroup) {
     const password = group.controls['newPassword'].value;
     const confirm = group.controls['confirm'].value;
     return password === confirm ? null : { matching: true };
   }
 
+  // Soumission du formulaire
   onSubmit() {
     if (this.formChangePassword?.valid) {
+      // Changement du mot de passe
       this.authService.changePassword(this.token, this.formChangePassword.value).subscribe({
         next: () => {
           alert("Password changed successfully!");

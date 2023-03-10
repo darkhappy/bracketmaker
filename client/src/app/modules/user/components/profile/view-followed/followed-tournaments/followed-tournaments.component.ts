@@ -25,6 +25,7 @@ export class FollowedTournamentsComponent {
   // @ts-ignore
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  // initialisation de la table
   ngOnInit(): void {
     this.tournamentService.getFollowedTournaments().subscribe((data: any) => {
       console.log(data);
@@ -35,6 +36,7 @@ export class FollowedTournamentsComponent {
     });
   }
 
+  // tri de la table
   onSearchChange() {
     this.tournamentService.searchFollowedTournaments(this.search).subscribe((data) => {
       this.tournaments = data;
@@ -44,6 +46,7 @@ export class FollowedTournamentsComponent {
     });
   }
 
+  // voir le profil d'un tournoi
   look(element: any) {
     this.router.navigate(['/tournament/profile/' + element._id]);
   }

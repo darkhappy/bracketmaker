@@ -25,12 +25,14 @@ export class ProfileHeaderComponent {
     avatar: '',
   }
 
+  // verifie si le profil est celui de l'utilisateur connecté
   @Input() isMyProfile: boolean = false;
   isFollowed: boolean = false;
 
   href: string = '';
   constructor(private userService : UserService, private authService: AuthService, private router: Router, private fileUploadService: FileUploadService, private cookieService: CookieService) { }
 
+  // initialisation du composant
   ngOnInit(): void {
     this.href = this.router.url;
     let urlArray = this.href.split('/');
@@ -41,6 +43,10 @@ export class ProfileHeaderComponent {
     });
   }
 
+  /*
+  * Change l'avatar de l'utilisateur
+  * @param event : { file: File } : fichier à envoyer
+   */
   changeAvatar(event: { file: File }) {
     const file = event.file;
     const extension = file.name.split('.')[1];
@@ -61,6 +67,7 @@ export class ProfileHeaderComponent {
     });
   }
 
+  // permet de suivre un utilisateur
   follow() {
     if (this.authService.getUserId() === null) {
       this.router.navigate(['/auth/login']);
@@ -77,6 +84,7 @@ export class ProfileHeaderComponent {
     }
   }
 
+  // permet de ne plus suivre un utilisateur
   unfollow() {
     this.userService.unfollowUser(this.user.username).subscribe( {
       next: (response) => {
